@@ -43,7 +43,22 @@ defmodule NsgLora.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+
+      # Для совместимости с lorawan-server
+      {:ranch, "1.6.2", override: true},
+      {:lorawan_server, git: "https://github.com/nsg-ru/lorawan-server.git"},
+      {:erlmongo,
+       git: "https://github.com/SergejJurecko/erlmongo.git",
+       ref: "f0d03cd4592f7bf28059b81214b61c28ccf046c0",
+       override: true},
+      {:cbor,
+       git: "https://github.com/yjh0502/cbor-erlang.git",
+       ref: "b5c9dbc2de15753b2db15e13d88c11738c2ac292",
+       override: true},
+      {:cowboy, "~> 2.7",
+       env: :prod, hex: "cowboy", repo: "hexpm", optional: false, override: true},
+      {:cowlib, git: "https://github.com/ninenines/cowlib", tag: "2.9.1", override: true}
     ]
   end
 
