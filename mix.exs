@@ -56,7 +56,6 @@ defmodule NsgLora.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
 
-       {:reverse_proxy_plug, "~> 1.3.2"},
 
       # Для совместимости с lorawan-server
       {:ranch, "1.7.1", override: true},
