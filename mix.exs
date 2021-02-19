@@ -10,7 +10,14 @@ defmodule NsgLora.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: [
+        nsg_lora_arm: [
+          include_executables_for: [:unix],
+          applications: [runtime_tools: :permanent],
+          include_erts: "/opt/erlang/arm_rt_eabi/erlang-22.3.4/erts-10.7.2"
+        ]
+      ]
     ]
   end
 
@@ -20,7 +27,7 @@ defmodule NsgLora.MixProject do
   def application do
     [
       mod: {NsgLora.Application, []},
-      extra_applications: [:lager, :logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -48,19 +55,19 @@ defmodule NsgLora.MixProject do
        {:reverse_proxy_plug, "~> 1.3.2"},
 
       # Для совместимости с lorawan-server
-      {:ranch, "1.6.2", override: true},
-      {:lorawan_server, git: "https://github.com/nsg-ru/lorawan-server.git"},
-      {:erlmongo,
-       git: "https://github.com/SergejJurecko/erlmongo.git",
-       ref: "f0d03cd4592f7bf28059b81214b61c28ccf046c0",
-       override: true},
-      {:cbor,
-       git: "https://github.com/yjh0502/cbor-erlang.git",
-       ref: "b5c9dbc2de15753b2db15e13d88c11738c2ac292",
-       override: true},
-      {:cowboy, "~> 2.7",
-       env: :prod, hex: "cowboy", repo: "hexpm", optional: false, override: true},
-      {:cowlib, git: "https://github.com/ninenines/cowlib", tag: "2.9.1", override: true}
+      # {:ranch, "1.6.2", override: true},
+      # {:lorawan_server, git: "https://github.com/nsg-ru/lorawan-server.git"},
+      # {:erlmongo,
+      #  git: "https://github.com/SergejJurecko/erlmongo.git",
+      #  ref: "f0d03cd4592f7bf28059b81214b61c28ccf046c0",
+      #  override: true},
+      # {:cbor,
+      #  git: "https://github.com/yjh0502/cbor-erlang.git",
+      #  ref: "b5c9dbc2de15753b2db15e13d88c11738c2ac292",
+      #  override: true},
+      # {:cowboy, "~> 2.7",
+      #  env: :prod, hex: "cowboy", repo: "hexpm", optional: false, override: true},
+      # {:cowlib, git: "https://github.com/ninenines/cowlib", tag: "2.9.1", override: true}
     ]
   end
 

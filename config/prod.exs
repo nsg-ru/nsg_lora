@@ -10,8 +10,11 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :nsg_lora, NsgLoraWeb.Endpoint,
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  http: [port: 4000],
+  url: [host: "localhost", port: 4000],
+  check_origin: false,
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  server: true
 
 # Do not print debug messages in production
 config :logger, level: :info
