@@ -20,7 +20,7 @@ defmodule NsgLora.MixProject do
   def application do
     [
       mod: {NsgLora.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:lager, :logger, :runtime_tools]
     ]
   end
 
@@ -44,6 +44,8 @@ defmodule NsgLora.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
+
+       {:reverse_proxy_plug, "~> 1.3.2"},
 
       # Для совместимости с lorawan-server
       {:ranch, "1.6.2", override: true},

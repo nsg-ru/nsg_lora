@@ -1,5 +1,6 @@
 defmodule NsgLoraWeb.Router do
   use NsgLoraWeb, :router
+  require Logger
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -18,6 +19,18 @@ defmodule NsgLoraWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+  end
+
+  scope "/" do
+    pipe_through :api
+
+    forward "/lorawan_server", ReverseProxyPlug,
+      upstream: "http://localhost:8080",
+      error_callback: &__MODULE__.log_reverse_proxy_error/1
+
+    def log_reverse_proxy_error(error) do
+      Logger.warn("ReverseProxyPlug network error: #{inspect(error)}")
+    end
   end
 
   # Other scopes may use custom stacks.
