@@ -12,6 +12,10 @@ defmodule NsgLora.MixProject do
       aliases: aliases(),
       deps: deps(),
       releases: [
+        local: [
+          include_executables_for: [:unix],
+          applications: [runtime_tools: :permanent]
+        ],
         nsg_lora_arm: [
           include_executables_for: [:unix],
           applications: [runtime_tools: :permanent],
@@ -55,19 +59,19 @@ defmodule NsgLora.MixProject do
        {:reverse_proxy_plug, "~> 1.3.2"},
 
       # Для совместимости с lorawan-server
-      # {:ranch, "1.6.2", override: true},
-      # {:lorawan_server, git: "https://github.com/nsg-ru/lorawan-server.git"},
-      # {:erlmongo,
-      #  git: "https://github.com/SergejJurecko/erlmongo.git",
-      #  ref: "f0d03cd4592f7bf28059b81214b61c28ccf046c0",
-      #  override: true},
-      # {:cbor,
-      #  git: "https://github.com/yjh0502/cbor-erlang.git",
-      #  ref: "b5c9dbc2de15753b2db15e13d88c11738c2ac292",
-      #  override: true},
-      # {:cowboy, "~> 2.7",
-      #  env: :prod, hex: "cowboy", repo: "hexpm", optional: false, override: true},
-      # {:cowlib, git: "https://github.com/ninenines/cowlib", tag: "2.9.1", override: true}
+      {:ranch, "1.7.1", override: true},
+      {:lorawan_server, git: "https://github.com/nsg-ru/lorawan-server.git"},
+      {:erlmongo,
+       git: "https://github.com/SergejJurecko/erlmongo.git",
+       ref: "f0d03cd4592f7bf28059b81214b61c28ccf046c0",
+       override: true},
+      {:cbor,
+       git: "https://github.com/yjh0502/cbor-erlang.git",
+       ref: "b5c9dbc2de15753b2db15e13d88c11738c2ac292",
+       override: true},
+      {:cowboy, "~> 2.7",
+       env: :prod, hex: "cowboy", repo: "hexpm", optional: false, override: true},
+      {:cowlib, git: "https://github.com/ninenines/cowlib", tag: "2.9.1", override: true}
     ]
   end
 
