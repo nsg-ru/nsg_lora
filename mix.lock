@@ -1,5 +1,6 @@
 %{
   "accept": {:hex, :accept, "0.3.5", "b33b127abca7cc948bbe6caa4c263369abf1347cfa9d8e699c6d214660f10cd1", [:rebar3], [], "hexpm", "11b18c220bcc2eab63b5470c038ef10eb6783bcb1fcdb11aa4137defa5ac1bb8"},
+  "amnesia": {:hex, :amnesia, "0.2.8", "81199a1c4c8db886cfb8ea159f746d5ffdb188bee96cb944f63bdb4465b09fa0", [:mix], [{:exquisite, "~> 0.1.7", [hex: :exquisite, repo: "hexpm", optional: false]}], "hexpm", "6037898c974457809ffa1f9a74cccab8f48c99b206aee9b3fc7bb3af73b06b14"},
   "amqp_client": {:hex, :amqp_client, "3.7.18", "abb8b8e63218f15308e37af8078482228d74a22d02acde80f7721ebc13a6cef9", [:make, :rebar3], [{:rabbit_common, "3.7.18", [hex: :rabbit_common, repo: "hexpm", optional: false]}], "hexpm", "00e65984707e1b2d70fcfc9643949dc6aee14f7fc2efaacd835f6845dcade2a9"},
   "cbor": {:git, "https://github.com/yjh0502/cbor-erlang.git", "b5c9dbc2de15753b2db15e13d88c11738c2ac292", [ref: "b5c9dbc2de15753b2db15e13d88c11738c2ac292"]},
   "certifi": {:hex, :certifi, "2.5.3", "70bdd7e7188c804f3a30ee0e7c99655bc35d8ac41c23e12325f36ab449b70651", [:rebar3], [{:parse_trans, "~>3.3", [hex: :parse_trans, repo: "hexpm", optional: false]}], "hexpm", "ed516acb3929b101208a9d700062d520f3953da3b6b918d866106ffa980e1c10"},
@@ -10,6 +11,7 @@
   "eid": {:git, "https://github.com/jur0/eid.git", "74ac5ae1eb89fd512f5ce101148094a34dfead2e", [tag: "0.6.0"]},
   "emqtt": {:git, "https://github.com/emqx/emqtt.git", "e6aa7ed2b4ed76a812463ee386f59426815e99e1", [tag: "v1.1.1"]},
   "erlmongo": {:git, "https://github.com/SergejJurecko/erlmongo.git", "f0d03cd4592f7bf28059b81214b61c28ccf046c0", [ref: "f0d03cd4592f7bf28059b81214b61c28ccf046c0"]},
+  "exquisite": {:hex, :exquisite, "0.1.10", "e3ca4f8b812696a40a6da3bcd4e9861cef879ee2eb239d5485b0f96885fc9fba", [:mix], [], "hexpm", "0af9319851f1e21dd4adab812c82247f05e11cc19820fa17cc74afd696e2313c"},
   "file_system": {:hex, :file_system, "0.2.10", "fb082005a9cd1711c05b5248710f8826b02d7d1784e7c3451f9c1231d4fc162d", [:mix], [], "hexpm", "41195edbfb562a593726eda3b3e8b103a309b733ad25f3d642ba49696bf715dc"},
   "floki": {:hex, :floki, "0.30.0", "22ebbe681a5d3777cdd830ca091b1b806d33c3449c26312eadca7f7be685c0c8", [:mix], [{:html_entities, "~> 0.5.0", [hex: :html_entities, repo: "hexpm", optional: false]}], "hexpm", "a9e128a4ca9bb71f11affa315b6768a9ad326d5996ff1e92acf1d7a01a10076a"},
   "gen_smtp": {:hex, :gen_smtp, "0.15.0", "9f51960c17769b26833b50df0b96123605a8024738b62db747fece14eb2fbfcc", [:rebar3], [], "hexpm", "29bd14a88030980849c7ed2447b8db6d6c9278a28b11a44cafe41b791205440f"},
@@ -26,6 +28,7 @@
   "jsx": {:hex, :jsx, "2.10.0", "77760560d6ac2b8c51fd4c980e9e19b784016aa70be354ce746472c33beb0b1c", [:rebar3], [], "hexpm", "9a83e3704807298016968db506f9fad0f027de37546eb838b3ae1064c3a0ad62"},
   "lager": {:hex, :lager, "3.7.0", "563ab17cd32134a3dd17ec3b3622e6d8f827506aa4f8c489158879bed87d980b", [:rebar3], [{:goldrush, "0.1.9", [hex: :goldrush, repo: "hexpm", optional: false]}], "hexpm", "97dc7e1c9e7289c3167f417e71ffe1df28218537967e076800ecedb1c28c9e48"},
   "lorawan_server": {:git, "https://github.com/nsg-ru/lorawan-server.git", "1a5c0f2f4d8238a54a326c57a5eb0e6015821b1d", []},
+  "memento": {:hex, :memento, "0.3.1", "b2909390820550d8b90b68ec96f9e15ff8a45a28b6f97fa4a62ef50e87c2f9d9", [:mix], [], "hexpm", "ff8fc66255d21dcd539c5d77a0b5458715bf3efec91b389dd06017bbb4e2e916"},
   "metrics": {:hex, :metrics, "1.0.1", "25f094dea2cda98213cecc3aeff09e940299d950904393b2a29d191c346a8486", [:rebar3], [], "hexpm", "69b09adddc4f74a40716ae54d140f93beb0fb8978d8636eaded0c31b6f099f16"},
   "mime": {:hex, :mime, "1.5.0", "203ef35ef3389aae6d361918bf3f952fa17a09e8e43b5aa592b93eba05d0fb8d", [:mix], [], "hexpm", "55a94c0f552249fc1a3dd9cd2d3ab9de9d3c89b559c2bd01121f824834f24746"},
   "mimerl": {:hex, :mimerl, "1.2.0", "67e2d3f571088d5cfd3e550c383094b47159f3eee8ffa08e64106cdf5e981be3", [:rebar3], [], "hexpm", "f278585650aa581986264638ebf698f8bb19df297f66ad91b18910dfc6e19323"},
