@@ -30,3 +30,6 @@ defmodule NsgLora.Application do
     :ok
   end
 end
+
+# :mnesia.system_info(:tables)
+# |> Enum.each(fn t -> :mnesia.force_load_table(t) end)  

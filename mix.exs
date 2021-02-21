@@ -31,7 +31,7 @@ defmodule NsgLora.MixProject do
   def application do
     [
       mod: {NsgLora.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:lager, :logger, :runtime_tools]
     ]
   end
 
@@ -57,12 +57,15 @@ defmodule NsgLora.MixProject do
       {:plug_cowboy, "~> 2.0"},
 
       # aditional deps
-      #{:amnesia, "~> 0.2.8"},
+      # {:amnesia, "~> 0.2.8"},
       {:memento, "~> 0.3.1"},
 
       # Для совместимости с lorawan-server
       {:ranch, "1.7.1", override: true},
-      {:lorawan_server, git: "https://github.com/nsg-ru/lorawan-server.git"},
+      {
+        :lorawan_server,
+        git: "https://github.com/nsg-ru/lorawan-server.git",runtime: false
+      },
       {:erlmongo,
        git: "https://github.com/SergejJurecko/erlmongo.git",
        ref: "f0d03cd4592f7bf28059b81214b61c28ccf046c0",
