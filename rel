@@ -1,6 +1,6 @@
 #!/bin/bash
-export MIX_ENV=prod
 export SECRET_KEY_BASE=`mix phx.gen.secret`
+export MIX_ENV=prod
 mix compile
 npm install --prefix ./assets
 npm run deploy --prefix ./assets
