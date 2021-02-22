@@ -1,0 +1,10 @@
+#!/bin/bash
+export MIX_ENV=prod
+export SECRET_KEY_BASE=`mix phx.gen.secret`
+mix compile
+npm install --prefix ./assets
+npm run deploy --prefix ./assets
+mix phx.digest
+mix release local
+
+_build/prod/rel/local/bin/local start_iex

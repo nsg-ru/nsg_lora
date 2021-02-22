@@ -14,7 +14,7 @@ defmodule NsgLora.MixProject do
       releases: [
         local: [
           include_executables_for: [:unix],
-          applications: [runtime_tools: :permanent]
+          applications: [runtime_tools: :permanent, lorawan_server: :load]
         ],
         nsg_lora_arm: [
           include_executables_for: [:unix],
@@ -64,7 +64,7 @@ defmodule NsgLora.MixProject do
       {:ranch, "1.7.1", override: true},
       {
         :lorawan_server,
-        git: "https://github.com/nsg-ru/lorawan-server.git",runtime: false
+        git: "https://github.com/nsg-ru/lorawan-server.git", runtime: false
       },
       {:erlmongo,
        git: "https://github.com/SergejJurecko/erlmongo.git",
