@@ -7,9 +7,33 @@
 <div x-data="{ isOpen: true }">
   <button @click=" isOpen = !isOpen">Toggle</button>
   <h1 x-show="isOpen">index.html</h1>
+  <div id="counter" x-show="!isOpen">
+    <h1>The count is: <span><%= @count %></span></h1>
+    <button phx-click="decrement"> Decrement </button>
+    <button phx-click="increment"> Increment </button>
+  </div>
 </div>
-<div id="counter">
-  <h1>The count is: <span><%= @count %></span></h1>
-  <button phx-click="decrement"> Decrement </button>
-  <button phx-click="increment"> Increment </button>
-</div>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>
+<p>Page</p>

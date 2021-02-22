@@ -10,6 +10,40 @@
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-    <%= @inner_content %>
+
+    <nav class="fixed top-0 inset-x-0 z-50 h-12 text-white bg-gray-800 font-medium flex justify-between items-center shadow-lg">
+
+      <h1 class="text-red-500 text-5xl font-bold text-center">Nav Bar</h1>
+      <p> text </p>
+    </nav>
+
+
+    <aside class="hidden mt-12 w-64 text-white bg-gray-700 fixed inset-y-0 overflow-x-hidden overflow-y-auto sm:block">
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+      <p>Menu</p>
+    </aside>
+    <main class="pt-12 sm:pl-64">
+      <%= @inner_content %>
+    </main>
   </body>
 </html>
