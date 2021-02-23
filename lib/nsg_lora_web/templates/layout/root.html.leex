@@ -128,7 +128,7 @@ x-data="alpine_init()"
 <script>
   function alpine_init() {
     return {
-      isLight: localStorage.getItem("alpine_isLight"),
+      isLight: localStorage.getItem("alpine_isLight") == "true" && true || false,
       isShowMenu: true,
       toggleTheme() {
         this.isLight = !this.isLight
