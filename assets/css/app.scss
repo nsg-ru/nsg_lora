@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .side-menu-item {
+    @apply flex items-center p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700;
+  }
+  .hover-item {
+    @apply hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md;
+  }
+}
+
+
 /* This file is for your main application css. */
 @import "../node_modules/nprogress/nprogress.css";
 
