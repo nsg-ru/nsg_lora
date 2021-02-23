@@ -1,11 +1,11 @@
 <h1 class="text-5xl font-bold text-center">NSG Lora</h1>
 <div>
-  <a href="dashboard" target="_blank">Системная панель</a>
+  <a href="dashboard" target="_blank"><%= gettext "Dashboard %{name}", name: "NSG" %></a>
 </div>
 
 
 <div x-data="{ isOpen: true }">
-  <button @click=" isOpen = !isOpen">Toggle</button>
+  <button @click=" isOpen = !isOpen"><%= gettext("Toggle") %></button>
   <h1 x-show="isOpen">index.html</h1>
   <div id="counter" x-show="!isOpen">
     <h1>The count is: <span><%= @count %></span></h1>
@@ -13,27 +13,3 @@
     <button phx-click="increment"> Increment </button>
   </div>
 </div>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>
-<p>Page</p>

@@ -15,6 +15,9 @@ config :nsg_lora, NsgLoraWeb.Endpoint,
   pubsub_server: NsgLora.PubSub,
   live_view: [signing_salt: "GwFPmi9y"]
 
+# Gettext
+config :gettext, :default_locale, "ru"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
