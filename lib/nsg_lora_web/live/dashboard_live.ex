@@ -5,15 +5,25 @@ defmodule NsgLoraWeb.DashboardLive do
     IO.inspect(params, label: "Params")
     IO.inspect(session, label: "Session")
     IO.inspect(socket, label: "Socket")
+
+    IO.inspect(Gettext.get_locale())
     Gettext.put_locale("ru")
-    {:ok, assign(socket, count: 0)}
+    {:ok, assign(socket, lang: "ru")}
   end
 
-  def handle_event("increment", _params, socket) do
-    {:noreply, update(socket, :count, &(&1 + 1))}
+  @impl true
+  def handle_event("toggle_lang", _params, socket) do
+    IO.inspect("lang")
+    Gettext.put_locale("en")
+
+    {:noreply,
+     push_redirect(socket,
+       to: Routes.live_path(socket, NsgLoraWeb.DashboardLive)
+     )}
   end
 
-  def handle_event("decrement", _params, socket) do
-    {:noreply, update(socket, :count, &(&1 - 1))}
+  def handle_event(event, params, socket) do
+    IO.inspect(event: event, params: params)
+    {:noreply, socket}
   end
 end

@@ -58,5 +58,5 @@ msgstr "Радиомодуль"
 
 #, elixir-format
 #: lib/nsg_lora_web/live/page_live.html.leex:1
-msgid "dashboard title"
+msgid "Dashboard title"
 msgstr "Панель мониторинга"
