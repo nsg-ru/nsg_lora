@@ -32,6 +32,9 @@ x-data="alpine_init()"
     </div>
 
     <div class="flex items-center">
+      <!-- Toggle language -->
+      <span class="mr-2 text-2xl"><%= @lang %></span>
+
       <!-- Toggle theme -->
       <div @click="toggleTheme"
       class="mr-2">
@@ -85,7 +88,9 @@ x-data="alpine_init()"
   >
 
     <a href="#"
-    class="side-menu-item">
+    class="side-menu-item"
+    phx-click="menu-item" phx-value-name="dashboard"
+    >
       <%= gettext "Dashboard" %>
     </a>
 
@@ -115,7 +120,9 @@ x-data="alpine_init()"
     <div class="pl-2"
     x-show="isLoraMenuOpen">
       <a href="#"
-      class="side-menu-item">
+      class="side-menu-item"
+      phx-click="menu-item" phx-value-name="radio"
+      >
         <%= gettext "Radio" %>
       </a>
       <a href="#"
@@ -175,7 +182,13 @@ x-data="alpine_init()"
   >
     <div class="p-2" >
       <!-- Components -->
-
+      <% mod = case @menu_item do
+            "dashboard" -> NsgLoraWeb.DashboardComponent
+            "radio" -> NsgLoraWeb.RadioComponent
+            _ -> NsgLoraWeb.DashboardComponent
+          end
+      %>
+      <%= live_component @socket, mod, id: 0 %>
 
     </div>
   </div>

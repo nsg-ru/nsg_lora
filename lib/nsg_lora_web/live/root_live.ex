@@ -9,7 +9,12 @@ defmodule NsgLoraWeb.RootLive do
 
     IO.inspect(Gettext.get_locale())
     Gettext.put_locale("ru")
-    {:ok, assign(socket, lang: "ru")}
+
+    {:ok,
+     assign(socket,
+       lang: "ru",
+       menu_item: "dashboard"
+     )}
   end
 
   @impl true
@@ -21,6 +26,10 @@ defmodule NsgLoraWeb.RootLive do
      push_redirect(socket,
        to: Routes.live_path(socket, NsgLoraWeb.DashboardLive)
      )}
+  end
+
+  def handle_event("menu-item", %{"name" => name}, socket) do
+    {:noreply, assign(socket, menu_item: name)}
   end
 
   def handle_event(event, params, socket) do
