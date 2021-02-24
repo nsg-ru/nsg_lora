@@ -12,16 +12,51 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/page_live.html.leex:3
-msgid "Dashboard %{name}"
-msgstr "Dashboard for %{name}"
-
-#, elixir-format
-#: lib/nsg_lora_web/live/page_live.html.leex:8
-msgid "Toggle"
+#: lib/nsg_lora_web/templates/layout/root.html.leex:174
+msgid "About Programm"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/root.html.leex:106
-msgid "packet forwarder"
+#: lib/nsg_lora_web/templates/layout/root.html.leex:178
+msgid "About System"
 msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/root.html.leex:143
+msgid "App Server"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/nsg_lora_web/templates/layout/root.html.leex:105
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/root.html.leex:182
+msgid "Debug Dashboard"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/root.html.leex:111
+msgid "LoRa"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/root.html.leex:139
+msgid "LoRaWan Server"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/root.html.leex:150
+msgid "Other"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/root.html.leex:135
+msgid "Radio"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/page_live.html.leex:1
+msgid "dashboard title"
+msgstr "Dashboard"

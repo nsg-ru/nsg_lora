@@ -1,7 +1,10 @@
-defmodule NsgLoraWeb.PageLive do
+defmodule NsgLoraWeb.DashboardLive do
   use NsgLoraWeb, :live_view
 
-  def mount(_params, _session, socket) do
+  def mount(params, session, socket) do
+    IO.inspect(params, label: "Params")
+    IO.inspect(session, label: "Session")
+    IO.inspect(socket, label: "Socket")
     Gettext.put_locale("ru")
     {:ok, assign(socket, count: 0)}
   end

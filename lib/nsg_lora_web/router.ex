@@ -17,7 +17,7 @@ defmodule NsgLoraWeb.Router do
   scope "/", NsgLoraWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", DashboardLive
   end
 
   # Other scopes may use custom stacks.
@@ -37,7 +37,7 @@ defmodule NsgLoraWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: NsgLoraWeb.Telemetry
+      live_dashboard "/live_dashboard", metrics: NsgLoraWeb.Telemetry
     end
   end
 end

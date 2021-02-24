@@ -100,17 +100,88 @@ x-data="alpine_init()"
     :class="{ 'block': isShowMenu,  'hidden': !isShowMenu}"
     >
 
-      <a href="#"
-      class="side-menu-item"
-      >
-        packet forwarder
+      <a href="<%= Routes.live_path(@conn, NsgLoraWeb.DashboardLive) %>"
+      class="side-menu-item">
+        <%= gettext "Dashboard" %>
       </a>
 
       <a href="#"
-      class="side-menu-item"
-      >
-        lorawan server
+      @click="isLoraMenuOpen = !isLoraMenuOpen"
+      class="side-menu-item flex justify-between">
+        <span><%= gettext "LoRa" %></span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="!isLoraMenuOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 9l-7 7-7-7" />
+          </svg>
+
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="isLoraMenuOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 15l7-7 7 7" />
+          </svg>
+        </span>
       </a>
+
+      <div class="pl-2"
+      x-show="isLoraMenuOpen">
+        <a href="#"
+        class="side-menu-item">
+          <%= gettext "Radio" %>
+        </a>
+        <a href="#"
+        class="side-menu-item">
+          <%= gettext "LoRaWan Server" %>
+        </a>
+        <a href="#"
+        class="side-menu-item">
+          <%= gettext "App Server" %>
+        </a>
+      </div>
+
+      <a href="#"
+      @click="isOtherMenuOpen = !isOtherMenuOpen"
+      class="side-menu-item flex justify-between">
+        <span><%= gettext "Other" %></span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="!isOtherMenuOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 9l-7 7-7-7" />
+          </svg>
+
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="isOtherMenuOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 15l7-7 7 7" />
+          </svg>
+        </span>
+      </a>
+
+      <div class="pl-2"
+      x-show="isOtherMenuOpen">
+        <a href="#"
+        class="side-menu-item">
+          <%= gettext "About Programm" %>
+        </a>
+        <a href="#"
+        class="side-menu-item">
+          <%= gettext "About System" %>
+        </a>
+        <a href="live_dashboard"  target="_blank"
+        class="side-menu-item">
+          <%= gettext "Debug Dashboard" %>
+        </a>
+      </div>
 
     </div>
 
@@ -130,6 +201,8 @@ x-data="alpine_init()"
     return {
       isLight: localStorage.getItem("alpine_isLight") == "true" && true || false,
       isShowMenu: true,
+      isLoraMenuOpen: false,
+      isOtherMenuOpen: false,
       toggleTheme() {
         this.isLight = !this.isLight
         localStorage.setItem("alpine_isLight", this.isLight)
