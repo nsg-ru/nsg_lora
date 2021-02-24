@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en"
+x-data="alpine_init()"
+:class="{ 'dark': !isLight}">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <%= csrf_meta_tag() %>
+    <%= live_title_tag assigns[:page_title] || "NsgLora", suffix: " · Phoenix Framework" %>
+
+    <link phx-track-static rel="stylesheet"
+    href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+
+    <script defer phx-track-static type="text/javascript"
+    src="<%= Routes.static_path(@conn, "/js/app.js") %>">
+    </script>
+  </head>
+
+  <body class="bg-gray-200 dark:bg-gray-700">
+    <nav
+    class="fixed top-0 inset-x-0 z-50 h-12
+    bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-200
+    border-b border-gray-400
+    font-medium flex justify-between items-center">
+      <div class="flex items-center">
+
+        <!-- Togle menu -->
+          <svg class="w-6 h-6 mx-2 hover-item"
+          @click="toggleMenu"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+
+        <h1 class="text-3xl text-center mx-2">NSG</h1>
+
+        <!-- IoT icon -->
+        <svg class="w-6 h-6"
+          @click="toggleMenu"
+          viewBox="0 0 32 32" fill="none"
+          stroke="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M2,2 l0,28 M7,2 l23,0 M20,2 l0,28" stroke-linecap="round" stroke-width="4"/>
+          <ellipse cx="11" cy="18" rx="6" ry="13.5" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <div class="flex items-center">
+        <!-- Toggle theme -->
+        <div @click="toggleTheme"
+        class="mr-2">
+          <svg
+          x-show="!isLight"
+          class="w-6 h-6 hover-item"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003
+            9.003 0 008.354-5.646z"/>
+          </svg>
+
+          <svg
+          x-show="isLight"
+          class="w-6 h-6 hover-item"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343
+            6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16
+            12a4 4 0 11-8 0 4 4 0 018 0z"/>
+          </svg>
+        </div>
+
+        <!-- Exit -->
+        <svg
+        class="w-6 h-6 mx-1 hover-item"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3
+          3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+      </div>
+    </nav>
+
+    <!-- Menu -->
+    <div class="mt-12 md:w-64 p-2
+    flex flex-col
+    bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-200
+    md:border-r border-b md:border-b-0   border-gray-400
+    md:fixed md:inset-y-0 overflow-x-hidden md:overflow-y-auto hidden"
+    :class="{ 'block': isShowMenu,  'hidden': !isShowMenu}"
+    >
+
+      <a href="<%= Routes.live_path(@conn, NsgLoraWeb.DashboardLive) %>"
+      class="side-menu-item">
+        <%= gettext "Dashboard" %>
+      </a>
+
+      <a href="#"
+      @click="isLoraMenuOpen = !isLoraMenuOpen"
+      class="side-menu-item flex justify-between">
+        <span><%= gettext "LoRa" %></span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="!isLoraMenuOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 9l-7 7-7-7" />
+          </svg>
+
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="isLoraMenuOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 15l7-7 7 7" />
+          </svg>
+        </span>
+      </a>
+
+      <div class="pl-2"
+      x-show="isLoraMenuOpen">
+        <a href="#"
+        class="side-menu-item">
+          <%= gettext "Radio" %>
+        </a>
+        <a href="#"
+        class="side-menu-item">
+          <%= gettext "LoRaWan Server" %>
+        </a>
+        <a href="#"
+        class="side-menu-item">
+          <%= gettext "App Server" %>
+        </a>
+      </div>
+
+      <a href="#"
+      @click="isOtherMenuOpen = !isOtherMenuOpen"
+      class="side-menu-item flex justify-between">
+        <span><%= gettext "Other" %></span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="!isOtherMenuOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 9l-7 7-7-7" />
+          </svg>
+
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="isOtherMenuOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 15l7-7 7 7" />
+          </svg>
+        </span>
+      </a>
+
+      <div class="pl-2"
+      x-show="isOtherMenuOpen">
+        <a href="#"
+        class="side-menu-item">
+          <%= gettext "About Programm" %>
+        </a>
+        <a href="#"
+        class="side-menu-item">
+          <%= gettext "About System" %>
+        </a>
+        <a href="live_dashboard"  target="_blank"
+        class="side-menu-item">
+          <%= gettext "Debug Dashboard" %>
+        </a>
+      </div>
+
+    </div>
+
+    <main class="md:pt-12
+    bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
+    :class="{ 'md:pl-64': isShowMenu, 'pt-12': !isShowMenu }"
+    >
+      <div class="p-2">
+        <%= @inner_content %>
+      </div>
+    </main>
+  </body>
+</html>
+
+<script>
+  function alpine_init() {
+    return {
+      isLight: localStorage.getItem("alpine_isLight") == "true" && true || false,
+      isShowMenu: true,
+      isLoraMenuOpen: false,
+      isOtherMenuOpen: false,
+      toggleTheme() {
+        this.isLight = !this.isLight
+        localStorage.setItem("alpine_isLight", this.isLight)
+      },
+      toggleMenu() {
+        this.isShowMenu = !this.isShowMenu
+      },
+    }
+  }
+</script>

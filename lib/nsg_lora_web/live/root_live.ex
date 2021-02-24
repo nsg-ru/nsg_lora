@@ -1,4 +1,4 @@
-defmodule NsgLoraWeb.DashboardLive do
+defmodule NsgLoraWeb.RootLive do
   use NsgLoraWeb, :live_view
 
   @impl true
