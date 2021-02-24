@@ -1,10 +1,20 @@
 #!/bin/bash
+REL=${1-local}
+
 export SECRET_KEY_BASE=`mix phx.gen.secret`
 export MIX_ENV=prod
 mix compile
 npm install --prefix ./assets
 npm run deploy --prefix ./assets
 mix phx.digest
-mix release local
+mix release $REL
 
-_build/prod/rel/local/bin/local start_iex
+if [[ $REL == local ]]
+then
+  _build/prod/rel/local/bin/local start_iex
+elif [[ $REL == nsg_lora_arm ]]
+then
+  scp _build/prod/nsg_lora_arm-0.1.0.tar.gz root@10.0.10.155:/tmp
+  ssh root@10.0.10.155 \
+  "mkdir -p /usr/lib/lora; tar -C /usr/lib/lora -mxzf /tmp/nsg_lora_arm-0.1.0.tar.gz"
+fi

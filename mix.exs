@@ -1,6 +1,8 @@
 defmodule NsgLora.MixProject do
   use Mix.Project
 
+  @rel_app [runtime_tools: :permanent, lorawan_server: :load]
+
   def project do
     [
       app: :nsg_lora,
@@ -14,12 +16,13 @@ defmodule NsgLora.MixProject do
       releases: [
         local: [
           include_executables_for: [:unix],
-          applications: [runtime_tools: :permanent, lorawan_server: :load]
+          applications: @rel_app,
         ],
         nsg_lora_arm: [
           include_executables_for: [:unix],
-          applications: [runtime_tools: :permanent],
-          include_erts: "/opt/erlang/arm_rt_eabi/erlang-22.3.4/erts-10.7.2"
+          applications: @rel_app,
+          include_erts: "/opt/erlang/arm_rt_eabi/erlang-22.3.4/erts-10.7.2",
+          steps: [:assemble, :tar]
         ]
       ]
     ]
