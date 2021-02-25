@@ -18,10 +18,10 @@ x-data="alpine_init()"
         d="M4 6h16M4 12h16M4 18h16" />
       </svg>
 
-      <h1 class="text-3xl text-center mx-2">NSG</h1>
+      <h1 class="text-3xl text-center mx-2 hidden md:block">NSG</h1>
 
       <!-- IoT icon -->
-      <svg class="w-6 h-6"
+      <svg class="w-6 h-6 hidden md:block"
         @click="toggleMenu"
         viewBox="0 0 32 32" fill="none"
         stroke="currentColor"
@@ -125,18 +125,19 @@ x-data="alpine_init()"
     <div class="pl-2"
     x-show="isLoraMenuOpen">
       <a href="#"
-      class="side-menu-item"
-      phx-click="menu-item" phx-value-name="radio"
-      >
-        <%= gettext "Radio" %>
+      phx-click="menu-item" phx-value-name="bs"
+      class="side-menu-item">
+        <%= gettext "BS" %>
       </a>
       <a href="#"
+      phx-click="menu-item" phx-value-name="lws"
       class="side-menu-item">
         <%= gettext "LoRaWan Server" %>
       </a>
       <a href="#"
+      phx-click="menu-item" phx-value-name="mqtt"
       class="side-menu-item">
-        <%= gettext "App Server" %>
+        <%= gettext "MQTT" %>
       </a>
     </div>
 
@@ -170,6 +171,7 @@ x-data="alpine_init()"
         <%= gettext "About Programm" %>
       </a>
       <a href="#"
+      phx-click="menu-item" phx-value-name="aboutsys"
       class="side-menu-item">
         <%= gettext "About System" %>
       </a>
@@ -187,14 +189,21 @@ x-data="alpine_init()"
   >
     <div class="p-2" >
       <!-- Components -->
-      <% mod = case @menu_item do
-            "dashboard" -> NsgLoraWeb.DashboardComponent
-            "radio" -> NsgLoraWeb.RadioComponent
-            _ -> NsgLoraWeb.DashboardComponent
-          end
-      %>
-      <%= live_component @socket, mod, id: 0 %>
-
+      <div class="<%= if @menu_item != "dashboard", do: "hidden" %>">
+        <%= live_component @socket, NsgLoraWeb.DashboardComponent, id: 0  %>
+      </div>
+      <div class="<%= if @menu_item != "bs", do: "hidden" %>">
+        <%= live_component @socket, NsgLoraWeb.BSComponent, id: 0  %>
+      </div>
+      <div class="<%= if @menu_item != "lws", do: "hidden" %>">
+        <%= live_component @socket, NsgLoraWeb.LorawanServerComponent, id: 0, uri: @uri  %>
+      </div>
+      <div class="<%= if @menu_item != "mqtt", do: "hidden" %>">
+        <%= live_component @socket, NsgLoraWeb.MQTTServerComponent, id: 0  %>
+      </div>
+      <div class="<%= if @menu_item != "aboutsys", do: "hidden" %>">
+        <%= live_component @socket, NsgLoraWeb.AboutSystemComponent, id: 0  %>
+      </div>
     </div>
   </div>
 </div>

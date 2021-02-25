@@ -1,4 +1,4 @@
-defmodule NsgLoraWeb.RadioComponent do
+defmodule NsgLoraWeb.BSComponent do
   use Phoenix.LiveComponent
   import NsgLoraWeb.Gettext
 
@@ -9,7 +9,7 @@ defmodule NsgLoraWeb.RadioComponent do
 
   @impl true
   def handle_event(event, params, socket) do
-    IO.inspect(event: event, params: params)
+    IO.inspect(%{event: event, params: params})
     {:noreply, socket}
   end
 end

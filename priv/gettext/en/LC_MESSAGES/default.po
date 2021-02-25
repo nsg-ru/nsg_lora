@@ -12,51 +12,71 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/root.html.leex:174
+#: lib/nsg_lora_web/live/root_live.html.leex:171
 msgid "About Programm"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/root.html.leex:178
+#: lib/nsg_lora_web/live/root_live.html.leex:175
 msgid "About System"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/root.html.leex:143
-msgid "App Server"
-msgstr ""
+#: lib/nsg_lora_web/live/root_live.html.leex:130
+msgid "BS"
+msgstr "Base Station"
 
-#, elixir-format, fuzzy
-#: lib/nsg_lora_web/templates/layout/root.html.leex:105
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_component.html.leex:1
+msgid "BS title"
+msgstr "Base Station"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/root_live.html.leex:99
 msgid "Dashboard"
 msgstr "Dashboard"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/root.html.leex:182
+#: lib/nsg_lora_web/live/dashboard_component.html.leex:1
+msgid "Dashboard title"
+msgstr "Dashboard"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/root_live.html.leex:179
 msgid "Debug Dashboard"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/root.html.leex:111
+#: lib/nsg_lora_web/live/root_live.html.leex:105
 msgid "LoRa"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/root.html.leex:139
+#: lib/nsg_lora_web/live/root_live.html.leex:135
 msgid "LoRaWan Server"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/root.html.leex:150
+#: lib/nsg_lora_web/live/lorawan_server_component.html.leex:1
+msgid "Lorawan server title"
+msgstr "LoRaWan Server"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/root_live.html.leex:140
+msgid "MQTT"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/mqtt_server_component.html.leex:1
+msgid "MQTT server title"
+msgstr "MQTT server"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/root_live.html.leex:147
 msgid "Other"
 msgstr ""
 
-#, elixir-format
-#: lib/nsg_lora_web/templates/layout/root.html.leex:135
-msgid "Radio"
+#, elixir-format, fuzzy
+#: lib/nsg_lora_web/live/lorawan_server_component.html.leex:5
+msgid "Go to lorawan server"
 msgstr ""
-
-#, elixir-format
-#: lib/nsg_lora_web/live/page_live.html.leex:1
-msgid "Dashboard title"
-msgstr "Dashboard"

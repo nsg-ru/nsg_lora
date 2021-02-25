@@ -1,9 +1,9 @@
-defmodule NsgLoraWeb.DashboardComponent do
+defmodule NsgLoraWeb.MQTTServerComponent do
   use Phoenix.LiveComponent
   import NsgLoraWeb.Gettext
 
   @impl true
-  def update(assigns, socket) do
+  def mount(_params, _session, socket) do
     {:ok, assign(socket, xxx: "ru")}
   end
 

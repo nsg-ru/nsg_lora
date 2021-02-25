@@ -5,13 +5,16 @@ defmodule NsgLoraWeb.RootLive do
   def mount(_params, _session, socket) do
     # TODO read real admin
     lang = get_lang("admin")
-
     Gettext.put_locale(lang)
+
+    {:ok, admin} = NsgLora.Repo.Admin.read("admin")
+    opts = admin.opts || %{}
+    menu_item = opts[:menu_item] || "dashboard"
 
     {:ok,
      assign(socket,
        lang: lang,
-       menu_item: "dashboard"
+       menu_item: menu_item
      )}
   end
 
@@ -26,12 +29,22 @@ defmodule NsgLoraWeb.RootLive do
   end
 
   def handle_event("menu-item", %{"name" => name}, socket) do
+    {:ok, admin} = NsgLora.Repo.Admin.read("admin")
+    opts = admin.opts || %{}
+    opts = Map.put(opts, :menu_item, name)
+    NsgLora.Repo.Admin.write(%{admin | opts: opts})
+
     {:noreply, assign(socket, menu_item: name)}
   end
 
   def handle_event(event, params, socket) do
-    IO.inspect(event: event, params: params)
+    IO.inspect(%{event: event, params: params})
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_params(_unsigned_params, uri, socket) do
+    {:noreply, assign(socket, uri: URI.parse(uri))}
   end
 
   defp get_lang(admin, opts \\ []) do
@@ -48,9 +61,7 @@ defmodule NsgLoraWeb.RootLive do
 
     if toggle || update do
       opts = Map.put(opts, :lang, lang)
-
       NsgLora.Repo.Admin.write(%{admin | opts: opts})
-      |> IO.inspect()
     end
 
     lang

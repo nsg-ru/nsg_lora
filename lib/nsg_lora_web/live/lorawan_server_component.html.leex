@@ -1,0 +1,12 @@
+<h1 class="text-3xl font-bold text-center"><%= gettext "Lorawan server title" %></h1>
+<p>
+  Здесь будет конфигурация сервера, мониторинг основных параметров, перезагрузка, логи.
+</p>
+<p>
+  Кнопка перехода на сервер (login/psw = admin/admin)
+</p>
+<div class="p-2 m-2 border rounded-md bg-transparent flex justify-center">
+  <a href="<%= "#{@uri.scheme}://#{@uri.host}:8080" %>" target="_blank">
+    <%= gettext "Go to lorawan server" %>
+  </a>
+</div>
