@@ -12,9 +12,10 @@ defmodule NsgLora.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: NsgLora.PubSub},
       # Start the Endpoint (http/https)
-      NsgLoraWeb.Endpoint
+      NsgLoraWeb.Endpoint,
       # Start a worker by calling: NsgLora.Worker.start_link(arg)
       # {NsgLora.Worker, arg}
+      NsgLora.DBServer
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -30,6 +31,3 @@ defmodule NsgLora.Application do
     :ok
   end
 end
-
-# :mnesia.system_info(:tables)
-# |> Enum.each(fn t -> :mnesia.force_load_table(t) end)  

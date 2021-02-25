@@ -2,29 +2,26 @@ defmodule NsgLoraWeb.RootLive do
   use NsgLoraWeb, :live_view
 
   @impl true
-  def mount(params, session, socket) do
-    IO.inspect(params, label: "Params")
-    IO.inspect(session, label: "Session")
-    IO.inspect(socket, label: "Socket")
+  def mount(_params, _session, socket) do
+    # TODO read real admin
+    lang = get_lang("admin")
 
-    IO.inspect(Gettext.get_locale())
-    Gettext.put_locale("ru")
+    Gettext.put_locale(lang)
 
     {:ok,
      assign(socket,
-       lang: "ru",
+       lang: lang,
        menu_item: "dashboard"
      )}
   end
 
   @impl true
-  def handle_event("toggle_lang", _params, socket) do
-    IO.inspect("lang")
-    Gettext.put_locale("en")
+  def handle_event("toggle-lang", _params, socket) do
+    get_lang("admin", toggle: true)
 
     {:noreply,
      push_redirect(socket,
-       to: Routes.live_path(socket, NsgLoraWeb.DashboardLive)
+       to: Routes.live_path(socket, NsgLoraWeb.RootLive)
      )}
   end
 
@@ -35,5 +32,27 @@ defmodule NsgLoraWeb.RootLive do
   def handle_event(event, params, socket) do
     IO.inspect(event: event, params: params)
     {:noreply, socket}
+  end
+
+  defp get_lang(admin, opts \\ []) do
+    toggle = opts[:toggle]
+    {:ok, admin} = NsgLora.Repo.Admin.read(admin)
+    opts = admin.opts || %{}
+
+    {lang, update} =
+      case opts[:lang] do
+        "ru" -> {(toggle && "en") || "ru", false}
+        "en" -> {(toggle && "ru") || "en", false}
+        _ -> {"ru", true}
+      end
+
+    if toggle || update do
+      opts = Map.put(opts, :lang, lang)
+
+      NsgLora.Repo.Admin.write(%{admin | opts: opts})
+      |> IO.inspect()
+    end
+
+    lang
   end
 end

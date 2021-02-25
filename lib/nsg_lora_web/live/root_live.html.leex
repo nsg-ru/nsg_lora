@@ -3,7 +3,7 @@ x-data="alpine_init()"
 :class="{ 'dark': !isLight}"
 >
   <nav
-  class="fixed top-0 inset-x-0 z-50 h-12
+  class="fixed top-0 inset-x-0 z-50 h-12 pr-6
   bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-200
   border-b border-gray-400
   font-medium flex justify-between items-center">
@@ -31,13 +31,18 @@ x-data="alpine_init()"
       </svg>
     </div>
 
-    <div class="flex items-center">
+    <div class="flex items-center mr-2">
       <!-- Toggle language -->
-      <span class="mr-2 text-2xl"><%= @lang %></span>
+      <a href="#"
+      class="mx-1 px-1 text-2xl hover-item"
+      phx-click="toggle-lang"
+      >
+        <%= @lang %>
+      </a>
 
       <!-- Toggle theme -->
       <div @click="toggleTheme"
-      class="mr-2">
+      class="mx-1">
         <svg
         x-show="!isLight"
         class="w-6 h-6 hover-item"
