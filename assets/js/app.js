@@ -25,13 +25,25 @@ import {
 let Hooks = {}
 
 Hooks.ToggleTheme = {
-  updated() {
+  set_theme(el) {
     let html = document.querySelector("html")
-    if (this.el.classList.contains("hidden")) {
+    if (el.classList.contains("hidden")) {
       html.classList.add("dark")
     } else {
       html.classList.remove("dark")
     }
+  },
+  mounted() {
+    this.set_theme(this.el)
+  },
+  updated() {
+    this.set_theme(this.el)
+    // let html = document.querySelector("html")
+    // if (this.el.classList.contains("hidden")) {
+    //   html.classList.add("dark")
+    // } else {
+    //   html.classList.remove("dark")
+    // }
   }
 }
 
