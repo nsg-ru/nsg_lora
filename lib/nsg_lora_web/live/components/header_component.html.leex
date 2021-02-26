@@ -32,14 +32,12 @@ font-medium flex justify-between items-center">
     <!-- Toggle language -->
     <a href="#"
     class="mx-1 px-1 text-2xl hover-item"
-    phx-click="toggle-lang"  phx-target="<%= @myself %>"
-    >
-      <%= @lang %>
+    phx-click="toggle-lang" phx-target="<%= @myself %>" >
+      <%= @admin.opts.lang %>
     </a>
 
     <!-- Toggle theme -->
-    <div @click="toggleTheme"
-    class="mx-1">
+    <div class="mx-1" phx-click="toggle-theme" phx-target="<%= @myself %>" >
       <svg
       x-show="!isLight"
       class="w-6 h-6 hover-item"

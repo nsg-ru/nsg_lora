@@ -4,34 +4,15 @@ defmodule NsgLoraWeb.Live do
   def init(mod, session, socket) do
     path = Routes.live_path(socket, mod)
     id = session["current_admin"]
-    lang = get_lang(id)
+    {:ok, admin} = NsgLora.Repo.Admin.read(id)
 
+    lang = admin.opts[:lang] || "ru"
     Gettext.put_locale(lang)
 
-    [
+    %{
       path: path,
-      admin: id,
-      lang: lang
-    ]
+      admin: admin,
+    }
   end
 
-  def get_lang(admin, opts \\ []) do
-    toggle = opts[:toggle]
-    {:ok, admin} = NsgLora.Repo.Admin.read(admin)
-    opts = admin.opts || %{}
-
-    {lang, update} =
-      case opts[:lang] do
-        "ru" -> {(toggle && "en") || "ru", false}
-        "en" -> {(toggle && "ru") || "en", false}
-        _ -> {"ru", true}
-      end
-
-    if toggle || update do
-      opts = Map.put(opts, :lang, lang)
-      NsgLora.Repo.Admin.write(%{admin | opts: opts})
-    end
-
-    lang
-  end
 end

@@ -5,8 +5,8 @@ defmodule NsgLoraWeb.MQTTServerLive do
 
   @impl true
   def mount(_params, session, socket) do
-    assigns = NsgLoraWeb.Live.init(__MODULE__, session, socket)
-    {:ok, assign(socket, assigns)}
+    socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
+    {:ok, socket}
   end
 
   @impl true

@@ -8,7 +8,7 @@ defmodule NsgLoraWeb.HeaderComponent do
 
   @impl true
   def handle_event("toggle-lang", _params, socket) do
-    NsgLoraWeb.Live.get_lang(socket.assigns.admin, toggle: true)
+    toggle_lang(socket.assigns.admin.username)
 
     {:noreply, push_redirect(socket, to: socket.assigns.path)}
   end
@@ -16,5 +16,19 @@ defmodule NsgLoraWeb.HeaderComponent do
   def handle_event(event, params, socket) do
     IO.inspect(event: event, params: params, assigns: socket.assigns)
     {:noreply, socket}
+  end
+
+  def toggle_lang(username) do
+    {:ok, admin} = NsgLora.Repo.Admin.read(username)
+    opts = admin.opts || %{}
+
+    lang =
+      case opts[:lang] do
+        "en" -> "ru"
+        _ -> "en"
+      end
+
+    opts = Map.put(opts, :lang, lang)
+    NsgLora.Repo.Admin.write(%{admin | opts: opts})
   end
 end

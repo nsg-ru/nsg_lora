@@ -4,8 +4,7 @@ defmodule NsgLoraWeb.AboutSystemLive do
 
   @impl true
   def mount(_params, session, socket) do
-    assigns = NsgLoraWeb.Live.init(__MODULE__, session, socket)
-    socket = assign(socket, assigns)
+    socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
 
     {top, 0} = System.cmd("top", ["-bn1"])
     {cpu, 0} = System.cmd("cat", ["/proc/cpuinfo"])
