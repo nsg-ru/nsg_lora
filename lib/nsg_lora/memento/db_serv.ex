@@ -28,6 +28,9 @@ defmodule NsgLora.DBServer do
       _ -> nil
     end
 
+    Application.ensure_all_started(:lorawan_server)
+
+
     {:ok, %{}}
   end
 end
