@@ -13,6 +13,12 @@ defmodule NsgLoraWeb.HeaderComponent do
     {:noreply, push_redirect(socket, to: socket.assigns.path)}
   end
 
+  def handle_event("toggle-theme", _params, socket) do
+    admin = toggle_theme(socket.assigns.admin.username)
+
+    {:noreply, assign(socket, admin: admin)}
+  end
+
   def handle_event(event, params, socket) do
     IO.inspect(event: event, params: params, assigns: socket.assigns)
     {:noreply, socket}
@@ -30,5 +36,21 @@ defmodule NsgLoraWeb.HeaderComponent do
 
     opts = Map.put(opts, :lang, lang)
     NsgLora.Repo.Admin.write(%{admin | opts: opts})
+  end
+
+  def toggle_theme(username) do
+    {:ok, admin} = NsgLora.Repo.Admin.read(username)
+    opts = admin.opts || %{}
+
+    theme =
+      case opts[:light_theme] do
+        true -> false
+        _ -> true
+      end
+
+    opts = Map.put(opts, :light_theme, theme)
+    admin = %{admin | opts: opts}
+    NsgLora.Repo.Admin.write(admin)
+    admin
   end
 end

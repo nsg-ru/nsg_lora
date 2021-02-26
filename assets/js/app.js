@@ -22,6 +22,19 @@ import {
   LiveSocket
 } from "phoenix_live_view"
 
+let Hooks = {}
+
+Hooks.ToggleTheme = {
+  updated() {
+    let html = document.querySelector("html")
+    if (this.el.classList.contains("hidden")) {
+      html.classList.add("dark")
+    } else {
+      html.classList.remove("dark")
+    }
+  }
+}
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   dom: {
@@ -32,6 +45,7 @@ let liveSocket = new LiveSocket("/live", Socket, {
       }
     },
   },
+  hooks: Hooks,
   params: {
     _csrf_token: csrfToken
   }

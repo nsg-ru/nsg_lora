@@ -1,11 +1,8 @@
 <div class="bg-gray-200 dark:bg-gray-700"
 x-data="alpine_init()"
-:class="{ 'dark': !isLight}"
 >
-  <%=
-    IO.inspect(@socket.assigns, label: "SOCKET")
-    live_component @socket, NsgLoraWeb.HeaderComponent,
-  id: :header, admin: @admin, path: @path, lang: @lang %>
+  <%= live_component @socket, NsgLoraWeb.HeaderComponent,
+  id: :header, admin: @admin, path: @path %>
 
   <!-- Menu -->
   <div class="mt-12 md:w-64 p-2

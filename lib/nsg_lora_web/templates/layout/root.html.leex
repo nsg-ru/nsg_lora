@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru"
+<html lang="ru" class="dark"
 >
   <head>
     <meta charset="utf-8"/>
@@ -16,35 +16,19 @@
     </script>
   </head>
 
-  <body>
+  <body class="bg-gray-200 dark:bg-gray-700">
         <%= @inner_content %>
   </body>
 </html>
 
 <script>
   let mainBody = document.querySelector('body')
-  function setBodyClass(light) {
-    if (light) {
-      mainBody.className = "bg-gray-200"
-    } else {
-      mainBody.className = "bg-gray-700"
-    }
-  }
-
   function alpine_init() {
-    let is_light = localStorage.getItem("alpine_isLight") == "true" && true || false
-    setBodyClass(is_light)
 
     return {
-      isLight: is_light,
       isShowMenu: true,
       isLoraMenuOpen: false,
       isOtherMenuOpen: false,
-      toggleTheme() {
-        this.isLight = !this.isLight
-        localStorage.setItem("alpine_isLight", this.isLight)
-        setBodyClass(this.isLight)
-      },
       toggleMenu() {
         this.isShowMenu = !this.isShowMenu
       },
