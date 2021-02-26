@@ -24,4 +24,9 @@ defmodule NsgLora.Repo.Admin do
 
     Memento.transaction(fn -> Memento.Query.write(admin_struct) end)
   end
+
+  def load_current_admin(conn, _) do
+    conn
+    |> Plug.Conn.put_session("current_admin", "admin")
+  end
 end

@@ -13,70 +13,74 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/root_live.html.leex:171
+#: lib/nsg_lora_web/templates/layout/live.html.leex:168
 msgid "About Programm"
 msgstr "О программе"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/root_live.html.leex:175
+#: lib/nsg_lora_web/live/root_live.html.leex:176
+#: lib/nsg_lora_web/templates/layout/live.html.leex:173
 msgid "About System"
 msgstr "О системе"
 
 #, elixir-format
 #: lib/nsg_lora_web/live/root_live.html.leex:130
+#: lib/nsg_lora_web/templates/layout/live.html.leex:127
 msgid "BS"
 msgstr "Базовая станция"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_component.html.leex:1
+#: lib/nsg_lora_web/live/bs_live.html.leex:1
 msgid "BS title"
 msgstr "Базовая станция"
 
 #, elixir-format
 #: lib/nsg_lora_web/live/root_live.html.leex:99
+#: lib/nsg_lora_web/templates/layout/live.html.leex:97
 msgid "Dashboard"
 msgstr "Панель"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/dashboard_component.html.leex:1
+#: lib/nsg_lora_web/live/dashboard_live.html.leex:1
 msgid "Dashboard title"
 msgstr "Панель мониторинга"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/root_live.html.leex:179
+#: lib/nsg_lora_web/live/root_live.html.leex:180
+#: lib/nsg_lora_web/templates/layout/live.html.leex:178
 msgid "Debug Dashboard"
 msgstr "Отладка"
 
 #, elixir-format
 #: lib/nsg_lora_web/live/root_live.html.leex:105
+#: lib/nsg_lora_web/templates/layout/live.html.leex:103
 msgid "LoRa"
 msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/root_live.html.leex:135
+#: lib/nsg_lora_web/templates/layout/live.html.leex:132
 msgid "LoRaWan Server"
 msgstr "Сервер LoRaWan"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_component.html.leex:1
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:1
 msgid "Lorawan server title"
 msgstr "Сервер LoRaWan"
 
 #, elixir-format
 #: lib/nsg_lora_web/live/root_live.html.leex:140
+#: lib/nsg_lora_web/templates/layout/live.html.leex:137
 msgid "MQTT"
 msgstr "Сервер MQTT"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/mqtt_server_component.html.leex:1
-msgid "MQTT server title"
-msgstr "Сервер MQTT"
-
-#, elixir-format
 #: lib/nsg_lora_web/live/root_live.html.leex:147
+#: lib/nsg_lora_web/templates/layout/live.html.leex:144
 msgid "Other"
 msgstr "Прочее"
 
-#, elixir-format, fuzzy
-#: lib/nsg_lora_web/live/lorawan_server_component.html.leex:5
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:10
 msgid "Go to lorawan server"
 msgstr "Перейти на сервер LoRaWan"

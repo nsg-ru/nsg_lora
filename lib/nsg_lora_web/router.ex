@@ -1,6 +1,8 @@
 defmodule NsgLoraWeb.Router do
   use NsgLoraWeb, :router
 
+  import NsgLora.Repo.Admin, only: [load_current_admin: 2]
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -14,10 +16,20 @@ defmodule NsgLoraWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", NsgLoraWeb do
-    pipe_through :browser
+  pipeline :auth do
+    plug :load_current_admin
+  end
 
-    live "/", RootLive
+  scope "/", NsgLoraWeb do
+    pipe_through [:browser, :auth]
+
+    live "/", DashboardLive
+    live "/bs", BSLive
+    live "/lws", LorawanServerLive
+    live "/mqtt", MQTTServerLive
+    live "/absys", AboutSystemLive
+
+    live "/blank", BlankLive
   end
 
   # Other scopes may use custom stacks.
