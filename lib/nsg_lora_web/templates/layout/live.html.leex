@@ -18,90 +18,97 @@ x-data="alpine_init()"
       <%= gettext "Dashboard" %>
     <% end %>
 
-    <a href="#"
-    @click="isLoraMenuOpen = !isLoraMenuOpen"
-    class="side-menu-item flex justify-between">
-      <span><%= gettext "LoRa" %></span>
-      <span>
-        <svg xmlns="http://www.w3.org/2000/svg"
-        class="h-4 w-4"
-        x-show="!isLoraMenuOpen"
-        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M19 9l-7 7-7-7" />
-        </svg>
 
-        <svg xmlns="http://www.w3.org/2000/svg"
-        class="h-4 w-4"
-        x-show="isLoraMenuOpen"
-        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M5 15l7-7 7 7" />
-        </svg>
-      </span>
-    </a>
+    <div x-data="submenu_init('lora')">
+      <a href="#"
+      @click="toggleOpen"
+      class="side-menu-item flex justify-between">
+        <span><%= gettext "LoRa" %></span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="!isOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 9l-7 7-7-7" />
+          </svg>
 
-    <div class="pl-2"
-    x-show="isLoraMenuOpen">
-      <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.BSLive),
-      class: "side-menu-item" do %>
-        <%= gettext "BS" %>
-      <% end %>
-
-      <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.LorawanServerLive),
-      class: "side-menu-item" do %>
-        <%= gettext "LoRaWan Server" %>
-      <% end %>
-
-      <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.MQTTServerLive),
-      class: "side-menu-item" do %>
-        <%= gettext "MQTT" %>
-      <% end %>
-    </div>
-
-    <a href="#"
-    @click="isOtherMenuOpen = !isOtherMenuOpen"
-    class="side-menu-item flex justify-between">
-      <span><%= gettext "Other" %></span>
-      <span>
-        <svg xmlns="http://www.w3.org/2000/svg"
-        class="h-4 w-4"
-        x-show="!isOtherMenuOpen"
-        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M19 9l-7 7-7-7" />
-        </svg>
-
-        <svg xmlns="http://www.w3.org/2000/svg"
-        class="h-4 w-4"
-        x-show="isOtherMenuOpen"
-        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M5 15l7-7 7 7" />
-        </svg>
-      </span>
-    </a>
-
-    <div class="pl-2"
-    x-show="isOtherMenuOpen">
-      <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.BlankLive),
-      class: "side-menu-item" do %>
-        <%= gettext "About Programm" %>
-      <% end %>
-
-      <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.AboutSystemLive),
-      class: "side-menu-item" do %>
-        <%= gettext "About System" %>
-      <% end %>
-
-      <a href="live_dashboard"  target="_blank"
-      class="side-menu-item">
-        <%= gettext "Debug Dashboard" %>
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="isOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 15l7-7 7 7" />
+          </svg>
+        </span>
       </a>
+
+      <div class="pl-2"
+      x-show="isOpen">
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.BSLive),
+        class: "side-menu-item" do %>
+          <%= gettext "BS" %>
+        <% end %>
+
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.LorawanServerLive),
+        class: "side-menu-item" do %>
+          <%= gettext "LoRaWan Server" %>
+        <% end %>
+
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.MQTTServerLive),
+        class: "side-menu-item" do %>
+          <%= gettext "MQTT" %>
+        <% end %>
+      </div>
     </div>
 
+
+
+    <div x-data="submenu_init('other')">
+      <a href="#"
+      @click="toggleOpen"
+      class="side-menu-item flex justify-between">
+        <span><%= gettext "Other" %></span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="!isOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 9l-7 7-7-7" />
+          </svg>
+
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="isOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 15l7-7 7 7" />
+          </svg>
+        </span>
+      </a>
+
+      <div class="pl-2"
+      x-show="isOpen">
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.BlankLive),
+        class: "side-menu-item" do %>
+          <%= gettext "About Programm" %>
+        <% end %>
+
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.AboutSystemLive),
+        class: "side-menu-item" do %>
+          <%= gettext "About System" %>
+        <% end %>
+
+        <a href="live_dashboard"  target="_blank"
+        class="side-menu-item">
+          <%= gettext "Debug Dashboard" %>
+        </a>
+      </div>
+    </div>
   </div>
 
+  <!-- Main container -->
   <div class="md:pt-12
   bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
   :class="{ 'md:pl-64': isShowMenu, 'pt-12': !isShowMenu }"
@@ -119,5 +126,19 @@ x-data="alpine_init()"
         <%= @inner_content %>
       </main>
     </div>
+  <div class="text-xs text-right mr-3 mt-5">
+    LoRa-Full-Service-0.1.1 &copy;2021x ООО "ЭН-ЭС-ДЖИ" nsg.ru
   </div>
 </div>
+
+<script>
+  function submenu_init(id) {
+    return {
+      isOpen: localStorage.getItem("isSubmenuOpen_"+id) == "true" && true || false,
+      toggleOpen() {
+        this.isOpen = !this.isOpen
+        localStorage.setItem("isSubmenuOpen_"+id, this.isOpen)
+      }
+    }
+  }
+</script>
