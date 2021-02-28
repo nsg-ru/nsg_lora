@@ -1,5 +1,5 @@
 <div class="bg-gray-200 dark:bg-gray-700"
-x-data="alpine_init()"
+x-data="main_init()"
 >
   <%= live_component @socket, NsgLoraWeb.HeaderComponent,
   id: :header, admin: @admin, path: @path %>
@@ -113,6 +113,7 @@ x-data="alpine_init()"
   bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
   :class="{ 'md:pl-64': isShowMenu, 'pt-12': !isShowMenu }"
   >
+  <div class="max-w-screen-xl mx-auto">
     <div class="p-2" >
       <main>
         <p class="alert alert-info" role="alert"
@@ -126,12 +127,25 @@ x-data="alpine_init()"
         <%= @inner_content %>
       </main>
     </div>
-  <div class="text-xs text-right mr-3 mt-5">
-    LoRa-Full-Service-0.1.1 &copy;2021x ООО "ЭН-ЭС-ДЖИ" nsg.ru
+    <div class="text-xs text-right mr-3 mt-5">
+      LoRa-Full-Service-<%= Application.spec(:nsg_lora, :vsn) %> &copy;2021 ООО "ЭН-ЭС-ДЖИ" nsg.ru
+    </div>
+  </div>
   </div>
 </div>
 
+
 <script>
+  function main_init() {
+    return {
+      isShowMenu: localStorage.getItem("isHiddenMenu") != "true" && true || false,
+      toggleMenu() {
+        this.isShowMenu = !this.isShowMenu
+        localStorage.setItem("isHiddenMenu", !this.isShowMenu)
+      },
+    }
+  }
+
   function submenu_init(id) {
     return {
       isOpen: localStorage.getItem("isSubmenuOpen_"+id) == "true" && true || false,
