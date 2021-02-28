@@ -6,13 +6,13 @@ defmodule NsgLoraWeb.Live do
     id = session["current_admin"]
     {:ok, admin} = NsgLora.Repo.Admin.read(id)
 
-    lang = admin.opts[:lang] || "ru"
+    opts = admin.opts || %{}
+    lang = opts[:lang] || "ru"
     Gettext.put_locale(lang)
 
     %{
       path: path,
-      admin: admin,
+      admin: %{admin | opts: Map.put(opts, :lang, lang)}
     }
   end
-
 end
