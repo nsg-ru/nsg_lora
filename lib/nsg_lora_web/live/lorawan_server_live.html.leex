@@ -5,8 +5,7 @@
 <p>
   Кнопка перехода на сервер (login/psw = admin/admin)
 </p>
-<div class="p-2 m-2 border rounded-md bg-transparent flex justify-center">
-  <a href="<%= "#{@uri.scheme}://#{@uri.host}:8080" %>" target="_blank">
+  <a href="<%= "http://#{@uri.host}:8080" %>" target="_blank"
+  class="p-2 m-2 border rounded-md bg-transparent flex justify-center">
     <%= gettext "Go to lorawan server" %>
   </a>
-</div>

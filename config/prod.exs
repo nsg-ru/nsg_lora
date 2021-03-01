@@ -26,9 +26,15 @@ config :nsg_lora, NsgLoraWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :lager,
+  crash_log: '/dev/null',
+  handlers: [
+    lager_console_backend: :info
+  ]
+
 config :mnesia,
   # TODO get from runtime config
-  dir: '/usr/lib/lora'
+  dir: '/usr/lib/lora/Mnesia'
 
 # ## SSL Support
 #
