@@ -21,6 +21,14 @@ defmodule NsgLoraWeb.Router do
   end
 
   scope "/", NsgLoraWeb do
+    pipe_through [:browser]
+
+    get "/login", PageController, :index
+    post "/login", PageController, :login
+
+  end
+
+  scope "/", NsgLoraWeb do
     pipe_through [:browser, :auth]
 
     live "/", DashboardLive
