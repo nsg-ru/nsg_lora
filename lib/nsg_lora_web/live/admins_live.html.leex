@@ -1,0 +1,29 @@
+<div class="text-3xl font-bold text-center mb-5"><%= gettext "Admins" %></div>
+
+<table class="border-collapse w-full">
+  <thead>
+    <tr class="content-color">
+      <th class="table-th"><%= gettext "Name" %></th>
+      <th class="table-th"><%= gettext "Fullname" %></th>
+      <th class="table-th"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for admin <- @admins do %>
+      <tr class="table-body-tr content-color flex-row md:flex-row flex-wrap md:flex-no-wrap">
+        <td class="table-td">
+          <span class="table-td-span"><%= gettext "Name" %></span>
+          <%= admin.username %>
+        </td>
+        <td class="table-td">
+          <span class="table-td-span"><%= gettext "Fullname" %></span>
+          <%= admin.fullname %>
+        </td>
+        <td class="table-td">
+          <span class="table-td-span"></span>
+          <%= admin.opts && admin.opts[:lang] %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

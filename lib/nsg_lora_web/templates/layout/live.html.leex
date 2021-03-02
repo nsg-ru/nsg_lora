@@ -90,7 +90,7 @@ x-data="main_init()"
 
       <div class="pl-2"
       x-show="isOpen">
-        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.BlankLive),
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.AdminsLive),
         class: "side-menu-item" do %>
           <%= gettext "Admins" %>
         <% end %>

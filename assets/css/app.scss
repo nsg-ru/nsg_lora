@@ -1,23 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer components {
+  .content-color {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  .theme-color {
+    @apply bg-gray-200 dark:bg-gray-700;
+  }
+
   .side-menu-item {
     @apply flex items-center p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700;
   }
+
   .hover-item {
     @apply hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md;
   }
+
+  .table-th {
+    @apply p-1 font-bold border border-gray-400 hidden md:table-cell;
+  }
+
+  .table-td {
+    @apply w-full md:w-auto p-1 text-center border border-b border-gray-400 block md:table-cell relative lg:static min-h-cell;
+  }
+
+  .table-td-span {
+    @apply md:hidden absolute top-0 left-0 px-2 py-1 text-xs font-bold bg-opacity-0 text-gray-400;
+  }
+
+  .table-body-tr {
+    @apply md:hover:bg-gray-200 md:dark:hover:bg-gray-700 flex md:table-row mb-10 md:mb-0 ;
+  }
 }
-
-
 /* This file is for your main application css. */
 @import "../node_modules/nprogress/nprogress.css";
-
 /* LiveView specific classes for your customizations */
-.phx-no-feedback.invalid-feedback,
-.phx-no-feedback .invalid-feedback {
+.phx-no-feedback .invalid-feedback,
+.phx-no-feedback.invalid-feedback {
   display: none;
 }
 
@@ -26,10 +47,11 @@
   transition: opacity 1s ease-out;
 }
 
-.phx-disconnected{
+.phx-disconnected {
   cursor: wait;
 }
-.phx-disconnected *{
+
+.phx-disconnected * {
   pointer-events: none;
 }
 
@@ -61,14 +83,12 @@
   font-weight: bold;
 }
 
-.phx-modal-close:hover,
-.phx-modal-close:focus {
+.phx-modal-close:focus,
+.phx-modal-close:hover {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
-
-
 /* Alerts and form errors */
 .alert {
   padding: 15px;
@@ -76,27 +96,33 @@
   border: 1px solid transparent;
   border-radius: 4px;
 }
+
 .alert-info {
   color: #31708f;
   background-color: #d9edf7;
   border-color: #bce8f1;
 }
+
 .alert-warning {
   color: #8a6d3b;
   background-color: #fcf8e3;
   border-color: #faebcc;
 }
+
 .alert-danger {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
 }
+
 .alert p {
   margin-bottom: 0;
 }
+
 .alert:empty {
   display: none;
 }
+
 .invalid-feedback {
   color: #a94442;
   display: block;

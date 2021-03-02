@@ -36,7 +36,7 @@ defmodule NsgLoraWeb.Router do
     live "/lws", LorawanServerLive
     live "/mqtt", MQTTServerLive
     live "/absys", AboutSystemLive
-
+    live "/admins", AdminsLive
     live "/blank", BlankLive
   end
 
