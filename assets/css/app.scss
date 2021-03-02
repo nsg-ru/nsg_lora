@@ -10,6 +10,10 @@
     @apply bg-gray-200 dark:bg-gray-700;
   }
 
+  .input-field {
+    @apply border border-gray-400 rounded-md py-2 px-4;
+  }
+
   .side-menu-item {
     @apply flex items-center p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700;
   }
@@ -27,7 +31,7 @@
   }
 
   .table-td-span {
-    @apply md:hidden absolute top-0 left-0 px-2 py-1 text-xs font-bold bg-opacity-0 text-gray-400;
+    @apply md:hidden absolute top-0 left-0 px-2 py-1 text-xs font-bold text-gray-400;
   }
 
   .table-body-tr {

@@ -1,15 +1,58 @@
-<div class="text-3xl font-bold text-center mb-5"><%= gettext "Admins" %></div>
+<div class="text-3xl font-bold text-center"><%= gettext "Admins" %></div>
 
 
 
 <div x-data="{form: false}">
-  <div @click="form = !form">+</div>
+  <div @click="form = !form"
+  class="flex justify-end items-center m-2">
+    <svg xmlns="http://www.w3.org/2000/svg"
+    class="h-6 w-6 mx-2 hover-item"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+    </svg>
+  </div>
   <div class="relative">
-    <div class = "absolute inset-x-0 top-0  p-5 text-center bg-gray-400 border rounded-md m-2"
+    <div class = "absolute inset-x-0 top-0 theme-color border border-gray-400 rounded-md m-1 md:m-5 p-2 z-10"
     x-show="form">
-      XXXXX
-    </div>
+      <%= f = form_for :admin, "#", [phx_change: :admin_validate, phx_submit: :add_admin] %>
+        <div class="flex flex-wrap items-baseline mb-2">
+          <%= label f, gettext("Name"), class: "w-full md:w-1/4" %>
+          <%= text_input f, :username,
+          class: "input-field content-color w-full md:w-3/4"
+          %>
+        </div>
 
+        <div class="flex flex-wrap items-baseline mb-2">
+          <%= label f, gettext("Fullname"), class: "w-full md:w-1/4" %>
+          <%= text_input f, :fullname,
+          class: "input-field content-color w-full md:w-3/4"
+          %>
+        </div>
+
+        <div class="flex flex-wrap items-baseline mb-2">
+          <%= label f, gettext("Password"), class: "w-full md:w-1/4" %>
+          <%= password_input f, :password, value: input_value(f, :password),
+          class: "input-field content-color w-full md:w-3/4" %>
+          <div class="w-full text-right text-red-500 text-sm"></div>
+        </div>
+
+        <div class="flex flex-wrap items-baseline mb-2">
+          <%= label f, gettext("Confirm password"), class: "w-full md:w-1/4" %>
+          <%= password_input f, :password_confirm, value: input_value(f, :password_confirm),
+          class: "input-field content-color w-full md:w-3/4" %>
+        </div>
+
+        <div class="flex justify-end  mb-2">
+          <%= submit gettext("Save"), class: "input-field theme-color hover:bg-gray-400" %>
+        </div>
+      </form>
+
+
+
+    </div>
 
     <table class="border-collapse w-full">
       <thead>
