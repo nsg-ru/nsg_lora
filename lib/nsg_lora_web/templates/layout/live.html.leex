@@ -23,7 +23,7 @@ x-data="main_init()"
       <a href="#"
       @click="toggleOpen"
       class="side-menu-item flex justify-between">
-        <span><%= gettext "LoRa" %></span>
+        <span class="font-bold"><%= gettext "LoRa" %></span>
         <span>
           <svg xmlns="http://www.w3.org/2000/svg"
           class="h-4 w-4"
@@ -64,11 +64,49 @@ x-data="main_init()"
 
 
 
+    <div x-data="submenu_init('administration')">
+      <a href="#"
+      @click="toggleOpen"
+      class="side-menu-item flex justify-between">
+        <span class="font-bold"><%= gettext "Administration" %></span>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="!isOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 9l-7 7-7-7" />
+          </svg>
+
+          <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          x-show="isOpen"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 15l7-7 7 7" />
+          </svg>
+        </span>
+      </a>
+
+      <div class="pl-2"
+      x-show="isOpen">
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.BlankLive),
+        class: "side-menu-item" do %>
+          <%= gettext "Admins" %>
+        <% end %>
+
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.BlankLive),
+        class: "side-menu-item" do %>
+          <%= gettext "Users" %>
+        <% end %>
+      </div>
+    </div>
+
     <div x-data="submenu_init('other')">
       <a href="#"
       @click="toggleOpen"
       class="side-menu-item flex justify-between">
-        <span><%= gettext "Other" %></span>
+        <span class="font-bold"><%= gettext "Other" %></span>
         <span>
           <svg xmlns="http://www.w3.org/2000/svg"
           class="h-4 w-4"
@@ -106,6 +144,7 @@ x-data="main_init()"
         </a>
       </div>
     </div>
+
   </div>
 
   <!-- Main container -->

@@ -11,17 +11,17 @@ msgid ""
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:89
+#: lib/nsg_lora_web/templates/layout/live.html.leex:133
 msgid "About Programm"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:94
+#: lib/nsg_lora_web/templates/layout/live.html.leex:138
 msgid "About System"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:48
+#: lib/nsg_lora_web/templates/layout/live.html.leex:50
 msgid "BS"
 msgstr ""
 
@@ -41,17 +41,17 @@ msgid "Dashboard title"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:99
+#: lib/nsg_lora_web/templates/layout/live.html.leex:143
 msgid "Debug Dashboard"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:24
+#: lib/nsg_lora_web/templates/layout/live.html.leex:26
 msgid "LoRa"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:53
+#: lib/nsg_lora_web/templates/layout/live.html.leex:55
 msgid "LoRaWan Server"
 msgstr ""
 
@@ -61,12 +61,12 @@ msgid "Lorawan server title"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:58
+#: lib/nsg_lora_web/templates/layout/live.html.leex:60
 msgid "MQTT"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:65
+#: lib/nsg_lora_web/templates/layout/live.html.leex:109
 msgid "Other"
 msgstr ""
 
@@ -78,4 +78,39 @@ msgstr ""
 #, elixir-format
 #: lib/nsg_lora_web/live/mqtt_server_live.html.leex:1
 msgid "MQTT server title"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/live.html.leex:71
+msgid "Administration"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/live.html.leex:95
+msgid "Admins"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/blank_live.html.leex:1
+msgid "Coming soon"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/page/index.html.eex:10
+msgid "Password"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/page/index.html.eex:12
+msgid "Sign in"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/page/index.html.eex:6
+msgid "Username"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/live.html.leex:100
+msgid "Users"
 msgstr ""

@@ -12,17 +12,17 @@ msgstr ""
 "Plural-Forms: nplurals=3\n"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:89
+#: lib/nsg_lora_web/templates/layout/live.html.leex:133
 msgid "About Programm"
 msgstr "О программе"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:94
+#: lib/nsg_lora_web/templates/layout/live.html.leex:138
 msgid "About System"
 msgstr "О системе"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:48
+#: lib/nsg_lora_web/templates/layout/live.html.leex:50
 msgid "BS"
 msgstr "Базовая станция"
 
@@ -42,17 +42,17 @@ msgid "Dashboard title"
 msgstr "Панель мониторинга"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:99
+#: lib/nsg_lora_web/templates/layout/live.html.leex:143
 msgid "Debug Dashboard"
 msgstr "Отладка"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:24
+#: lib/nsg_lora_web/templates/layout/live.html.leex:26
 msgid "LoRa"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:53
+#: lib/nsg_lora_web/templates/layout/live.html.leex:55
 msgid "LoRaWan Server"
 msgstr "Сервер LoRaWan"
 
@@ -62,12 +62,12 @@ msgid "Lorawan server title"
 msgstr "Сервер LoRaWan"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:58
+#: lib/nsg_lora_web/templates/layout/live.html.leex:60
 msgid "MQTT"
 msgstr "Сервер MQTT"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:65
+#: lib/nsg_lora_web/templates/layout/live.html.leex:109
 msgid "Other"
 msgstr "Прочее"
 
@@ -80,3 +80,38 @@ msgstr "Перейти на сервер LoRaWan"
 #: lib/nsg_lora_web/live/mqtt_server_live.html.leex:1
 msgid "MQTT server title"
 msgstr "Сервер MQTT"
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/live.html.leex:71
+msgid "Administration"
+msgstr "Администрирование"
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/live.html.leex:95
+msgid "Admins"
+msgstr "Админы"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/blank_live.html.leex:1
+msgid "Coming soon"
+msgstr "Скоро будет"
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/page/index.html.eex:10
+msgid "Password"
+msgstr "Пароль"
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/page/index.html.eex:12
+msgid "Sign in"
+msgstr "Войти"
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/page/index.html.eex:6
+msgid "Username"
+msgstr "Имя"
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/live.html.leex:100
+msgid "Users"
+msgstr "Пользователи"
