@@ -10,15 +10,6 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :nsg_lora, NsgLoraWeb.Endpoint,
-  #http: [port: 4000],
-  https: [
-    port: 4443,
-    cipher_suite: :strong,
-    keyfile: "/etc/stunnel/https_auto.key",
-    certfile: "/etc/stunnel/https_auto.cert",
-    transport_options: [socket_opts: [:inet6]]
-  ],
-  url: [host: "localhost", port: 4443],
   check_origin: false,
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true
@@ -31,10 +22,6 @@ config :lager,
   handlers: [
     lager_console_backend: :info
   ]
-
-config :mnesia,
-  # TODO get from runtime config
-  dir: '/usr/lib/lora/Mnesia'
 
 # ## SSL Support
 #

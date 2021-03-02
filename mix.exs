@@ -17,11 +17,13 @@ defmodule NsgLora.MixProject do
         local: [
           include_executables_for: [:unix],
           applications: @rel_app,
+          runtime_config_path: "config/local.exs"
         ],
         nsg_lora_arm: [
           include_executables_for: [:unix],
           applications: @rel_app,
           include_erts: "/opt/erlang/arm_rt_eabi/erlang-22.3.4/erts-10.7.2",
+          runtime_config_path: "config/target.exs",
           steps: [:assemble, :tar]
         ]
       ]
