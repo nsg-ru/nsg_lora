@@ -87,6 +87,7 @@ msgid "Administration"
 msgstr "Администрирование"
 
 #, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:1
 #: lib/nsg_lora_web/templates/layout/live.html.leex:95
 msgid "Admins"
 msgstr "Админы"
@@ -97,6 +98,7 @@ msgid "Coming soon"
 msgstr "Скоро будет"
 
 #, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:36
 #: lib/nsg_lora_web/templates/page/index.html.eex:10
 msgid "Password"
 msgstr "Пароль"
@@ -115,3 +117,25 @@ msgstr "Имя"
 #: lib/nsg_lora_web/templates/layout/live.html.leex:100
 msgid "Users"
 msgstr "Пользователи"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:43
+msgid "Confirm password"
+msgstr "Подтвердите пароль"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:29
+#: lib/nsg_lora_web/live/admins_live.html.leex:61 lib/nsg_lora_web/live/admins_live.html.leex:73
+msgid "Fullname"
+msgstr "Полное имя"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:22
+#: lib/nsg_lora_web/live/admins_live.html.leex:60 lib/nsg_lora_web/live/admins_live.html.leex:69
+msgid "Name"
+msgstr "Имя"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:49
+msgid "Save"
+msgstr "Сохранить"
