@@ -125,17 +125,38 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:29
-#: lib/nsg_lora_web/live/admins_live.html.leex:61 lib/nsg_lora_web/live/admins_live.html.leex:73
+#: lib/nsg_lora_web/live/admins_live.html.leex:63 lib/nsg_lora_web/live/admins_live.html.leex:91
 msgid "Fullname"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:22
-#: lib/nsg_lora_web/live/admins_live.html.leex:60 lib/nsg_lora_web/live/admins_live.html.leex:69
+#: lib/nsg_lora_web/live/admins_live.html.leex:21
+#: lib/nsg_lora_web/live/admins_live.html.leex:62 lib/nsg_lora_web/live/admins_live.html.leex:87
 msgid "Name"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:49
+#: lib/nsg_lora_web/live/admins_live.html.leex:50
 msgid "Save"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:64
+#: lib/nsg_lora_web/live/admins_live.html.leex:95
+msgid "Actions"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:72
+msgid "Are you shure to delete admin"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:76
+msgid "Cancel"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:80
+msgid "OK"
 msgstr ""

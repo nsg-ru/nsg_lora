@@ -1,3 +1,16 @@
+defmodule NsgLora.Repo do
+  def write(struct) do
+    Memento.transaction(fn ->
+      try do
+        Memento.Query.write(struct)
+      rescue
+        err in Memento.Error -> Memento.Transaction.abort(err.message)
+        res -> Memento.Transaction.abort(inspect(res))
+      end
+    end)
+  end
+end
+
 defmodule NsgLora.Repo.Admin do
   use Memento.Table,
     attributes: [:username, :fullname, :hash, :opts]
@@ -11,18 +24,21 @@ defmodule NsgLora.Repo.Admin do
   end
 
   def write(admin = %NsgLora.Repo.Admin{}) do
-    Memento.transaction(fn -> Memento.Query.write(admin) end)
+    NsgLora.Repo.write(admin)
   end
 
   def write(admin = %{}) do
     admin_struct = %__MODULE__{
-      username: admin[:username],
-      fullname: admin[:fullname],
-      hash: admin[:hash],
-      opts: admin[:opts]
+      username: (if admin["username"] == "", do: nil, else: admin["username"]),
+      fullname: admin["fullname"],
+      hash: admin["hash"],
+      opts: admin["opts"]
     }
+    NsgLora.Repo.write(admin_struct)
+  end
 
-    Memento.transaction(fn -> Memento.Query.write(admin_struct) end)
+  def delete(username) do
+    Memento.transaction(fn -> Memento.Query.delete(__MODULE__, username) end)
   end
 
   def load_current_admin(conn, _) do

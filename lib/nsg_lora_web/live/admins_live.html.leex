@@ -1,9 +1,23 @@
+<div
+class="<%= @alert_hidden && "hidden" || "" %> fixed z-10 border rounded-md border-gray-400 p-2 left-1/2 top-1/2
+transform -translate-x-1/2 -translate-y-1/2 content-color w-56">
+  <div class="mb-5 text-center">
+  <%= gettext("Are you shure to delete admin") %> <%= @user_to_delete %>?</div>
+  <div class="flex justify-between">
+    <a href="#" phx-click="delete-user-cancel"
+    class="border rounded-md border-gray-400 p-2 theme-color">
+      <%= gettext "Cancel" %>
+    </a>
+    <a href="#" phx-click="delete-user" phx-value-username="<%= @user_to_delete %>"
+    class="border rounded-md border-gray-400 p-2 theme-color">
+      <%= gettext "OK" %>
+    </a>
+  </div>
+</div>
+
 <div class="text-3xl font-bold text-center"><%= gettext "Admins" %></div>
-
-
-
-<div x-data="{form: false}">
-  <div @click="form = !form"
+<div>
+  <div phx-click="add_user"
   class="flex justify-end items-center m-2">
     <svg xmlns="http://www.w3.org/2000/svg"
     class="h-6 w-6 mx-2 hover-item"
@@ -15,14 +29,14 @@
     </svg>
   </div>
   <div class="relative">
-    <div class = "absolute inset-x-0 top-0 theme-color border border-gray-400 rounded-md m-1 md:m-5 p-2 z-10"
-    x-show="form">
+    <div class = "<%= @add_user_hidden && "hidden" || "" %> absolute inset-x-0 top-0 theme-color border border-gray-400 rounded-md m-1 md:m-5 p-2 z-10">
       <%= f = form_for :admin, "#", [phx_change: :admin_validate, phx_submit: :add_admin] %>
         <div class="flex flex-wrap items-baseline mb-2">
           <%= label f, gettext("Name"), class: "w-full md:w-1/4" %>
           <%= text_input f, :username,
           class: "input-field content-color w-full md:w-3/4"
           %>
+          <div class="w-full text-right text-red-500 text-sm"><%= @err_name %></div>
         </div>
 
         <div class="flex flex-wrap items-baseline mb-2">
@@ -36,18 +50,20 @@
           <%= label f, gettext("Password"), class: "w-full md:w-1/4" %>
           <%= password_input f, :password, value: input_value(f, :password),
           class: "input-field content-color w-full md:w-3/4" %>
-          <div class="w-full text-right text-red-500 text-sm"></div>
+          <div class="w-full text-right text-red-500 text-sm"><%= @err_pass_conf %></div>
         </div>
 
         <div class="flex flex-wrap items-baseline mb-2">
           <%= label f, gettext("Confirm password"), class: "w-full md:w-1/4" %>
           <%= password_input f, :password_confirm, value: input_value(f, :password_confirm),
           class: "input-field content-color w-full md:w-3/4" %>
+          <div class="w-full text-right text-red-500 text-sm"><%= @err_pass_conf %></div>
         </div>
 
         <div class="flex justify-end  mb-2">
           <%= submit gettext("Save"), class: "input-field theme-color hover:bg-gray-400" %>
         </div>
+        <div class="w-full text-right text-red-500 text-sm"><%= @err_save %></div>
       </form>
 
 
@@ -59,7 +75,7 @@
         <tr class="content-color">
           <th class="table-th"><%= gettext "Name" %></th>
           <th class="table-th"><%= gettext "Fullname" %></th>
-          <th class="table-th"></th>
+          <th class="table-th"><%= gettext "Actions" %></th>
         </tr>
       </thead>
       <tbody>
@@ -74,8 +90,17 @@
               <%= admin.fullname %>
             </td>
             <td class="table-td">
-              <span class="table-td-span"></span>
-              <%= admin.opts && admin.opts[:lang] %>
+              <span class="table-td-span"><%= gettext "Actions" %></span>
+              <div class="flex justify-end">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                class="h-6 w-6"
+                phx-click="delete-user-req" phx-value-username="<%= admin.username %>"
+                stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5
+                  4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </div>
             </td>
           </tr>
         <% end %>
