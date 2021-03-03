@@ -7,14 +7,18 @@ defmodule NsgLoraWeb.AdminsLive do
     err_save: "",
     err_name: "",
     err_pass: "",
-    err_pass_conf: ""
+    err_pass_conf: "",
+    username: "",
+    fullname: "",
+    password: "",
+    password_confirm: ""
   ]
 
   @impl true
   def mount(_params, session, socket) do
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
 
-    {:ok, admins} = NsgLora.Repo.Admin.all()
+    admins = all_admins_sorted()
 
     {:ok,
      assign(
@@ -24,21 +28,39 @@ defmodule NsgLoraWeb.AdminsLive do
   end
 
   @impl true
-  def handle_event("add_admin", params, socket) do
-    IO.inspect(event: "AddAdmin", params: params, assigns: socket.assigns)
+  def handle_event("add_admin", %{"admin" => admin}, socket) do
+    {res, valid} = admin_validate(admin, socket.assigns.admins)
 
-    case NsgLora.Repo.Admin.write(params["admin"]) do
-      {:ok, _} ->
-        {:ok, admins} = NsgLora.Repo.Admin.all()
-        {:noreply, assign(socket, admins: admins, err_save: "", add_user_hidden: true)}
+    case res do
+      :error ->
+        {:noreply, assign(socket, valid)}
 
-      {:error, {:transaction_aborted, err}} ->
-        {:noreply, assign(socket, err_save: err)}
+      :ok ->
+        case NsgLora.Repo.Admin.write(admin) do
+          {:ok, _} ->
+            admins = all_admins_sorted()
+
+            {:noreply,
+             assign(
+               socket,
+               [admins: admins, err_save: "", add_user_hidden: true] ++ @add_user_deafaults
+             )}
+
+          {:error, {:transaction_aborted, err}} ->
+            {:noreply, assign(socket, err_save: err)}
+        end
     end
   end
 
+  def handle_event("admin_validate", %{"admin" => admin}, socket) do
+    {_, valid} = admin_validate(admin, socket.assigns.admins)
+
+    {:noreply, assign(socket, [alert_hidden: true] ++ valid)}
+  end
+
   def handle_event("add_user", _params, socket) do
-    {:noreply, assign(socket, add_user_hidden: !socket.assigns.add_user_hidden)}
+    {:noreply,
+     assign(socket, add_user_hidden: !socket.assigns.add_user_hidden, alert_hidden: true)}
   end
 
   def handle_event("delete-user-req", %{"username" => username}, socket) do
@@ -51,12 +73,63 @@ defmodule NsgLoraWeb.AdminsLive do
 
   def handle_event("delete-user", %{"username" => username}, socket) do
     NsgLora.Repo.Admin.delete(username)
-    {:ok, admins} = NsgLora.Repo.Admin.all()
+    admins = all_admins_sorted()
     {:noreply, assign(socket, admins: admins, alert_hidden: true)}
   end
 
   def handle_event(event, params, socket) do
     IO.inspect(event: event, params: params)
     {:noreply, socket}
+  end
+
+  defp is_admin_exists(admins, username) do
+    admins |> Enum.find(fn %{username: n} -> n == String.trim(username) end)
+  end
+
+  defp all_admins_sorted() do
+    {:ok, admins} = NsgLora.Repo.Admin.all()
+    admins |> Enum.sort_by(fn %{username: u} -> u end)
+  end
+
+  defp admin_validate(admin, admins) do
+    u = admin["username"]
+
+    err_name =
+      cond do
+        String.trim(u) == "" -> gettext("Name must not be empty")
+        is_admin_exists(admins, u) -> gettext("Name already exists")
+        true -> ""
+      end
+
+    p = admin["password"]
+
+    err_pass =
+      cond do
+        String.length(p) < 8 -> gettext("Too short")
+        true -> ""
+      end
+
+    pc = admin["password_confirm"]
+
+    err_pass_conf =
+      cond do
+        p != pc -> gettext("Not equal")
+        true -> ""
+      end
+
+    {if err_name <> err_pass <> err_pass_conf == "" do
+       :ok
+     else
+       :error
+     end,
+     [
+       err_name: err_name,
+       err_pass: err_pass,
+       err_pass_conf: err_pass_conf,
+       username: u,
+       fullname: admin["fullname"],
+       password: p,
+       password_confirm: pc
+     ]}
   end
 end
