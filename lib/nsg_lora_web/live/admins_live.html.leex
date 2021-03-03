@@ -42,46 +42,48 @@
         <div class="absolute inset-0 content-color bg-opacity-80 dark:bg-opacity-80">
         </div>
       </div>
+      <div class = "absolute inset-x-0 top-0 flex justify-center z-20">
+        <div class = "theme-color border border-gray-400 rounded-md m-1 md:mx-5 p-2
+        w-full max-w-3xl">
 
-      <div class = "absolute inset-x-0 top-0 theme-color border border-gray-400 rounded-md m-1 md:m-5 p-2 z-20">
+          <div class="text-2xl font-bold text-center mb-5"><%= gettext "Add new admin" %></div>
+          <%= f = form_for :admin, "#", [phx_change: :admin_validate, phx_submit: :add_admin] %>
+            <div class="flex flex-wrap items-baseline mb-2">
+              <%= label f, gettext("Name"), class: "w-full md:w-1/4" %>
+              <%= text_input f, :username, value: @username,
+              class: "input-field content-color w-full md:w-3/4"
+              %>
+              <div class="w-full text-right text-red-500 text-sm"><%= @err_name %></div>
+            </div>
 
-        <div class="text-2xl font-bold text-center mb-5"><%= gettext "Add new admin" %></div>
-        <%= f = form_for :admin, "#", [phx_change: :admin_validate, phx_submit: :add_admin] %>
-          <div class="flex flex-wrap items-baseline mb-2">
-            <%= label f, gettext("Name"), class: "w-full md:w-1/4" %>
-            <%= text_input f, :username, value: @username,
-            class: "input-field content-color w-full md:w-3/4"
-            %>
-            <div class="w-full text-right text-red-500 text-sm"><%= @err_name %></div>
-          </div>
+            <div class="flex flex-wrap items-baseline mb-2">
+              <%= label f, gettext("Fullname"), class: "w-full md:w-1/4" %>
+              <%= text_input f, :fullname, value: @fullname,
+              class: "input-field content-color w-full md:w-3/4"
+              %>
+            </div>
 
-          <div class="flex flex-wrap items-baseline mb-2">
-            <%= label f, gettext("Fullname"), class: "w-full md:w-1/4" %>
-            <%= text_input f, :fullname, value: @fullname,
-            class: "input-field content-color w-full md:w-3/4"
-            %>
-          </div>
+            <div class="flex flex-wrap items-baseline mb-2">
+              <%= label f, gettext("Password"), class: "w-full md:w-1/4" %>
+              <%= password_input f, :password, value: @password,
+              class: "input-field content-color w-full md:w-3/4" %>
+              <div class="w-full text-right text-red-500 text-sm"><%= @err_pass %></div>
+            </div>
 
-          <div class="flex flex-wrap items-baseline mb-2">
-            <%= label f, gettext("Password"), class: "w-full md:w-1/4" %>
-            <%= password_input f, :password, value: @password,
-            class: "input-field content-color w-full md:w-3/4" %>
-            <div class="w-full text-right text-red-500 text-sm"><%= @err_pass %></div>
-          </div>
+            <div class="flex flex-wrap items-baseline mb-2">
+              <%= label f, gettext("Confirm password"), class: "w-full md:w-1/4" %>
+              <%= password_input f, :password_confirm, value: @password_confirm,
+              class: "input-field content-color w-full md:w-3/4" %>
+              <div class="w-full text-right text-red-500 text-sm"><%= @err_pass_conf %></div>
+            </div>
 
-          <div class="flex flex-wrap items-baseline mb-2">
-            <%= label f, gettext("Confirm password"), class: "w-full md:w-1/4" %>
-            <%= password_input f, :password_confirm, value: @password_confirm,
-            class: "input-field content-color w-full md:w-3/4" %>
-            <div class="w-full text-right text-red-500 text-sm"><%= @err_pass_conf %></div>
-          </div>
-
-          <div class="flex justify-end  mb-2">
-            <a href="#" phx-click="add_user" class="btn"><%= gettext "Cancel" %></a>
-            <%= submit gettext("Save"), class: "btn ml-2" %>
-          </div>
-          <div class="w-full text-right text-red-500 text-sm"><%= @err_save %></div>
-        </form>
+            <div class="flex justify-end  mb-2">
+              <a href="#" phx-click="add_user" class="btn"><%= gettext "Cancel" %></a>
+              <%= submit gettext("Save"), class: "btn ml-2" %>
+            </div>
+            <div class="w-full text-right text-red-500 text-sm"><%= @err_save %></div>
+          </form>
+        </div>
       </div>
     </div>
 
