@@ -87,7 +87,7 @@ msgid "Administration"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:1
+#: lib/nsg_lora_web/live/admins_live.html.leex:24
 #: lib/nsg_lora_web/templates/layout/live.html.leex:95
 msgid "Admins"
 msgstr ""
@@ -98,7 +98,7 @@ msgid "Coming soon"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:36
+#: lib/nsg_lora_web/live/admins_live.html.leex:66
 #: lib/nsg_lora_web/templates/page/index.html.eex:10
 msgid "Password"
 msgstr ""
@@ -119,44 +119,70 @@ msgid "Users"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:43
+#: lib/nsg_lora_web/live/admins_live.html.leex:73
 msgid "Confirm password"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:29
-#: lib/nsg_lora_web/live/admins_live.html.leex:63 lib/nsg_lora_web/live/admins_live.html.leex:91
+#: lib/nsg_lora_web/live/admins_live.html.leex:59
+#: lib/nsg_lora_web/live/admins_live.html.leex:92 lib/nsg_lora_web/live/admins_live.html.leex:104
 msgid "Fullname"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:21
-#: lib/nsg_lora_web/live/admins_live.html.leex:62 lib/nsg_lora_web/live/admins_live.html.leex:87
+#: lib/nsg_lora_web/live/admins_live.html.leex:51
+#: lib/nsg_lora_web/live/admins_live.html.leex:91 lib/nsg_lora_web/live/admins_live.html.leex:100
 msgid "Name"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:50
+#: lib/nsg_lora_web/live/admins_live.html.leex:81
 msgid "Save"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:64
-#: lib/nsg_lora_web/live/admins_live.html.leex:95
+#: lib/nsg_lora_web/live/admins_live.html.leex:93
+#: lib/nsg_lora_web/live/admins_live.html.leex:108
 msgid "Actions"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:72
+#: lib/nsg_lora_web/live/admins_live.html.leex:10
 msgid "Are you shure to delete admin"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:76
+#: lib/nsg_lora_web/live/admins_live.html.leex:14
+#: lib/nsg_lora_web/live/admins_live.html.leex:80
 msgid "Cancel"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:80
+#: lib/nsg_lora_web/live/admins_live.html.leex:18
 msgid "OK"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:48
+msgid "Add new admin"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.ex:100
+msgid "Name already exists"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.ex:99
+msgid "Name must not be empty"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.ex:116
+msgid "Not equal"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.ex:108
+msgid "Too short"
 msgstr ""
