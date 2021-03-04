@@ -23,13 +23,14 @@ defmodule NsgLora.DBServer do
 
     Memento.Table.create(NsgLora.Repo.Admin, disc_copies: nodes)
 
+    :mnesia.wait_for_tables([NsgLora.Repo.Admin], 5000)
+
     case NsgLora.Repo.Admin.all() do
       {:ok, []} -> NsgLora.Repo.Admin.write(%{"username" => "admin", "password" => "admin"})
       _ -> nil
     end
 
     Application.ensure_all_started(:lorawan_server)
-
 
     {:ok, %{}}
   end
