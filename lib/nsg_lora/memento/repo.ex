@@ -60,7 +60,13 @@ defmodule NsgLora.Repo.Admin do
   end
 
   def load_current_admin(conn, _) do
-    conn
-    |> Plug.Conn.put_session("current_admin", "admin")
+    case Guardian.Plug.current_resource(conn) do
+      {:ok, %{username: name}} ->
+        conn
+        |> Plug.Conn.put_session("current_admin", name)
+
+      _ ->
+        conn
+    end
   end
 end

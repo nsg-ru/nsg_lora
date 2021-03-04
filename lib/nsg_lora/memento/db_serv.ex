@@ -24,7 +24,7 @@ defmodule NsgLora.DBServer do
     Memento.Table.create(NsgLora.Repo.Admin, disc_copies: nodes)
 
     case NsgLora.Repo.Admin.all() do
-      {:ok, []} -> NsgLora.Repo.Admin.write(%{username: "admin"})
+      {:ok, []} -> NsgLora.Repo.Admin.write(%{"username" => "admin", "password" => "admin"})
       _ -> nil
     end
 

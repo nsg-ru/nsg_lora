@@ -98,18 +98,18 @@ msgid "Coming soon"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:66
-#: lib/nsg_lora_web/templates/page/index.html.eex:10
+#: lib/nsg_lora_web/live/components/header_component.html.leex:121
+#: lib/nsg_lora_web/templates/session/new.html.eex:10
 msgid "Password"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/page/index.html.eex:12
+#: lib/nsg_lora_web/templates/session/new.html.eex:12
 msgid "Sign in"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/page/index.html.eex:6
+#: lib/nsg_lora_web/templates/session/new.html.eex:6
 msgid "Username"
 msgstr ""
 
@@ -119,30 +119,30 @@ msgid "Users"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:73
+#: lib/nsg_lora_web/live/components/header_component.html.leex:128
 msgid "Confirm password"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:59
-#: lib/nsg_lora_web/live/admins_live.html.leex:92 lib/nsg_lora_web/live/admins_live.html.leex:104
+#: lib/nsg_lora_web/live/admins_live.html.leex:45
+#: lib/nsg_lora_web/live/admins_live.html.leex:57 lib/nsg_lora_web/live/components/header_component.html.leex:110
 msgid "Fullname"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:51
-#: lib/nsg_lora_web/live/admins_live.html.leex:91 lib/nsg_lora_web/live/admins_live.html.leex:100
+#: lib/nsg_lora_web/live/admins_live.html.leex:44
+#: lib/nsg_lora_web/live/admins_live.html.leex:53
 msgid "Name"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:81
+#: lib/nsg_lora_web/live/components/header_component.html.leex:137
 msgid "Save"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:93
-#: lib/nsg_lora_web/live/admins_live.html.leex:108
+#: lib/nsg_lora_web/live/admins_live.html.leex:46
+#: lib/nsg_lora_web/live/admins_live.html.leex:61
 msgid "Actions"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:14
-#: lib/nsg_lora_web/live/admins_live.html.leex:80
+#: lib/nsg_lora_web/live/components/header_component.html.leex:136
 msgid "Cancel"
 msgstr ""
 
@@ -163,26 +163,42 @@ msgid "OK"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:48
-msgid "Add new admin"
-msgstr ""
-
-#, elixir-format
-#: lib/nsg_lora_web/live/admins_live.ex:100
+#: lib/nsg_lora_web/live/admins_live.ex:118
 msgid "Name already exists"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.ex:99
+#: lib/nsg_lora_web/live/admins_live.ex:117
 msgid "Name must not be empty"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.ex:116
+#: lib/nsg_lora_web/live/admins_live.ex:135
 msgid "Not equal"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.ex:108
+#: lib/nsg_lora_web/live/admins_live.ex:127
 msgid "Too short"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/controllers/session_controller.ex:35
+msgid "Bad password"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/components/header_component.html.leex:88
+#: lib/nsg_lora_web/live/components/header_component.html.leex:106
+msgid "Edit profile"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/components/header_component.html.leex:117
+msgid "Leave the following fields blank if you do not want change password"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/components/header_component.html.leex:91
+msgid "Sign out"
 msgstr ""

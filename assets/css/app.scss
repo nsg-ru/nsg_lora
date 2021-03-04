@@ -1,4 +1,7 @@
 @tailwind base;
+[x-cloak] {
+  display: none;
+}
 @tailwind components;
 @tailwind utilities;
 @layer components {

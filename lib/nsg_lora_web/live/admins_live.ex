@@ -18,6 +18,7 @@ defmodule NsgLoraWeb.AdminsLive do
   def mount(_params, session, socket) do
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
 
+    Phoenix.PubSub.subscribe(NsgLora.PubSub, "system")
     admins = all_admins_sorted()
 
     {:ok,
@@ -55,7 +56,7 @@ defmodule NsgLoraWeb.AdminsLive do
   def handle_event("admin_validate", %{"admin" => admin}, socket) do
     {_, valid} = admin_validate(admin, socket.assigns.admins)
 
-    {:noreply, assign(socket, [alert_hidden: true] ++ valid)}
+    {:noreply, assign(socket, valid)}
   end
 
   def handle_event("add_user", _params, socket) do
@@ -82,6 +83,18 @@ defmodule NsgLoraWeb.AdminsLive do
     {:noreply, socket}
   end
 
+  @impl true
+  def handle_info({:change_admin_profile, _username}, socket) do
+    admins = all_admins_sorted()
+    {:noreply, assign(socket, admins: admins)}
+  end
+
+  def handle_info(mes, socket) do
+    IO.inspect(mes)
+    {:noreply, socket}
+  end
+
+
   defp is_admin_exists(admins, username) do
     admins |> Enum.find(fn %{username: n} -> n == String.trim(username) end)
   end
@@ -91,21 +104,28 @@ defmodule NsgLoraWeb.AdminsLive do
     admins |> Enum.sort_by(fn %{username: u} -> u end)
   end
 
-  defp admin_validate(admin, admins) do
+  def admin_validate(admin, admins \\ nil) do
     u = admin["username"]
 
     err_name =
-      cond do
-        String.trim(u) == "" -> gettext("Name must not be empty")
-        is_admin_exists(admins, u) -> gettext("Name already exists")
-        true -> ""
+      case admins do
+        nil ->
+          ""
+
+        _ ->
+          cond do
+            String.trim(u) == "" -> gettext("Name must not be empty")
+            is_admin_exists(admins, u) -> gettext("Name already exists")
+            true -> ""
+          end
       end
 
     p = admin["password"]
-
+    pl = String.length(p)
     err_pass =
       cond do
-        String.length(p) < 8 -> gettext("Too short")
+        pl == 0 && admins -> gettext("No password")
+        pl < 8 and pl != 0 -> gettext("Too short")
         true -> ""
       end
 

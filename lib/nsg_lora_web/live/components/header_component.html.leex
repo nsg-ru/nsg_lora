@@ -1,6 +1,6 @@
 
 <nav
-class="fixed top-0 inset-x-0 z-30 h-12 pr-6
+class="fixed top-0 inset-x-0 z-10 h-12 pr-6
 bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-200
 border-b border-gray-400
 font-medium flex justify-between items-center">
@@ -60,6 +60,87 @@ font-medium flex justify-between items-center">
         6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16
         12a4 4 0 11-8 0 4 4 0 018 0z"/>
       </svg>
+    </div>
+
+    <!-- Admin -->
+    <div  class="relative"
+    x-data=" { open: false }">
+      <div @click="open = !open">
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          class="w-6 h-6 mx-1 hover-item"
+          stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </a>
+      </div>
+      <div class="absolute right-0 mt-1 w-56 rounded-md border border-gray-400 content-color"
+           x-show="open"
+           x-cloak
+           >
+        <div class="py-1 rounded-md bg-white shadow-xs"
+        @click="open=false">
+          <div class="block px-4 pt-2 text-sm text-center"><%= @admin.username %></div>
+          <div class="block px-4 pb-2 text-sm text-center border-b border-gray-400"><%= @admin.fullname %></div>
+          <a href="#" class="block px-4 py-2 text-sm hover-item"
+          phx-click="edit-profile" phx-target="<%= @myself %>" >
+            <%= gettext "Edit profile" %>
+          </a>
+          <a href="/logout" class="block px-4 py-2 text-sm hover-item">
+            <%= gettext "Sign out" %>
+          </a>
+        </div>
+      </div>
+
+      <div class="<%= @chpsw_hidden && "hidden" || "" %>">
+        <div class="fixed inset-0 transition-opacity z-10">
+          <div class="absolute inset-0 content-color bg-opacity-80 dark:bg-opacity-80">
+          </div>
+        </div>
+
+          <div class = "fixed inset-x-1 md:left-1/2 md:transform md:-translate-x-1/2 top-10
+          md:w-3/4 md:max-w-3xl
+          z-20 theme-color border border-gray-400 rounded-md p-2">
+
+            <div class="text-2xl font-bold text-center mb-5"><%= gettext "Edit profile" %></div>
+            <%= f = form_for :admin, "#", [phx_change: :admin_validate,
+            phx_submit: :save_profile, phx_target: @myself] %>
+              <div class="flex flex-wrap items-baseline mb-2">
+                <%= label f, gettext("Fullname"), class: "w-full md:w-1/4" %>
+                <%= text_input f, :fullname, value: @fullname,
+                class: "input-field content-color w-full md:w-3/4"
+                %>
+              </div>
+
+              <div class="text-sm italic">
+                  <%= gettext "Leave the following fields blank if you do not want change password" %>
+              </div>
+
+              <div class="flex flex-wrap items-baseline mb-2">
+                <%= label f, gettext("Password"), class: "w-full md:w-1/4" %>
+                <%= password_input f, :password, value: @password,
+                class: "input-field content-color w-full md:w-3/4" %>
+                <div class="w-full text-right text-red-500 text-sm"><%= @err_pass %></div>
+              </div>
+
+              <div class="flex flex-wrap items-baseline mb-2">
+                <%= label f, gettext("Confirm password"), class: "w-full md:w-1/4" %>
+                <%= password_input f, :password_confirm, value: @password_confirm,
+                class: "input-field content-color w-full md:w-3/4" %>
+                <div class="w-full text-right text-red-500 text-sm"><%= @err_pass_conf %></div>
+              </div>
+
+              <div class="flex justify-end  mb-2">
+                <a href="#" phx-click="close-profile" phx-target="<%= @myself %>"
+                  class="btn"><%= gettext "Cancel" %></a>
+                <%= submit gettext("Save"), class: "btn ml-2" %>
+              </div>
+              <div class="w-full text-right text-red-500 text-sm"><%= @err_save %></div>
+            </form>
+          </div>
+        </div>
+
     </div>
 
     <!-- Exit -->
