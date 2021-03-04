@@ -60,7 +60,7 @@ defmodule NsgLoraWeb.HeaderComponent do
               socket.assigns.admin.hash
 
             _ ->
-              Bcrypt.hash_pwd_salt(admin["password"])
+              Argon2.hash_pwd_salt(admin["password"])
           end
 
         admin = %{socket.assigns.admin | fullname: admin["fullname"], hash: hash}

@@ -28,7 +28,7 @@ defmodule NsgLora.Repo.Admin do
   end
 
   def write(admin = %{}) do
-    hash = Bcrypt.hash_pwd_salt(admin["password"])
+    hash = Argon2.hash_pwd_salt(admin["password"])
 
     admin_struct = %__MODULE__{
       username: admin["username"],
@@ -47,14 +47,14 @@ defmodule NsgLora.Repo.Admin do
   def authenticate(username, plain_text_password) do
     case read(username) do
       {:ok, admin = %NsgLora.Repo.Admin{hash: hash}} when is_binary(hash) ->
-        if Bcrypt.verify_pass(plain_text_password, hash) do
+        if Argon2.verify_pass(plain_text_password, hash) do
           {:ok, admin}
         else
           {:error, :invalid_credentials}
         end
 
       _ ->
-        Bcrypt.no_user_verify()
+        Argon2.no_user_verify()
         {:error, :invalid_credentials}
     end
   end
