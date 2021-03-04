@@ -64,7 +64,7 @@ defmodule NsgLora.MixProject do
       # aditional deps
       {:memento, "~> 0.3.1"},
       {:guardian, "~> 2.0"},
-      {:argon2_elixir, "~> 2.0"},
+      {:bcrypt_elixir, "~> 2.3"},
 
       # Для совместимости с lorawan-server
       {:ranch, "1.7.1", override: true},
