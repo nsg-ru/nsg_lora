@@ -1,5 +1,5 @@
-<%= form_for @conn, Routes.page_path(@conn, :index), fn f -> %>
-  <div class="flex flex-col items-center justify-center min-h-screen w-full text-gray-200">
+<%= form_for @conn, Routes.session_path(@conn, :new), fn f -> %>
+  <div class="flex flex-col items-center justify-center h-screen w-full text-gray-200">
     <div class="text-xl mb-3">LoRa-Full-Service</div>
     <%= text_input f, :name,
         class: "border rounded-md bg-transparent py-2 px-4 w-64",
@@ -10,8 +10,11 @@
         placeholder: gettext("Password")
     %>
     <%= submit gettext("Sign in"),
-        class: "border rounded-md bg-transparent py-2 px-4 w-64 hover:bg-gray-200 hover:text-gray-800"
+        class: "border rounded-md bg-transparent py-2 px-4 w-64 hover:bg-gray-200 hover:text-gray-800 mb-3"
     %>
+    <div class="alert py-2 px-4 w-64 text-center border rounded-md text-red-900 bg-red-200"><%=
+       get_flash(@conn, :error)
+    %></div>
     <div class="text-gray-400 mt-3">&copy; NSG 2021</div>
   </div>
 <% end %>

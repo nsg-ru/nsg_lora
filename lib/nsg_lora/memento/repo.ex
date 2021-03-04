@@ -28,17 +28,35 @@ defmodule NsgLora.Repo.Admin do
   end
 
   def write(admin = %{}) do
+    hash = Argon2.hash_pwd_salt(admin["password"])
+
     admin_struct = %__MODULE__{
-      username: (if admin["username"] == "", do: nil, else: admin["username"]),
+      username: admin["username"],
       fullname: admin["fullname"],
-      hash: admin["hash"],
+      hash: hash,
       opts: admin["opts"]
     }
+
     NsgLora.Repo.write(admin_struct)
   end
 
   def delete(username) do
     Memento.transaction(fn -> Memento.Query.delete(__MODULE__, username) end)
+  end
+
+  def authenticate(username, plain_text_password) do
+    case read(username) do
+      {:ok, admin = %NsgLora.Repo.Admin{hash: hash}} when is_binary(hash) ->
+        if Argon2.verify_pass(plain_text_password, hash) do
+          {:ok, admin}
+        else
+          {:error, :invalid_credentials}
+        end
+
+      _ ->
+        Argon2.no_user_verify()
+        {:error, :invalid_credentials}
+    end
   end
 
   def load_current_admin(conn, _) do

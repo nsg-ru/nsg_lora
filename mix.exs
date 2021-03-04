@@ -62,8 +62,9 @@ defmodule NsgLora.MixProject do
       {:plug_cowboy, "~> 2.0"},
 
       # aditional deps
-      # {:amnesia, "~> 0.2.8"},
       {:memento, "~> 0.3.1"},
+      {:guardian, "~> 2.0"},
+      {:argon2_elixir, "~> 2.0"},
 
       # Для совместимости с lorawan-server
       {:ranch, "1.7.1", override: true},

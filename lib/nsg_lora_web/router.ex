@@ -17,19 +17,25 @@ defmodule NsgLoraWeb.Router do
   end
 
   pipeline :auth do
+    plug NsgLora.Pipeline
     plug :load_current_admin
   end
 
-  scope "/", NsgLoraWeb do
-    pipe_through [:browser]
-
-    get "/login", PageController, :index
-    post "/login", PageController, :login
-
+  # We use ensure_auth to fail if there is no one logged in
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated
   end
 
   scope "/", NsgLoraWeb do
     pipe_through [:browser, :auth]
+
+    get "/login", SessionController, :new
+    post "/login", SessionController, :login
+    get "/logout", SessionController, :logout
+  end
+
+  scope "/", NsgLoraWeb do
+    pipe_through [:browser, :auth, :ensure_auth]
 
     live "/", DashboardLive
     live "/bs", BSLive
