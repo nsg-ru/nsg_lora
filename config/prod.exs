@@ -15,7 +15,7 @@ config :nsg_lora, NsgLoraWeb.Endpoint,
   server: true
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger, level: :info, colors: [enabled: false]
 
 config :lager,
   crash_log: '/dev/null',
