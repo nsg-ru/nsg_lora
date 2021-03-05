@@ -89,8 +89,7 @@ defmodule NsgLoraWeb.AdminsLive do
     {:noreply, assign(socket, admins: admins)}
   end
 
-  def handle_info(mes, socket) do
-    IO.inspect(mes)
+  def handle_info(_mes, socket) do
     {:noreply, socket}
   end
 

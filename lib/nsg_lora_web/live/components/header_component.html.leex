@@ -32,7 +32,7 @@ font-medium flex justify-between items-center">
     <a href="#"
     class="mx-1 px-1 text-2xl hover-item"
     phx-click="toggle-lang" phx-target="<%= @myself %>" >
-      <%= @admin.opts.lang %>
+      <%= @admin.opts[:lang] || "ru" %>
     </a>
 
     <!-- Toggle theme -->
@@ -81,7 +81,14 @@ font-medium flex justify-between items-center">
            >
         <div class="py-1 rounded-md bg-white shadow-xs"
         @click="open=false">
-          <div class="block px-4 pt-2 text-sm text-center"><%= @admin.username %></div>
+          <div class="block flex justify-end mr-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            class="h-4 w-4"
+            stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+          <div class="block px-4 pt-0 text-sm text-center"><%= @admin.username %></div>
           <div class="block px-4 pb-2 text-sm text-center border-b border-gray-400"><%= @admin.fullname %></div>
           <a href="#" class="block px-4 py-2 text-sm hover-item"
           phx-click="edit-profile" phx-target="<%= @myself %>" >

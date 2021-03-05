@@ -10,7 +10,7 @@ defmodule NsgLoraWeb.BSLive do
 
   @impl true
   def handle_event(event, params, socket) do
-    IO.inspect([event: event, params: params])
+    IO.inspect(event: event, params: params)
     {:noreply, socket}
   end
 end

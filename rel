@@ -1,6 +1,17 @@
 #!/bin/bash
 REL=${1-local}
 
+case "$REL" in
+nsg_lora_arm )
+  export CC=/opt/nsgdevkit-2017-Q2/usr/bin/arm-nsg_rt-linux-gnueabi-gcc
+  ERL="/opt/erlang/arm_rt_eabi/erlang-22.3.4"
+  export ERTS_INCLUDE_DIR=$ERL/erts-10.7.2/include
+  echo Make release nsg_lora_arm;;
+
+local )
+  echo Make release local;;
+esac
+
 export SECRET_KEY_BASE=`mix phx.gen.secret`
 export MIX_ENV=prod
 mix compile

@@ -15,7 +15,6 @@ defmodule NsgLoraWeb.HeaderComponent do
   @impl true
   def update(assigns, socket) do
     socket = assign(socket, assigns)
-    IO.inspect(socket.assigns)
     {:ok, assign(socket, @chpsw_deafaults)}
   end
 
@@ -60,7 +59,7 @@ defmodule NsgLoraWeb.HeaderComponent do
               socket.assigns.admin.hash
 
             _ ->
-              Argon2.hash_pwd_salt(admin["password"])
+              NsgLora.Hash.hash_pwd_salt(admin["password"])
           end
 
         admin = %{socket.assigns.admin | fullname: admin["fullname"], hash: hash}
@@ -86,7 +85,7 @@ defmodule NsgLoraWeb.HeaderComponent do
   end
 
   def handle_event(event, params, socket) do
-    IO.inspect(event: event, params: params, assigns: socket.assigns)
+    IO.inspect(event: event, params: params)
     {:noreply, socket}
   end
 

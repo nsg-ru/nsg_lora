@@ -98,8 +98,8 @@ msgid "Coming soon"
 msgstr "Скоро будет"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/components/header_component.html.leex:121
-#: lib/nsg_lora_web/templates/session/new.html.eex:10
+#: lib/nsg_lora_web/live/admins_live.html.leex:67
+#: lib/nsg_lora_web/live/components/header_component.html.leex:128 lib/nsg_lora_web/templates/session/new.html.eex:10
 msgid "Password"
 msgstr "Пароль"
 
@@ -119,30 +119,33 @@ msgid "Users"
 msgstr "Пользователи"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/components/header_component.html.leex:128
+#: lib/nsg_lora_web/live/admins_live.html.leex:74
+#: lib/nsg_lora_web/live/components/header_component.html.leex:135
 msgid "Confirm password"
 msgstr "Подтвердите пароль"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:45
-#: lib/nsg_lora_web/live/admins_live.html.leex:57 lib/nsg_lora_web/live/components/header_component.html.leex:110
+#: lib/nsg_lora_web/live/admins_live.html.leex:60
+#: lib/nsg_lora_web/live/admins_live.html.leex:94 lib/nsg_lora_web/live/admins_live.html.leex:106
+#: lib/nsg_lora_web/live/components/header_component.html.leex:117
 msgid "Fullname"
 msgstr "Полное имя"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:44
-#: lib/nsg_lora_web/live/admins_live.html.leex:53
+#: lib/nsg_lora_web/live/admins_live.html.leex:52
+#: lib/nsg_lora_web/live/admins_live.html.leex:93 lib/nsg_lora_web/live/admins_live.html.leex:102
 msgid "Name"
 msgstr "Имя"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/components/header_component.html.leex:137
+#: lib/nsg_lora_web/live/admins_live.html.leex:82
+#: lib/nsg_lora_web/live/components/header_component.html.leex:144
 msgid "Save"
 msgstr "Сохранить"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.html.leex:46
-#: lib/nsg_lora_web/live/admins_live.html.leex:61
+#: lib/nsg_lora_web/live/admins_live.html.leex:95
+#: lib/nsg_lora_web/live/admins_live.html.leex:110
 msgid "Actions"
 msgstr "Действия"
 
@@ -153,7 +156,7 @@ msgstr "Вы уверены что хотите удалить админа"
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:14
-#: lib/nsg_lora_web/live/components/header_component.html.leex:136
+#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/components/header_component.html.leex:143
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -163,12 +166,12 @@ msgid "OK"
 msgstr "Да"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.ex:118
+#: lib/nsg_lora_web/live/admins_live.ex:117
 msgid "Name already exists"
 msgstr "Имя уже существует"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.ex:117
+#: lib/nsg_lora_web/live/admins_live.ex:116
 msgid "Name must not be empty"
 msgstr "Имя не должно быть пустым"
 
@@ -188,17 +191,27 @@ msgid "Bad password"
 msgstr "Неверный пароль"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/components/header_component.html.leex:88
-#: lib/nsg_lora_web/live/components/header_component.html.leex:106
+#: lib/nsg_lora_web/live/components/header_component.html.leex:95
+#: lib/nsg_lora_web/live/components/header_component.html.leex:113
 msgid "Edit profile"
 msgstr "Редактировать профиль"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/components/header_component.html.leex:117
+#: lib/nsg_lora_web/live/components/header_component.html.leex:124
 msgid "Leave the following fields blank if you do not want change password"
 msgstr "Оставьте следующие поля пустыми если не хотите изменять пароль"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/components/header_component.html.leex:91
+#: lib/nsg_lora_web/live/components/header_component.html.leex:98
 msgid "Sign out"
 msgstr "Выйти"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.html.leex:49
+msgid "Add new admin"
+msgstr "Добавить нового админа"
+
+#, elixir-format, fuzzy
+#: lib/nsg_lora_web/live/admins_live.ex:126
+msgid "No password"
+msgstr "Неверный пароль"
