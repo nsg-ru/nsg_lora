@@ -16,6 +16,7 @@ module.exports = {
       current: 'currentColor',
       gray: colors.coolGray,
       blue: colors.lightBlue,
+      green: colors.emerald,
       red: colors.red,
     },
         minHeight: {
