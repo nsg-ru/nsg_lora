@@ -1,6 +1,8 @@
 <div class="bg-gray-200 dark:bg-gray-700"
 x-data="main_init()"
 >
+  <%= live_component @socket, NsgLoraWeb.AlertComponent, alert: @alert %>
+
   <%= live_component @socket, NsgLoraWeb.HeaderComponent,
   id: :header, admin: @admin, path: @path %>
 
@@ -155,19 +157,26 @@ x-data="main_init()"
   <div class="max-w-screen-xl mx-auto">
     <div class="p-2" >
       <main>
-        <p class="alert alert-info" role="alert"
-          phx-click="lv:clear-flash"
-          phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+        <div  id="live-flash" phx-hook="Flash"
+        class="fixed z-20 top-6 inset-x-0 mx-2 flex justify-center">
 
-        <p class="alert alert-danger" role="alert"
-          phx-click="lv:clear-flash"
-          phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+          <div class="alert py-2 px-4  text-center rounded-md
+           text-blue-900 bg-blue-200 bg-opacity-90"
+            phx-click="lv:clear-flash"
+            phx-value-key="info"><%= live_flash(@flash, :info) %></div>
+
+          <div class="alert py-2 px-4 text-center rounded-md
+          text-red-900 bg-red-200 bg-opacity-90"
+            phx-click="lv:clear-flash"
+            phx-value-key="error"><%= live_flash(@flash, :error) %></div>
+        </div>
 
         <%= @inner_content %>
       </main>
     </div>
     <div class="text-xs text-right mr-3 mt-5">
-      LoRa-Full-Service-<%= Application.spec(:nsg_lora, :vsn) %> &copy;2021 ООО "ЭН-ЭС-ДЖИ" <a href="https://nsg.ru" target="_blank">nsg.ru</a>
+      LoRa-Full-Service-<%= Application.spec(:nsg_lora, :vsn) %> &copy;2021 ООО "ЭН-ЭС-ДЖИ"
+      <a href="https://nsg.ru" target="_blank">nsg.ru</a>
     </div>
   </div>
   </div>

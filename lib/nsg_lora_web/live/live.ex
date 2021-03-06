@@ -12,7 +12,8 @@ defmodule NsgLoraWeb.Live do
 
     %{
       path: path,
-      admin: %{admin | opts: Map.put(opts, :lang, lang)}
+      admin: %{admin | opts: Map.put(opts, :lang, lang)},
+      alert: %{hidden: true, text: ""}
     }
   end
 end

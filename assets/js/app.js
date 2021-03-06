@@ -47,6 +47,18 @@ Hooks.ToggleTheme = {
   }
 }
 
+Hooks.Flash = {
+  timeout: null,
+  updated() {
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(() => this.closeFlash(), 7000)
+  },
+  closeFlash() {
+      this.pushEvent("lv:clear-flash", {key: "info"})
+  }
+}
+
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   dom: {
