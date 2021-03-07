@@ -2,6 +2,8 @@ defmodule NsgLora.DBServer do
   use GenServer
   require Logger
 
+  @table_list [NsgLora.Repo.Admin, NsgLora.Repo.Server]
+
   def start_link(params) do
     GenServer.start_link(__MODULE__, params, name: __MODULE__)
   end
@@ -21,9 +23,12 @@ defmodule NsgLora.DBServer do
     # :mnesia.system_info(:tables)
     # |> Enum.each(fn t -> :mnesia.force_load_table(t) end)
 
-    Memento.Table.create(NsgLora.Repo.Admin, disc_copies: nodes)
+    @table_list
+    |> Enum.each(fn table ->
+      Memento.Table.create(table, disc_copies: nodes)
+    end)
 
-    :mnesia.wait_for_tables([NsgLora.Repo.Admin], 5000)
+    :mnesia.wait_for_tables(@table_list, 5000)
 
     case NsgLora.Repo.Admin.all() do
       {:ok, []} -> NsgLora.Repo.Admin.write(%{"username" => "admin", "password" => "admin"})

@@ -36,7 +36,7 @@ font-medium flex justify-between items-center">
     </a>
 
     <!-- Toggle theme -->
-    <div class="mx-1"
+    <a href="#" class="mx-1"
     phx-click="toggle-theme" phx-target="<%= @myself %>" >
       <svg
       class="w-6 h-6 hover-item <%= @admin.opts[:light_theme] && "hidden" || "" %>"
@@ -60,7 +60,7 @@ font-medium flex justify-between items-center">
         6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16
         12a4 4 0 11-8 0 4 4 0 018 0z"/>
       </svg>
-    </div>
+    </a>
 
     <!-- Admin -->
     <div  class="relative"

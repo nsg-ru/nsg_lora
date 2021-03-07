@@ -1,5 +1,6 @@
 defmodule NsgLoraWeb.Live do
   alias NsgLoraWeb.Router.Helpers, as: Routes
+  use Phoenix.LiveView
 
   def init(mod, session, socket) do
     path = Routes.live_path(socket, mod)
@@ -16,4 +17,5 @@ defmodule NsgLoraWeb.Live do
       alert: %{hidden: true, text: ""}
     }
   end
+
 end

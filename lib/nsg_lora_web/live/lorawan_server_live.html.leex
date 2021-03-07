@@ -1,19 +1,41 @@
-<h1 class="text-3xl font-bold text-center"><%= gettext "Lorawan server title" %></h1>
 
-<div class="flex justify-end">
-  <a href="#" class="relative py-2"
-  phx-click="toggle">
-    <div class="h-2 w-16 rounded-full bg-gray-400">
-    </div>
-    <div class="<%= @server_up && "" || "hidden" %>
-    absolute inset-y-0 right-0 h-6 w-6 rounded-full bg-green-500">
-    </div>
-    <div class="<%= @server_up && "hidden" || "" %> absolute inset-y-0 h-6 w-6 rounded-full bg-gray-300 dark:bg-gray-500">
-    </div>
-  </a>
-</div>
+  <h1 class="text-3xl font-bold text-center"><%= gettext "Lorawan server title" %></h1>
+
+  <div class="flex justify-end">
+    <a href="#" class="relative py-2"
+    phx-click="toggle">
+      <div class="h-2 w-16 rounded-full bg-gray-400">
+      </div>
+      <div class="<%= @server_up && "" || "hidden" %>
+      absolute inset-y-0 right-0 h-6 w-6 rounded-full bg-green-500">
+      </div>
+      <div class="<%= @server_up && "hidden" || "" %> absolute inset-y-0 h-6 w-6 rounded-full bg-gray-300 dark:bg-gray-500">
+      </div>
+    </a>
+  </div>
 
   <a href="<%= "http://#{@uri.host}:8080" %>" target="_blank"
-  class="btn flex justify-center mt-2">
+    class="btn flex justify-center mt-2 mb-5">
     <%= gettext "Go to lorawan server" %>
   </a>
+
+  <div>
+    <h1 class="text-2xl font-bold"><%= gettext "Lorawan server configuration" %></h1>
+    <%= f = form_for :config, "#",
+    [phx_change: :config_validate, phx_submit: :config] %>
+      <%= render NsgLoraWeb.ShareView, "input_form.html",
+        f: f, config: @config, err: @err, id: "http_port", name: gettext("HTTP port")
+      %>
+
+      <%= render NsgLoraWeb.ShareView, "input_form.html",
+        f: f, config: @config, err: @err, id: "https_port", name: gettext("HTTPS port")
+      %>
+
+      <div class="flex justify-end  mb-2">
+        <a href="#" phx-click="lorawan_server_config_cancel"
+        class="btn"><%= gettext "Cancel" %></a>
+        <%= submit gettext("Save"), class: "btn ml-2" %>
+      </div>
+      <div class="w-full text-right text-red-500 text-sm"><%= @err["save"] %></div>
+    </form>
+  </div>

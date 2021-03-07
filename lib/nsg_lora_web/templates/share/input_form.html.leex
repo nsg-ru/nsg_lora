@@ -1,0 +1,8 @@
+<div class="flex flex-wrap items-baseline mb-2">
+  <div class="w-full md:w-1/4"><%= @name %></div>
+  <%= text_input @f, @id, value: @config[@id],
+  class: "input-field content-color w-full md:w-3/4"
+  %>
+  <div class="w-full text-right text-red-500 text-sm"><%=
+    @err[@id] %></div>
+</div>
