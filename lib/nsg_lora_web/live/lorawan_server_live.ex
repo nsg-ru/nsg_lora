@@ -35,8 +35,12 @@ defmodule NsgLoraWeb.LorawanServerLive do
 
     socket =
       case server_up do
-        true -> put_flash(socket, :info, gettext("Server started"))
-        _ -> put_flash(socket, :info, gettext("Server closed"))
+        true ->
+          Application.ensure_all_started(:lorawan_server)
+          put_flash(socket, :info, gettext("Server started"))
+        _ ->
+        Application.stop(:lorawan_server)
+        put_flash(socket, :info, gettext("Server closed"))
       end
 
     {:noreply, assign(socket, server_up: server_up)}
