@@ -10,17 +10,17 @@ defmodule NsgLora.Repo.Server do
     Memento.transaction(fn -> Memento.Query.read(__MODULE__, sname) end)
   end
 
-  def write(server = %{}) do
+  def write(server = %__MODULE__{}) do
     NsgLora.Repo.write(server)
   end
 
-  def write(server = %__MODULE__{}) do
+  def write(server = %{}) do
     struct = %__MODULE__{
-      sname: server["sname"],
-      name: server["name"],
-      adm_state: server["adm_state"],
-      config: server["http_port"],
-      opts: server["opts"]
+      sname: server[:sname],
+      name: server[:name],
+      adm_state: server[:adm_state],
+      config: server[:config],
+      opts: server[:opts]
     }
 
     NsgLora.Repo.write(struct)

@@ -5,14 +5,8 @@ defmodule NsgLoraWeb.LorawanServerLive do
   @impl true
   def mount(_params, session, socket) do
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
-
-    server =
-      case NsgLora.Repo.Server.read(node()) do
-        {:ok, server} -> server
-        _ -> %{}
-      end
-
-    config = server[:config] || %{"http_port" => 8080, "https_port" => 8443}
+    server = get_server_or_default(node())
+    config = server.config
 
     app = started?()
 
@@ -20,7 +14,8 @@ defmodule NsgLoraWeb.LorawanServerLive do
      assign(socket,
        server_up: !!app,
        config: config,
-       err: %{}
+       err: %{},
+       input: false
      )}
   end
 
@@ -35,8 +30,15 @@ defmodule NsgLoraWeb.LorawanServerLive do
 
     case server_up do
       true ->
-        Application.ensure_all_started(:lorawan_server)
-        socket = put_flash(socket, :info, gettext("Server started"))
+        socket =
+          case lorawan_server_start() do
+            {:ok, _} ->
+              put_flash(socket, :info, gettext("Server started"))
+
+            {:error, reason} ->
+              put_flash(socket, :error, gettext("Server not started") <> ": " <> inspect(reason))
+          end
+
         {:noreply, assign(socket, server_up: server_up)}
 
       _ ->
@@ -61,15 +63,38 @@ defmodule NsgLoraWeb.LorawanServerLive do
     {:noreply, assign(socket, server_up: false, alert: %{hidden: true})}
   end
 
-  def handle_event("config_validate", params = %{"config" => config}, socket) do
+  def handle_event("config_validate", %{"config" => config}, socket) do
     err = validate(config)
-    {:noreply, assign(socket, config: config, err: err)}
+    {:noreply, assign(socket, config: config, err: err, input: true)}
   end
 
-  def handle_event("config", params = %{"config" => config}, socket) do
-    IO.inspect(params, label: "SAVE")
+  def handle_event("config", %{"config" => config}, socket) do
+    case validate(config) do
+      err when err == %{} ->
+        server = get_server_or_default(node())
 
-    {:noreply, assign(socket, config: socket.assigns.config)}
+        case NsgLora.Repo.Server.write(%{server | config: config}) do
+          {:ok, _} ->
+            {:noreply,
+             assign(
+               socket,
+               config: config,
+               err: err,
+               input: false
+             )}
+
+          {:error, {:transaction_aborted, tr_err}} ->
+            {:noreply, assign(socket, err: Map.put(err, "save", inspect(tr_err)))}
+        end
+
+      err ->
+        {:noreply, assign(socket, config: config, err: err)}
+    end
+  end
+
+  def handle_event("cancel", _, socket) do
+    server = get_server_or_default(node())
+    {:noreply, assign(socket, config: server.config, err: %{}, input: false)}
   end
 
   def handle_event(event, params, socket) do
@@ -83,30 +108,54 @@ defmodule NsgLoraWeb.LorawanServerLive do
   end
 
   defp validate(config) do
-    %{
-      "http_port" => port_validate(config["http_port"]),
-      "https_port" => port_validate(config["https_port"])
-    }
+    %{}
+    |> port_validate("http_port", config["http_port"])
+    |> port_validate("https_port", config["https_port"])
   end
 
-  defp port_validate(str) do
-    str = String.trim(str)
+  defp port_validate(errmap, id, value) do
+    value = String.trim(value)
 
-    case str do
+    case value do
       "" ->
-        ""
+        errmap
 
       _ ->
-        case Integer.parse(str) do
+        case Integer.parse(value) do
           {n, ""} ->
             cond do
-              n <= 0 or n > 65535 -> gettext("Must be from 1 to 65535")
-              true -> ""
+              n <= 0 or n > 65535 -> Map.put(errmap, id, gettext("Must be from 1 to 65535"))
+              true -> errmap
             end
 
           _ ->
-            gettext("Must be number")
+            Map.put(errmap, id, gettext("Must be number"))
         end
     end
+  end
+
+  defp get_server_or_default(sname) do
+    case NsgLora.Repo.Server.read(node()) do
+      {:ok, server = %NsgLora.Repo.Server{}} ->
+        server
+
+      _ ->
+        %NsgLora.Repo.Server{sname: sname, config: %{"http_port" => 8080, "https_port" => 8443}}
+    end
+  end
+
+  def lorawan_server_start() do
+    server = get_server_or_default(node())
+    config = server.config
+
+    http_admin_listen =
+      case Integer.parse(config["http_port"]) do
+        {n, _} -> [port: n]
+        _ -> []
+      end
+
+    Application.put_env(:lorawan_server, :http_admin_listen, http_admin_listen)
+
+    Application.ensure_all_started(:lorawan_server)
   end
 end

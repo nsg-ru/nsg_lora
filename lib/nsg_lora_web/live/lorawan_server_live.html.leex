@@ -25,21 +25,36 @@
   </div>
 
   <div>
-    <h1 class="text-2xl font-bold"><%= gettext "Lorawan server configuration" %></h1>
+    <h1 class="text-2xl font-bold text-center mb-2"><%= gettext "Lorawan server configuration" %></h1>
     <%= f = form_for :config, "#",
     [phx_change: :config_validate, phx_submit: :config] %>
-      <%= render NsgLoraWeb.ShareView, "input_form.html",
-        f: f, config: @config, err: @err, id: "http_port", name: gettext("HTTP port")
-      %>
 
-      <%= render NsgLoraWeb.ShareView, "input_form.html",
-        f: f, config: @config, err: @err, id: "https_port", name: gettext("HTTPS port")
-      %>
+      <%= for {id, name} <- [
+        {"http_port",gettext("HTTP port")},
+        {"https_port",gettext("HTTPS port")},
+      ] do %>
+        <%= render NsgLoraWeb.ShareView, "input_form.html",
+          f: f, config: @config, err: @err, id: id, name: name
+        %>
+      <% end %>
+
+      <div class="<%= String.trim(@config["https_port"]) == "" && "hidden" || "" %>">
+        <div class="text-lg font-bold"><%= gettext("SSL files paths") %></div>
+        <%= for {id, name} <- [
+          {"keyfile",gettext("Key")},
+          {"certfile",gettext("Certificate")},
+          {"cacertfile",gettext("CA certificates")},
+        ] do %>
+          <%= render NsgLoraWeb.ShareView, "input_form.html",
+            f: f, config: @config, err: @err, id: id, name: name
+          %>
+        <% end %>
+      </div>
 
       <div class="flex justify-end  mb-2">
-        <a href="#" phx-click="lorawan_server_config_cancel"
-        class="btn"><%= gettext "Cancel" %></a>
-        <%= submit gettext("Save"), class: "btn ml-2" %>
+        <a href="#" phx-click="cancel"
+        class="btn <%= @input && "animate-pulse" || "" %>"><%= gettext "Cancel" %></a>
+        <%= submit gettext("Save"), class: "btn ml-2 #{@input && "animate-pulse" || ""} " %>
       </div>
       <div class="w-full text-right text-red-500 text-sm"><%= @err["save"] %></div>
     </form>
