@@ -33,17 +33,32 @@ defmodule NsgLoraWeb.LorawanServerLive do
   def handle_event("toggle", _params, socket) do
     server_up = !socket.assigns.server_up
 
-    socket =
-      case server_up do
-        true ->
-          Application.ensure_all_started(:lorawan_server)
-          put_flash(socket, :info, gettext("Server started"))
-        _ ->
-        Application.stop(:lorawan_server)
-        put_flash(socket, :info, gettext("Server closed"))
-      end
+    case server_up do
+      true ->
+        Application.ensure_all_started(:lorawan_server)
+        socket = put_flash(socket, :info, gettext("Server started"))
+        {:noreply, assign(socket, server_up: server_up)}
 
-    {:noreply, assign(socket, server_up: server_up)}
+      _ ->
+        {:noreply,
+         assign(socket,
+           alert: %{
+             hidden: false,
+             text: gettext("Do you want to stop Lorawan server?"),
+             id: "server_down"
+           }
+         )}
+    end
+  end
+
+  def handle_event("alert-cancel", _, socket) do
+    {:noreply, assign(socket, alert: %{hidden: true})}
+  end
+
+  def handle_event("alert-ok", %{"id" => "server_down"}, socket) do
+    Application.stop(:lorawan_server)
+    socket = put_flash(socket, :info, gettext("Server closed"))
+    {:noreply, assign(socket, server_up: false, alert: %{hidden: true})}
   end
 
   def handle_event("config_validate", params = %{"config" => config}, socket) do
@@ -51,8 +66,9 @@ defmodule NsgLoraWeb.LorawanServerLive do
     {:noreply, assign(socket, config: config, err: err)}
   end
 
-  def handle_event("lorawan_server_config", params = %{"lorawan_server_config" => config}, socket) do
-    IO.inspect(params)
+  def handle_event("config", params = %{"config" => config}, socket) do
+    IO.inspect(params, label: "SAVE")
+
     {:noreply, assign(socket, config: socket.assigns.config)}
   end
 

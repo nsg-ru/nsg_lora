@@ -1,7 +1,6 @@
 <div class="bg-gray-200 dark:bg-gray-700"
 x-data="main_init()"
 >
-  <%= live_component @socket, NsgLoraWeb.AlertComponent, alert: @alert %>
 
   <%= live_component @socket, NsgLoraWeb.HeaderComponent,
   id: :header, admin: @admin, path: @path %>
@@ -170,6 +169,8 @@ x-data="main_init()"
             phx-click="lv:clear-flash"
             phx-value-key="error"><%= live_flash(@flash, :error) %></div>
         </div>
+
+        <%= live_component @socket, NsgLoraWeb.AlertComponent, alert: @alert %>
 
         <%= @inner_content %>
       </main>
