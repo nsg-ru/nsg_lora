@@ -2,6 +2,35 @@ defmodule NsgLoraWeb.LorawanServerLive do
   use NsgLoraWeb, :live_view
   import NsgLoraWeb.Gettext
 
+  @default_config [
+    http_admin_path: "/admin",
+    map_tile_server: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    http_custom_web: [],
+    connectors: [
+      lorawan_connector_amqp: ["amqp", "amqps"],
+      lorawan_connector_mqtt: ["mqtt", "mqtts"],
+      lorawan_connector_http: ["http", "https"],
+      lorawan_connector_mongodb: ["mongodb"],
+      lorawan_connector_ws: ["ws"]
+    ],
+    frames_before_adr: 50,
+    slack_server: {'slack.com', 443},
+    applications: [{"semtech-mote", :lorawan_application_semtech_mote}],
+    max_lost_after_reset: 10,
+    trim_interval: 3600,
+    gateway_delay: 200,
+    http_admin_redirect_ssl: false,
+    retained_rxframes: 50,
+    websocket_timeout: 3_600_000,
+    ssl_options: [],
+    http_extra_headers: %{},
+    deduplication_delay: 200,
+    http_admin_credentials: {"admin", "admin"},
+    server_stats_interval: 60,
+    devstat_gap: {432_000, 96},
+    event_lifetime: 86400,
+  ]
+
   @impl true
   def mount(_params, session, socket) do
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))

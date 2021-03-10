@@ -15,7 +15,8 @@ defmodule NsgLora.Application do
       NsgLoraWeb.Endpoint,
       # Start a worker by calling: NsgLora.Worker.start_link(arg)
       # {NsgLora.Worker, arg}
-      NsgLora.DBServer
+      NsgLora.DBServer,
+      NsgLora.DynSup
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
