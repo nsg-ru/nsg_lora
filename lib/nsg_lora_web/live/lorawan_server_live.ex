@@ -111,6 +111,7 @@ defmodule NsgLoraWeb.LorawanServerLive do
 
   defp validate(config) do
     %{}
+    |> port_validate("packet_forwarder_port", config["packet_forwarder_port"])
     |> port_validate("http_port", config["http_port"])
     |> port_validate("https_port", config["https_port"])
   end
@@ -142,7 +143,10 @@ defmodule NsgLoraWeb.LorawanServerLive do
         server
 
       _ ->
-        %NsgLora.Repo.Server{sname: sname, config: %{"http_port" => 8080, "https_port" => 8443}}
+        %NsgLora.Repo.Server{
+          sname: sname,
+          config: %{"http_port" => 8080, "https_port" => 8443, "packet_forwarder_port" => 1680}
+        }
     end
   end
 
@@ -150,6 +154,12 @@ defmodule NsgLoraWeb.LorawanServerLive do
     server = get_server_or_default(node())
 
     config = server.config
+
+    packet_forwarder_listen =
+      case Integer.parse(config["packet_forwarder_port"]) do
+        {n, _} -> [port: n]
+        _ -> []
+      end
 
     http_admin_listen =
       case Integer.parse(config["http_port"]) do
@@ -171,6 +181,9 @@ defmodule NsgLoraWeb.LorawanServerLive do
           []
       end
 
+    Application.put_env(:lorawan_server, :http_admin_redirect_ssl, false)
+
+    Application.put_env(:lorawan_server, :packet_forwarder_listen, packet_forwarder_listen)
     Application.put_env(:lorawan_server, :http_admin_listen, http_admin_listen)
     Application.put_env(:lorawan_server, :http_admin_listen_ssl, http_admin_listen_ssl)
 
@@ -180,15 +193,21 @@ defmodule NsgLoraWeb.LorawanServerLive do
   defp lorawan_server_url(socket) do
     env = Application.get_all_env(:lorawan_server)
 
-    case env[:http_admin_listen][:port] do
-      n when is_integer(n) ->
-        "http://#{socket.assigns.uri.host}:#{n}"
+    http =
+      case env[:http_admin_listen][:port] do
+        n when is_integer(n) ->
+          "http://#{socket.assigns.uri.host}:#{n}"
 
-      _ ->
-        case env[:http_admin_listen_ssl][:port] do
-          n when is_integer(n) -> "https://#{socket.assigns.uri.host}:#{n}"
-          _ -> nil
-        end
-    end
+        _ ->
+          nil
+      end
+
+    https =
+      case env[:http_admin_listen_ssl][:port] do
+        n when is_integer(n) -> "https://#{socket.assigns.uri.host}:#{n}"
+        _ -> nil
+      end
+
+    %{http: http, https: https}
   end
 end

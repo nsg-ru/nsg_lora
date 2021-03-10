@@ -15,10 +15,20 @@
 
   <!-- Server on/off -->
   <div class="flex justify-end mt-2 mb-5">
-    <a href="<%= @server_url %>" target="_blank"
-      class="<%= @server_up && "" || "hidden" %> btn">
-      <%= gettext "Go to lorawan server" %>
-    </a>
+    <div class="<%= @server_up && "" || "hidden" %> flex flex-col
+      md:flex-row md:items-baseline">
+      <div class="<%= (@server_url.http || @server_url.https) && "" || "hidden" %>" >
+        <%= (gettext "Go to lorawan server")%>
+      </div>
+      <a href="<%= @server_url.http %>" target="_blank"
+        class="<%= @server_url.http && "" || "hidden" %> btn mt-2 md:ml-2 md:mt-0">
+        <%= @server_url.http %>
+      </a>
+      <a href="<%= @server_url.https %>" target="_blank"
+        class="<%= @server_url.https && "" || "hidden" %> btn mt-2 md:ml-2 md:mt-0">
+        <%= @server_url.https %>
+      </a>
+    </div>
     <div class="<%= @server_up && "hidden" || "" %> py-2 border border-transparent">
       <%= gettext("Lorawan server is down") %>
     </div>
@@ -30,6 +40,7 @@
     [phx_change: :config_validate, phx_submit: :config] %>
 
       <%= for {id, name} <- [
+        {"packet_forwarder_port",gettext("Packet forwarder port")},
         {"http_port",gettext("HTTP port")},
         {"https_port",gettext("HTTPS port")},
       ] do %>
