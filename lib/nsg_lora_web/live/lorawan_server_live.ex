@@ -21,7 +21,8 @@ defmodule NsgLoraWeb.LorawanServerLive do
 
   @impl true
   def handle_params(_unsigned_params, uri, socket) do
-    {:noreply, assign(socket, uri: URI.parse(uri))}
+    socket = assign(socket, uri: URI.parse(uri))
+    {:noreply, assign(socket, server_url: lorawan_server_url(socket))}
   end
 
   @impl true
@@ -39,7 +40,8 @@ defmodule NsgLoraWeb.LorawanServerLive do
               put_flash(socket, :error, gettext("Server not started") <> ": " <> inspect(reason))
           end
 
-        {:noreply, assign(socket, server_up: server_up)}
+        {:noreply,
+         assign(socket, server_up: !!started?(), server_url: lorawan_server_url(socket))}
 
       _ ->
         {:noreply,
@@ -60,7 +62,7 @@ defmodule NsgLoraWeb.LorawanServerLive do
   def handle_event("alert-ok", %{"id" => "server_down"}, socket) do
     Application.stop(:lorawan_server)
     socket = put_flash(socket, :info, gettext("Server closed"))
-    {:noreply, assign(socket, server_up: false, alert: %{hidden: true})}
+    {:noreply, assign(socket, server_up: !!started?(), alert: %{hidden: true})}
   end
 
   def handle_event("config_validate", %{"config" => config}, socket) do
@@ -146,6 +148,7 @@ defmodule NsgLoraWeb.LorawanServerLive do
 
   def lorawan_server_start() do
     server = get_server_or_default(node())
+
     config = server.config
 
     http_admin_listen =
@@ -154,8 +157,38 @@ defmodule NsgLoraWeb.LorawanServerLive do
         _ -> []
       end
 
+    http_admin_listen_ssl =
+      case Integer.parse(config["https_port"]) do
+        {n, _} ->
+          [
+            port: n,
+            certfile: config["certfile"] |> String.trim() |> String.to_charlist(),
+            cacertfile: [config["cacertfile"] |> String.trim() |> String.to_charlist()],
+            keyfile: config["keyfile"] |> String.trim() |> String.to_charlist()
+          ]
+
+        _ ->
+          []
+      end
+
     Application.put_env(:lorawan_server, :http_admin_listen, http_admin_listen)
+    Application.put_env(:lorawan_server, :http_admin_listen_ssl, http_admin_listen_ssl)
 
     Application.ensure_all_started(:lorawan_server)
+  end
+
+  defp lorawan_server_url(socket) do
+    env = Application.get_all_env(:lorawan_server)
+
+    case env[:http_admin_listen][:port] do
+      n when is_integer(n) ->
+        "http://#{socket.assigns.uri.host}:#{n}"
+
+      _ ->
+        case env[:http_admin_listen_ssl][:port] do
+          n when is_integer(n) -> "https://#{socket.assigns.uri.host}:#{n}"
+          _ -> nil
+        end
+    end
   end
 end

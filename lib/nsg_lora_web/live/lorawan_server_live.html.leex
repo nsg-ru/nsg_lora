@@ -15,7 +15,7 @@
 
   <!-- Server on/off -->
   <div class="flex justify-end mt-2 mb-5">
-    <a href="<%= "http://#{@uri.host}:8080" %>" target="_blank"
+    <a href="<%= @server_url %>" target="_blank"
       class="<%= @server_up && "" || "hidden" %> btn">
       <%= gettext "Go to lorawan server" %>
     </a>
@@ -38,7 +38,7 @@
         %>
       <% end %>
 
-      <div class="<%= String.trim(@config["https_port"]) == "" && "hidden" || "" %>">
+      <div class="<%= @config["https_port"] == "" && "hidden" || "" %>">
         <div class="text-lg font-bold"><%= gettext("SSL files paths") %></div>
         <%= for {id, name} <- [
           {"keyfile",gettext("Key")},

@@ -12,17 +12,17 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:133
+#: lib/nsg_lora_web/templates/layout/live.html.leex:134
 msgid "About Programm"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:138
+#: lib/nsg_lora_web/templates/layout/live.html.leex:139
 msgid "About System"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:50
+#: lib/nsg_lora_web/templates/layout/live.html.leex:51
 msgid "BS"
 msgstr "Base Station"
 
@@ -32,7 +32,7 @@ msgid "BS title"
 msgstr "Base Station"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:18
+#: lib/nsg_lora_web/templates/layout/live.html.leex:19
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -42,17 +42,17 @@ msgid "Dashboard title"
 msgstr "Dashboard"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:143
+#: lib/nsg_lora_web/templates/layout/live.html.leex:144
 msgid "Debug Dashboard"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:26
+#: lib/nsg_lora_web/templates/layout/live.html.leex:27
 msgid "LoRa"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:55
+#: lib/nsg_lora_web/templates/layout/live.html.leex:56
 msgid "LoRaWan Server"
 msgstr ""
 
@@ -62,17 +62,17 @@ msgid "Lorawan server title"
 msgstr "LoRaWan Server"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:60
+#: lib/nsg_lora_web/templates/layout/live.html.leex:61
 msgid "MQTT"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:109
+#: lib/nsg_lora_web/templates/layout/live.html.leex:110
 msgid "Other"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:10
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:20
 msgid "Go to lorawan server"
 msgstr ""
 
@@ -82,13 +82,13 @@ msgid "MQTT server title"
 msgstr "MQTT Server"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:71
+#: lib/nsg_lora_web/templates/layout/live.html.leex:72
 msgid "Administration"
 msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:24
-#: lib/nsg_lora_web/templates/layout/live.html.leex:95
+#: lib/nsg_lora_web/templates/layout/live.html.leex:96
 msgid "Admins"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgid "Username"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:100
+#: lib/nsg_lora_web/templates/layout/live.html.leex:101
 msgid "Users"
 msgstr ""
 
@@ -139,7 +139,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:82
-#: lib/nsg_lora_web/live/components/header_component.html.leex:144
+#: lib/nsg_lora_web/live/components/header_component.html.leex:144 lib/nsg_lora_web/live/lorawan_server_live.html.leex:57
 msgid "Save"
 msgstr ""
 
@@ -156,12 +156,14 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:14
-#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/components/header_component.html.leex:143
+#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/components/alert_component.html.leex:14
+#: lib/nsg_lora_web/live/components/header_component.html.leex:143 lib/nsg_lora_web/live/lorawan_server_live.html.leex:56
 msgid "Cancel"
 msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:18
+#: lib/nsg_lora_web/live/components/alert_component.html.leex:18
 msgid "OK"
 msgstr ""
 
@@ -211,7 +213,77 @@ msgstr ""
 msgid "Add new admin"
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/nsg_lora_web/live/admins_live.ex:126
 msgid "No password"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:46
+msgid "CA certificates"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:45
+msgid "Certificate"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:49
+msgid "Do you want to stop Lorawan server?"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:33
+msgid "HTTP port"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:34
+msgid "HTTPS port"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:44
+msgid "Key"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:28
+msgid "Lorawan server configuration"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:23
+msgid "Lorawan server is down"
+msgstr "LoRaWan Server"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:127
+msgid "Must be from 1 to 65535"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:132
+msgid "Must be number"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:42
+msgid "SSL files paths"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:62
+msgid "Server closed"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:39
+msgid "Server not started"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:36
+msgid "Server started"
 msgstr ""
