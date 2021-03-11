@@ -11,6 +11,8 @@ config :nsg_lora, NsgLoraWeb.Endpoint,
   ],
   url: [host: "localhost", port: 4443]
 
+config :mnesia,
+  dir: '/usr/lib/lora/Mnesia'
 
-  config :mnesia,
-    dir: '/usr/lib/lora/Mnesia'
+config :nsg_lora, :lora,
+  lora_gw_config_path: "/etc/lora/global_conf.json"

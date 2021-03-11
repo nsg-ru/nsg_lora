@@ -138,7 +138,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:82
-#: lib/nsg_lora_web/live/components/header_component.html.leex:144 lib/nsg_lora_web/live/lorawan_server_live.html.leex:68
+#: lib/nsg_lora_web/live/bs_live.html.leex:22 lib/nsg_lora_web/live/components/header_component.html.leex:144
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:68
 msgid "Save"
 msgstr ""
 
@@ -155,8 +156,9 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:14
-#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/components/alert_component.html.leex:14
-#: lib/nsg_lora_web/live/components/header_component.html.leex:143 lib/nsg_lora_web/live/lorawan_server_live.html.leex:67
+#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:21
+#: lib/nsg_lora_web/live/components/alert_component.html.leex:14 lib/nsg_lora_web/live/components/header_component.html.leex:143
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:67
 msgid "Cancel"
 msgstr ""
 
@@ -228,7 +230,7 @@ msgid "Certificate"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:51
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:81
 msgid "Do you want to stop Lorawan server?"
 msgstr ""
 
@@ -258,12 +260,12 @@ msgid "Lorawan server is down"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:130
+#: lib/nsg_lora/memento/validate.ex:15
 msgid "Must be from 1 to 65535"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:135
+#: lib/nsg_lora/memento/validate.ex:20
 msgid "Must be number"
 msgstr ""
 
@@ -273,21 +275,80 @@ msgid "SSL files paths"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:64
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:94
 msgid "Server closed"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:40
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:70
 msgid "Server not started"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:37
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:67
 msgid "Server started"
 msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/lorawan_server_live.html.leex:43
 msgid "Packet forwarder port"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora/memento/validate.ex:38
+msgid "Must be"
+msgid_plural "Must be"
+msgstr[0] ""
+msgstr[1] ""
+
+#, elixir-format
+#: lib/nsg_lora/memento/validate.ex:38
+msgid "char"
+msgid_plural "chars"
+msgstr[0] ""
+msgstr[1] ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.ex:51
+msgid "Base station closed"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.html.leex:5
+msgid "Base station configuration"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.ex:28
+msgid "Base station not started"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.ex:22
+msgid "Base station started"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.ex:39
+msgid "Do you want to stop Lora base station?"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.html.leex:10
+msgid "Gateway ID"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora/memento/validate.ex:43
+msgid "Must be hex number"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.html.leex:11
+msgid "Server port down"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.html.leex:12
+msgid "Server port up"
 msgstr ""

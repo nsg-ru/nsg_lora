@@ -1,6 +1,7 @@
 defmodule NsgLoraWeb.LorawanServerLive do
   use NsgLoraWeb, :live_view
   import NsgLoraWeb.Gettext
+  alias NsgLora.Validate
 
   @default_config [
     http_admin_path: "/admin",
@@ -140,30 +141,9 @@ defmodule NsgLoraWeb.LorawanServerLive do
 
   defp validate(config) do
     %{}
-    |> port_validate("packet_forwarder_port", config["packet_forwarder_port"])
-    |> port_validate("http_port", config["http_port"])
-    |> port_validate("https_port", config["https_port"])
-  end
-
-  defp port_validate(errmap, id, value) do
-    value = String.trim(value)
-
-    case value do
-      "" ->
-        errmap
-
-      _ ->
-        case Integer.parse(value) do
-          {n, ""} ->
-            cond do
-              n <= 0 or n > 65535 -> Map.put(errmap, id, gettext("Must be from 1 to 65535"))
-              true -> errmap
-            end
-
-          _ ->
-            Map.put(errmap, id, gettext("Must be number"))
-        end
-    end
+    |> Validate.port("packet_forwarder_port", config["packet_forwarder_port"])
+    |> Validate.port("http_port", config["http_port"])
+    |> Validate.port("https_port", config["https_port"])
   end
 
   defp get_server_or_default(sname) do

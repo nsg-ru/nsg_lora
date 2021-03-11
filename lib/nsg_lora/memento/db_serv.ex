@@ -2,7 +2,7 @@ defmodule NsgLora.DBServer do
   use GenServer
   require Logger
 
-  @table_list [NsgLora.Repo.Admin, NsgLora.Repo.Server]
+  @table_list [NsgLora.Repo.Admin, NsgLora.Repo.Server, NsgLora.Repo.BS]
 
   def start_link(params) do
     GenServer.start_link(__MODULE__, params, name: __MODULE__)

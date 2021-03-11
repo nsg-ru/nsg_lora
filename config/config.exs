@@ -33,6 +33,9 @@ config :nsg_lora, NsgLora.Guardian,
   issuer: "nsg_lora",
   secret_key: "99uM718KzWXfU/wxsmJzNgncrqZkRA/a3aOmkJLLDHamz7dXU3Ybbl5W9qLJKvcl"
 
+config :nsg_lora,  :lora,
+  lora_gw_config_path: "./global_conf.json"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

@@ -1,8 +1,26 @@
 <h1 class="text-3xl font-bold text-center"><%= gettext "BS title" %></h1>
-<p>
-  Здесь будет страница настроек параметров радио и packet forwarder.
-</p>
-<p>
-  Будет несколько стандартных шаблонов (RU868, EU868) плюс возможность создавать
-  кастомные шаблоны, настроенные под конкретные условия.
-</p>
+<%= render NsgLoraWeb.ShareView, "toggle.html", click_event: "toggle", up: @bs_up %>
+
+<div>
+  <h1 class="text-2xl font-bold text-center mb-2"><%= gettext "Base station configuration" %></h1>
+  <%= f = form_for :config, "#",
+  [phx_change: :config_validate, phx_submit: :config] %>
+
+    <%= for {id, name} <- [
+      {"gateway_ID",gettext("Gateway ID")},
+      {"serv_port_down",gettext("Server port down")},
+      {"serv_port_up",gettext("Server port up")},
+    ] do %>
+      <%= render NsgLoraWeb.ShareView, "input_form.html",
+        f: f, config: @config, err: @err, id: id, name: name
+      %>
+    <% end %>
+
+    <div class="flex justify-end  mb-2">
+      <a href="#" phx-click="cancel"
+      class="btn <%= @input && "animate-pulse" || "" %>"><%= gettext "Cancel" %></a>
+      <%= submit gettext("Save"), class: "btn ml-2 #{@input && "animate-pulse" || ""} " %>
+    </div>
+    <div class="w-full text-right text-red-500 text-sm"><%= @err["save"] %></div>
+  </form>
+</div>
