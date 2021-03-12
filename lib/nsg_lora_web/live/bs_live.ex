@@ -6,8 +6,12 @@ defmodule NsgLoraWeb.BSLive do
   @impl true
   def mount(_params, session, socket) do
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
+
+    Phoenix.PubSub.subscribe(NsgLora.PubSub, "exec_ser")
+
     bs = get_bs_or_default(node())
-    {:ok, assign(socket, bs_up: true, config: bs.gw, err: %{}, input: false)}
+    bs_up = NsgLora.ExecSer.port_alive?(:packet_forwarder)
+    {:ok, assign(socket, bs_up: bs_up, config: bs.gw, err: %{}, input: false)}
   end
 
   @impl true
@@ -16,11 +20,14 @@ defmodule NsgLoraWeb.BSLive do
 
     case bs_up do
       true ->
+        exit_packet_forwarder()
         create_gw_config_file()
+        reset_module()
+        path = Application.get_env(:nsg_lora, :lora)[:packet_forwarder_path]
         socket =
-          case {:ok, nil} do
+          case NsgLora.ExecSer.start_child(%{name: :packet_forwarder, path: path}) do
             {:ok, _} ->
-              put_flash(socket, :info, gettext("Base station started"))
+              socket
 
             {:error, reason} ->
               put_flash(
@@ -30,7 +37,7 @@ defmodule NsgLoraWeb.BSLive do
               )
           end
 
-        {:noreply, assign(socket, bs_up: true)}
+        {:noreply, socket}
 
       _ ->
         {:noreply,
@@ -49,8 +56,8 @@ defmodule NsgLoraWeb.BSLive do
   end
 
   def handle_event("alert-ok", %{"id" => "bs_down"}, socket) do
-    socket = put_flash(socket, :info, gettext("Base station closed"))
-    {:noreply, assign(socket, bs_up: false, alert: %{hidden: true})}
+    NsgLora.ExecSer.port_close(:packet_forwarder)
+    {:noreply, assign(socket, alert: %{hidden: true})}
   end
 
   def handle_event("config_validate", %{"config" => config}, socket) do
@@ -92,7 +99,21 @@ defmodule NsgLoraWeb.BSLive do
     {:noreply, socket}
   end
 
-  defp get_bs_or_default(sname) do
+  @impl true
+  def handle_info({:change_port_status, :packet_forwarder}, socket) do
+    bs_up = NsgLora.ExecSer.port_alive?(:packet_forwarder)
+
+    info =
+      case bs_up do
+        true -> gettext("Base station started")
+        _ -> gettext("Base station closed")
+      end
+
+    socket = put_flash(socket, :info, info)
+    {:noreply, assign(socket, bs_up: bs_up)}
+  end
+
+  def get_bs_or_default(sname) do
     case NsgLora.Repo.BS.read(node()) do
       {:ok, bs = %NsgLora.Repo.BS{}} ->
         bs
@@ -118,10 +139,17 @@ defmodule NsgLoraWeb.BSLive do
 
   def create_gw_config_file() do
     bs = get_bs_or_default(node())
+    |> IO.inspect()
 
     gw = NsgLora.Config.gw(:default)
     {:ok, gw} = Jason.decode(gw)
-    gw = Map.merge(gw, bs.gw)
+
+    bs_gw = bs.gw
+    bs_gw = Map.put(bs_gw, "serv_port_down", bs_gw["serv_port_down"] |> String.to_integer())
+    bs_gw = Map.put(bs_gw, "serv_port_up", bs_gw["serv_port_up"] |> String.to_integer())
+
+
+    gw = Map.merge(gw, bs_gw)
 
     phy = NsgLora.Config.phy(:nsg_default)
     {:ok, phy} = Jason.decode(phy)
@@ -131,6 +159,38 @@ defmodule NsgLoraWeb.BSLive do
       |> Jason.encode(pretty: true)
 
     path = Application.get_env(:nsg_lora, :lora)[:lora_gw_config_path]
+
+    dir =
+      Path.dirname(path)
+
+    File.mkdir_p(dir)
     File.write(path, json)
+  end
+
+  defp exit_packet_forwarder() do
+    NsgLora.ExecSer.exit(:packet_forwarder)
+
+    case NsgLora.ExecSer.pid(:packet_forwarder) do
+      nil ->
+        nil
+
+      _ ->
+        Process.sleep(100)
+        exit_packet_forwarder()
+    end
+  end
+
+  if Application.get_env(:nsg_lora, :lora)[:gpio_reset_pin] do
+    def reset_module() do
+      reset_pin = Application.get_env(:nsg_lora, :lora)[:gpio_reset_pin] |> to_string()
+      base_path = "/sys/class/gpio"
+      File.write("#{base_path}/unexport", reset_pin)
+      File.write("#{base_path}/export", reset_pin)
+      File.write("#{base_path}/gpio#{reset_pin}/direction", "out")
+      File.write("#{base_path}/gpio#{reset_pin}/value", "1")
+      File.write("#{base_path}/gpio#{reset_pin}/value", "0")
+    end
+  else
+    def reset_module(), do: nil
   end
 end

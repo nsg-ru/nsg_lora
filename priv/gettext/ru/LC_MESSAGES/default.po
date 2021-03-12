@@ -314,7 +314,7 @@ msgstr[2] "символов"
 #, elixir-format
 #: lib/nsg_lora_web/live/bs_live.ex:51
 msgid "Base station closed"
-msgstr "Базовая станция выключена"
+msgstr "Базовая станция остановлена"
 
 #, elixir-format
 #: lib/nsg_lora_web/live/bs_live.html.leex:5

@@ -3,15 +3,11 @@ defmodule NsgLora.ExecSer do
   require Logger
 
   def start_link(params = %{name: name}) do
-    IO.inspect(params, label: "START")
     GenServer.start_link(__MODULE__, params, name: name)
   end
 
   @impl true
-  def init(params = %{path: path}) do
-    IO.inspect(params, label: "INIT")
-    Process.flag(:trap_exit, true)
-
+  def init(params = %{name: name, path: path}) do
     args = params[:args] || []
 
     port =
@@ -20,14 +16,39 @@ defmodule NsgLora.ExecSer do
         args: [path | args]
       ])
 
-    # Port.monitor(port)
+    port =
+      case port do
+        port when is_port(port) ->
+          Port.monitor(port)
 
-    {:ok, %{port: port, data: CircularBuffer.new(10)}}
+          Phoenix.PubSub.broadcast(
+            NsgLora.PubSub,
+            "exec_ser",
+            {:change_port_status, name}
+          )
+
+          port
+
+        _ ->
+          nil
+      end
+
+    {:ok, %{name: name, port: port, data: CircularBuffer.new(10)}}
   end
 
   @impl true
   def handle_info({_port, {:data, data}}, state) do
     {:noreply, %{state | data: CircularBuffer.insert(state.data, data)}}
+  end
+
+  def handle_info({:DOWN, _ref, :port, port, _}, state = %{name: name, port: port}) do
+    Phoenix.PubSub.broadcast(
+      NsgLora.PubSub,
+      "exec_ser",
+      {:change_port_status, name}
+    )
+
+    {:noreply, %{state | port: nil}}
   end
 
   def handle_info(msg, state) do
@@ -40,10 +61,28 @@ defmodule NsgLora.ExecSer do
     {:reply, CircularBuffer.to_list(state.data), state}
   end
 
+  def handle_call(:port_info, _from, state) do
+    {:reply, Port.info(state.port), state}
+  end
+
+  def handle_call(:alive, _from, state) do
+    res =
+      case state.port do
+        port when is_port(port) -> true
+        _ -> false
+      end
+
+    {:reply, res, state}
+  end
+
   @impl true
-  def terminate(reason, state) do
-    IO.inspect(reason)
+  def handle_cast(:port_close, state) do
     Port.close(state.port)
+    {:noreply, state}
+  end
+
+  def handle_cast(:exit, state) do
+    {:stop, :shutdown, state}
   end
 
   def start_child(params) do
@@ -55,5 +94,28 @@ defmodule NsgLora.ExecSer do
 
   def get_data(name) do
     GenServer.call(name, :get_data)
+  end
+
+  def port_info(name) do
+    GenServer.call(name, :port_info)
+  end
+
+  def port_close(name) do
+    GenServer.cast(name, :port_close)
+  end
+
+  def exit(name) do
+    GenServer.cast(name, :exit)
+  end
+
+  def pid(name) do
+    Process.whereis(name)
+  end
+
+  def port_alive?(name) do
+    case pid(name) do
+      pid when is_pid(pid) -> GenServer.call(pid, :alive)
+      _ -> false
+    end
   end
 end

@@ -15,4 +15,6 @@ config :mnesia,
   dir: '/usr/lib/lora/Mnesia'
 
 config :nsg_lora, :lora,
-  lora_gw_config_path: "/etc/lora/global_conf.json"
+  lora_gw_config_path: "/etc/lora/global_conf.json",
+  packet_forwarder_path: "/usr/bin/lora_pkt_fwd",
+  gpio_reset_pin: 27

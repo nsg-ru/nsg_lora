@@ -34,6 +34,7 @@ npm-debug.log
 /priv/static/
 
 ###
+/tmp/
 /log/
 /.mnesia/
 /priv/cert/
