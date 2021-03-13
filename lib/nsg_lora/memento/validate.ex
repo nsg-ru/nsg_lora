@@ -1,6 +1,7 @@
 defmodule NsgLora.Validate do
   import NsgLoraWeb.Gettext
 
+  def port(errmap, _id, nil), do: errmap
   def port(errmap, id, value) do
     value = String.trim(value)
 
@@ -22,6 +23,7 @@ defmodule NsgLora.Validate do
     end
   end
 
+  def hex(errmap, _id, nil, _size), do: errmap
   def hex(errmap, id, value, size) do
     value = String.trim(value)
 

@@ -3,6 +3,18 @@ defmodule NsgLoraWeb.BSLive do
   import NsgLoraWeb.Gettext
   alias NsgLora.Validate
 
+  @channel_plans [
+    "RU864-870",
+    "EU863-870",
+    "US902-928",
+    "EU433",
+    "AU-915-928",
+    "CN470-510",
+    "AS923",
+    "KR920-923",
+    "IN865-867"
+  ]
+
   @impl true
   def mount(_params, session, socket) do
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
@@ -11,7 +23,15 @@ defmodule NsgLoraWeb.BSLive do
 
     bs = get_bs_or_default(node())
     bs_up = NsgLora.ExecSer.port_alive?(:packet_forwarder)
-    {:ok, assign(socket, bs_up: bs_up, config: bs.gw, err: %{}, input: false)}
+
+    {:ok,
+     assign(socket,
+       bs_up: bs_up,
+       config: bs.gw,
+       err: %{},
+       input: false,
+       channel_plans: @channel_plans
+     )}
   end
 
   @impl true
@@ -24,6 +44,7 @@ defmodule NsgLoraWeb.BSLive do
         create_gw_config_file()
         reset_module()
         path = Application.get_env(:nsg_lora, :lora)[:packet_forwarder_path]
+
         socket =
           case NsgLora.ExecSer.start_child(%{name: :packet_forwarder, path: path}) do
             {:ok, _} ->
@@ -61,11 +82,14 @@ defmodule NsgLoraWeb.BSLive do
   end
 
   def handle_event("config_validate", %{"config" => config}, socket) do
+    config = socket.assigns.config |> Map.merge(config)
     err = validate(config)
     {:noreply, assign(socket, config: config, err: err, input: true)}
   end
 
   def handle_event("config", %{"config" => config}, socket) do
+    config = socket.assigns.config |> Map.merge(config)
+
     case validate(config) do
       err when err == %{} ->
         bs = get_bs_or_default(node())
@@ -124,7 +148,8 @@ defmodule NsgLoraWeb.BSLive do
           gw: %{
             "gateway_ID" => "000956FFFE3208BB",
             "serv_port_down" => 1680,
-            "serv_port_up" => 1680
+            "serv_port_up" => 1680,
+            "channel_plan" => "RU864-870"
           }
         }
     end
@@ -139,7 +164,6 @@ defmodule NsgLoraWeb.BSLive do
 
   def create_gw_config_file() do
     bs = get_bs_or_default(node())
-    |> IO.inspect()
 
     gw = NsgLora.Config.gw(:default)
     {:ok, gw} = Jason.decode(gw)
@@ -147,7 +171,6 @@ defmodule NsgLoraWeb.BSLive do
     bs_gw = bs.gw
     bs_gw = Map.put(bs_gw, "serv_port_down", bs_gw["serv_port_down"] |> String.to_integer())
     bs_gw = Map.put(bs_gw, "serv_port_up", bs_gw["serv_port_up"] |> String.to_integer())
-
 
     gw = Map.merge(gw, bs_gw)
 
@@ -160,8 +183,7 @@ defmodule NsgLoraWeb.BSLive do
 
     path = Application.get_env(:nsg_lora, :lora)[:lora_gw_config_path]
 
-    dir =
-      Path.dirname(path)
+    dir = Path.dirname(path)
 
     File.mkdir_p(dir)
     File.write(path, json)

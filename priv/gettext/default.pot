@@ -138,7 +138,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:82
-#: lib/nsg_lora_web/live/bs_live.html.leex:22 lib/nsg_lora_web/live/components/header_component.html.leex:144
+#: lib/nsg_lora_web/live/bs_live.html.leex:84 lib/nsg_lora_web/live/components/header_component.html.leex:144
 #: lib/nsg_lora_web/live/lorawan_server_live.html.leex:68
 msgid "Save"
 msgstr ""
@@ -156,7 +156,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:14
-#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:21
+#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:83
 #: lib/nsg_lora_web/live/components/alert_component.html.leex:14 lib/nsg_lora_web/live/components/header_component.html.leex:143
 #: lib/nsg_lora_web/live/lorawan_server_live.html.leex:67
 msgid "Cancel"
@@ -260,12 +260,12 @@ msgid "Lorawan server is down"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:15
+#: lib/nsg_lora/memento/validate.ex:16
 msgid "Must be from 1 to 65535"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:20
+#: lib/nsg_lora/memento/validate.ex:21
 msgid "Must be number"
 msgstr ""
 
@@ -295,21 +295,21 @@ msgid "Packet forwarder port"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:38
+#: lib/nsg_lora/memento/validate.ex:40
 msgid "Must be"
 msgid_plural "Must be"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:38
+#: lib/nsg_lora/memento/validate.ex:40
 msgid "char"
 msgid_plural "chars"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:51
+#: lib/nsg_lora_web/live/bs_live.ex:133
 msgid "Base station closed"
 msgstr ""
 
@@ -319,17 +319,17 @@ msgid "Base station configuration"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:28
+#: lib/nsg_lora_web/live/bs_live.ex:57
 msgid "Base station not started"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:22
+#: lib/nsg_lora_web/live/bs_live.ex:132
 msgid "Base station started"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:39
+#: lib/nsg_lora_web/live/bs_live.ex:68
 msgid "Do you want to stop Lora base station?"
 msgstr ""
 
@@ -339,7 +339,7 @@ msgid "Gateway ID"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:43
+#: lib/nsg_lora/memento/validate.ex:45
 msgid "Must be hex number"
 msgstr ""
 
@@ -351,4 +351,14 @@ msgstr ""
 #, elixir-format
 #: lib/nsg_lora_web/live/bs_live.html.leex:12
 msgid "Server port up"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.html.leex:24
+msgid "Channel plan"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.html.leex:61
+msgid "Select channel plan"
 msgstr ""

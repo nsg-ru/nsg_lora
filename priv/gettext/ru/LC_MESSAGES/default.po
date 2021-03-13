@@ -139,7 +139,7 @@ msgstr "Имя"
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:82
-#: lib/nsg_lora_web/live/bs_live.html.leex:22 lib/nsg_lora_web/live/components/header_component.html.leex:144
+#: lib/nsg_lora_web/live/bs_live.html.leex:84 lib/nsg_lora_web/live/components/header_component.html.leex:144
 #: lib/nsg_lora_web/live/lorawan_server_live.html.leex:68
 msgid "Save"
 msgstr "Сохранить"
@@ -157,7 +157,7 @@ msgstr "Вы уверены что хотите удалить админа"
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:14
-#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:21
+#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:83
 #: lib/nsg_lora_web/live/components/alert_component.html.leex:14 lib/nsg_lora_web/live/components/header_component.html.leex:143
 #: lib/nsg_lora_web/live/lorawan_server_live.html.leex:67
 msgid "Cancel"
@@ -261,12 +261,12 @@ msgid "Lorawan server is down"
 msgstr "Сервер LoRaWan остановлен"
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:15
+#: lib/nsg_lora/memento/validate.ex:16
 msgid "Must be from 1 to 65535"
 msgstr "Должно быть число от 1 до 65535"
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:20
+#: lib/nsg_lora/memento/validate.ex:21
 msgid "Must be number"
 msgstr "Должно быть число"
 
@@ -295,8 +295,8 @@ msgstr "Сервер запущен"
 msgid "Packet forwarder port"
 msgstr "Порт packet forwarder"
 
-#, elixir-format, fuzzy
-#: lib/nsg_lora/memento/validate.ex:38
+#, elixir-format
+#: lib/nsg_lora/memento/validate.ex:40
 msgid "Must be"
 msgid_plural "Must be"
 msgstr[0] "Должен быть"
@@ -304,7 +304,7 @@ msgstr[1] "Должно быть"
 msgstr[2] "Должно быть"
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:38
+#: lib/nsg_lora/memento/validate.ex:40
 msgid "char"
 msgid_plural "chars"
 msgstr[0] "символ"
@@ -312,7 +312,7 @@ msgstr[1] "символа"
 msgstr[2] "символов"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:51
+#: lib/nsg_lora_web/live/bs_live.ex:133
 msgid "Base station closed"
 msgstr "Базовая станция остановлена"
 
@@ -322,17 +322,17 @@ msgid "Base station configuration"
 msgstr "Конфигурация базовой станции"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:28
+#: lib/nsg_lora_web/live/bs_live.ex:57
 msgid "Base station not started"
 msgstr "Базовая станция не стартовала"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:22
+#: lib/nsg_lora_web/live/bs_live.ex:132
 msgid "Base station started"
 msgstr "Базовая станция стартовала"
 
-#, elixir-format, fuzzy
-#: lib/nsg_lora_web/live/bs_live.ex:39
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.ex:68
 msgid "Do you want to stop Lora base station?"
 msgstr "Вы хотите остановить базовую станцию?"
 
@@ -341,8 +341,8 @@ msgstr "Вы хотите остановить базовую станцию?"
 msgid "Gateway ID"
 msgstr ""
 
-#, elixir-format, fuzzy
-#: lib/nsg_lora/memento/validate.ex:43
+#, elixir-format
+#: lib/nsg_lora/memento/validate.ex:45
 msgid "Must be hex number"
 msgstr "Должно быть шестнадцатеричное число"
 
@@ -355,3 +355,13 @@ msgstr ""
 #: lib/nsg_lora_web/live/bs_live.html.leex:12
 msgid "Server port up"
 msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.html.leex:24
+msgid "Channel plan"
+msgstr "Частотный план"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.html.leex:61
+msgid "Select channel plan"
+msgstr "Выберите частотный план"

@@ -54,7 +54,24 @@ Hooks.Flash = {
     this.timeout = setTimeout(() => this.closeFlash(), 7000)
   },
   closeFlash() {
-      this.pushEvent("lv:clear-flash", {key: "info"})
+    this.pushEvent("lv:clear-flash", {
+      key: "info"
+    })
+  }
+}
+
+Hooks.FormChange = {
+  mounted() {
+    const liveView = this
+    this.liveViewPushEvent = function(e) {
+      liveView.pushEvent(e.detail.event, e.detail.payload)
+    }
+    window.addEventListener('liveview-push-event',
+      this.liveViewPushEvent)
+  },
+  destroyed() {
+    window.removeEventListener('liveview-push-event',
+      this.liveViewPushEvent)
   }
 }
 
