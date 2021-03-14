@@ -80,7 +80,7 @@ defmodule NsgLora.MixProject do
        git: "https://github.com/yjh0502/cbor-erlang.git",
        ref: "b5c9dbc2de15753b2db15e13d88c11738c2ac292",
        override: true},
-      {:cowboy, "~> 2.7",
+      {:cowboy, "~> 2.8",
        env: :prod, hex: "cowboy", repo: "hexpm", optional: false, override: true},
       {:cowlib, git: "https://github.com/ninenines/cowlib", tag: "2.9.1", override: true}
     ]
