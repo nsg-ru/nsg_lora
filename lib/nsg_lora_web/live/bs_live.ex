@@ -2,6 +2,7 @@ defmodule NsgLoraWeb.BSLive do
   use NsgLoraWeb, :live_view
   import NsgLoraWeb.Gettext
   alias NsgLora.Validate
+  alias NsgLora.Repo.BS
 
   @channel_plans [
     "RU864-870",
@@ -40,13 +41,10 @@ defmodule NsgLoraWeb.BSLive do
 
     case bs_up do
       true ->
-        exit_packet_forwarder()
-        create_gw_config_file()
-        reset_module()
-        path = Application.get_env(:nsg_lora, :lora)[:packet_forwarder_path]
+        save_bs_adm_state(true)
 
         socket =
-          case NsgLora.ExecSer.start_child(%{name: :packet_forwarder, path: path}) do
+          case bs_start() do
             {:ok, _} ->
               socket
 
@@ -77,6 +75,7 @@ defmodule NsgLoraWeb.BSLive do
   end
 
   def handle_event("alert-ok", %{"id" => "bs_down"}, socket) do
+    save_bs_adm_state(false)
     NsgLora.ExecSer.port_close(:packet_forwarder)
     {:noreply, assign(socket, alert: %{hidden: true})}
   end
@@ -94,7 +93,7 @@ defmodule NsgLoraWeb.BSLive do
       err when err == %{} ->
         bs = get_bs_or_default(node())
 
-        case NsgLora.Repo.BS.write(%{bs | gw: config}) do
+        case BS.write(%{bs | gw: config}) do
           {:ok, _} ->
             {:noreply,
              assign(
@@ -138,17 +137,17 @@ defmodule NsgLoraWeb.BSLive do
   end
 
   def get_bs_or_default(sname) do
-    case NsgLora.Repo.BS.read(node()) do
-      {:ok, bs = %NsgLora.Repo.BS{}} ->
+    case BS.read(node()) do
+      {:ok, bs = %BS{}} ->
         bs
 
       _ ->
-        %NsgLora.Repo.BS{
+        %BS{
           sname: sname,
           gw: %{
             "gateway_ID" => "000956FFFE3208BB",
-            "serv_port_down" => 1680,
-            "serv_port_up" => 1680,
+            "serv_port_down" => "1680",
+            "serv_port_up" => "1680",
             "channel_plan" => "RU864-870"
           }
         }
@@ -162,9 +161,24 @@ defmodule NsgLoraWeb.BSLive do
     |> Validate.port("serv_port_up", config["serv_port_up"])
   end
 
-  def create_gw_config_file() do
+  def bs_start() do
     bs = get_bs_or_default(node())
 
+    case bs.adm_state do
+      true ->
+        exit_packet_forwarder()
+        create_gw_config_file(bs)
+        reset_module()
+        path = Application.get_env(:nsg_lora, :lora)[:packet_forwarder_path]
+
+        NsgLora.ExecSer.start_child(%{name: :packet_forwarder, path: path})
+
+      _ ->
+        {:error, gettext("Base station adm state is down")}
+    end
+  end
+
+  defp create_gw_config_file(bs) do
     gw = NsgLora.Config.gw(:default)
     {:ok, gw} = Jason.decode(gw)
 
@@ -200,6 +214,11 @@ defmodule NsgLoraWeb.BSLive do
         Process.sleep(100)
         exit_packet_forwarder()
     end
+  end
+
+  defp save_bs_adm_state(adm_state) do
+    bs = get_bs_or_default(node())
+    BS.write(%{bs | adm_state: adm_state})
   end
 
   if Application.get_env(:nsg_lora, :lora)[:gpio_reset_pin] do

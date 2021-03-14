@@ -158,7 +158,14 @@ defmodule NsgLoraWeb.LorawanServerLive do
       _ ->
         %Server{
           sname: sname,
-          config: %{"http_port" => 8080, "https_port" => 8443, "packet_forwarder_port" => 1680}
+          config: %{
+            "http_port" => "8080",
+            "https_port" => "8443",
+            "packet_forwarder_port" => "1680",
+            "certfile" => "",
+            "cacertfile" => "",
+            "keyfile" => ""
+          }
         }
     end
   end
@@ -169,7 +176,6 @@ defmodule NsgLoraWeb.LorawanServerLive do
         server = %Server{} -> server
         _ -> get_server_or_default(node())
       end
-      |> IO.inspect()
 
     case server.adm_state do
       true ->

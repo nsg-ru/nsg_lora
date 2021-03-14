@@ -35,6 +35,7 @@ defmodule NsgLora.DBServer do
       _ -> nil
     end
 
+    NsgLoraWeb.BSLive.bs_start()
     NsgLoraWeb.LorawanServerLive.lorawan_server_start()
 
     {:ok, %{}}
