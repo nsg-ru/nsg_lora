@@ -76,6 +76,10 @@ Hooks.FormChange = {
 }
 
 Hooks.ScrollBottom = {
+  mounted() {
+    // this.el.scrollTop = this.el.scrollHeight
+    setTimeout(() => this.el.scrollTop = this.el.scrollHeight, 0)
+  },
   updated() {
     this.el.scrollTop = this.el.scrollHeight
   }
