@@ -1,41 +1,21 @@
 #!/usr/bin/env bash
 date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
-date
+
+
+for i in {1..100}
+do
+  echo "12345678901234567890123456789012345678901234567890"
+  echo "12345678901234567890123456789012345678901234567890"
+done
 
 while true
 do
   date
-  echo "long long  long long  long long  long long  long long  long long  long long  long long  long long  long long" 1>&2
-  sleep 30
+  for i in {1..100}
+  do
+    echo "12345678901234567890123456789012345678901234567890"
+    echo "12345678901234567890123456789012345678901234567890"
+  done
+  echo "To stderr" 1>&2
+  sleep 3
 done

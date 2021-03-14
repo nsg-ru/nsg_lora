@@ -43,7 +43,7 @@ defmodule NsgLora.ExecSer do
       "exec_ser",
       {:get_data, name}
     )
-    IO.inspect(data, label: "Port data")
+    IO.inspect({data, String.length(data)}, label: "Port data")
     {:noreply, %{state | data: CircularBuffer.insert(state.data, data)}}
   end
 
