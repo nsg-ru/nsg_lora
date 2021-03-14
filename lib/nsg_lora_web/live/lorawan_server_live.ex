@@ -2,6 +2,7 @@ defmodule NsgLoraWeb.LorawanServerLive do
   use NsgLoraWeb, :live_view
   import NsgLoraWeb.Gettext
   alias NsgLora.Validate
+  alias NsgLora.Repo.Server
 
   @default_config [
     http_admin_path: "/admin",
@@ -29,7 +30,7 @@ defmodule NsgLoraWeb.LorawanServerLive do
     http_admin_credentials: {"admin", "admin"},
     server_stats_interval: 60,
     devstat_gap: {432_000, 96},
-    event_lifetime: 86400,
+    event_lifetime: 86400
   ]
 
   @impl true
@@ -61,6 +62,8 @@ defmodule NsgLoraWeb.LorawanServerLive do
 
     case server_up do
       true ->
+        save_server_adm_state(server_up)
+
         socket =
           case lorawan_server_start() do
             {:ok, _} ->
@@ -90,6 +93,7 @@ defmodule NsgLoraWeb.LorawanServerLive do
   end
 
   def handle_event("alert-ok", %{"id" => "server_down"}, socket) do
+    save_server_adm_state(false)
     Application.stop(:lorawan_server)
     socket = put_flash(socket, :info, gettext("Server closed"))
     {:noreply, assign(socket, server_up: !!started?(), alert: %{hidden: true})}
@@ -105,7 +109,7 @@ defmodule NsgLoraWeb.LorawanServerLive do
       err when err == %{} ->
         server = get_server_or_default(node())
 
-        case NsgLora.Repo.Server.write(%{server | config: config}) do
+        case Server.write(%{server | config: config}) do
           {:ok, _} ->
             {:noreply,
              assign(
@@ -147,56 +151,67 @@ defmodule NsgLoraWeb.LorawanServerLive do
   end
 
   defp get_server_or_default(sname) do
-    case NsgLora.Repo.Server.read(node()) do
-      {:ok, server = %NsgLora.Repo.Server{}} ->
+    case Server.read(node()) do
+      {:ok, server = %Server{}} ->
         server
 
       _ ->
-        %NsgLora.Repo.Server{
+        %Server{
           sname: sname,
           config: %{"http_port" => 8080, "https_port" => 8443, "packet_forwarder_port" => 1680}
         }
     end
   end
 
-  def lorawan_server_start() do
-    server = get_server_or_default(node())
-
-    config = server.config
-
-    packet_forwarder_listen =
-      case Integer.parse(config["packet_forwarder_port"]) do
-        {n, _} -> [port: n]
-        _ -> []
+  def lorawan_server_start(opts \\ []) do
+    server =
+      case opts[:server] do
+        server = %Server{} -> server
+        _ -> get_server_or_default(node())
       end
+      |> IO.inspect()
 
-    http_admin_listen =
-      case Integer.parse(config["http_port"]) do
-        {n, _} -> [port: n]
-        _ -> []
-      end
+    case server.adm_state do
+      true ->
+        config = server.config
 
-    http_admin_listen_ssl =
-      case Integer.parse(config["https_port"]) do
-        {n, _} ->
-          [
-            port: n,
-            certfile: config["certfile"] |> String.trim() |> String.to_charlist(),
-            cacertfile: [config["cacertfile"] |> String.trim() |> String.to_charlist()],
-            keyfile: config["keyfile"] |> String.trim() |> String.to_charlist()
-          ]
+        packet_forwarder_listen =
+          case Integer.parse(config["packet_forwarder_port"]) do
+            {n, _} -> [port: n]
+            _ -> []
+          end
 
-        _ ->
-          []
-      end
+        http_admin_listen =
+          case Integer.parse(config["http_port"]) do
+            {n, _} -> [port: n]
+            _ -> []
+          end
 
-    Application.put_env(:lorawan_server, :http_admin_redirect_ssl, false)
+        http_admin_listen_ssl =
+          case Integer.parse(config["https_port"]) do
+            {n, _} ->
+              [
+                port: n,
+                certfile: config["certfile"] |> String.trim() |> String.to_charlist(),
+                cacertfile: [config["cacertfile"] |> String.trim() |> String.to_charlist()],
+                keyfile: config["keyfile"] |> String.trim() |> String.to_charlist()
+              ]
 
-    Application.put_env(:lorawan_server, :packet_forwarder_listen, packet_forwarder_listen)
-    Application.put_env(:lorawan_server, :http_admin_listen, http_admin_listen)
-    Application.put_env(:lorawan_server, :http_admin_listen_ssl, http_admin_listen_ssl)
+            _ ->
+              []
+          end
 
-    Application.ensure_all_started(:lorawan_server)
+        Application.put_env(:lorawan_server, :http_admin_redirect_ssl, false)
+
+        Application.put_env(:lorawan_server, :packet_forwarder_listen, packet_forwarder_listen)
+        Application.put_env(:lorawan_server, :http_admin_listen, http_admin_listen)
+        Application.put_env(:lorawan_server, :http_admin_listen_ssl, http_admin_listen_ssl)
+
+        Application.ensure_all_started(:lorawan_server)
+
+      _ ->
+        {:error, gettext("Server adm state is down")}
+    end
   end
 
   defp lorawan_server_url(socket) do
@@ -218,5 +233,10 @@ defmodule NsgLoraWeb.LorawanServerLive do
       end
 
     %{http: http, https: https}
+  end
+
+  defp save_server_adm_state(adm_state) do
+    server = get_server_or_default(node())
+    Server.write(%{server | adm_state: adm_state})
   end
 end

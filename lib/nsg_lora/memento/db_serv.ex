@@ -35,7 +35,7 @@ defmodule NsgLora.DBServer do
       _ -> nil
     end
 
-    Application.ensure_all_started(:lorawan_server)
+    NsgLoraWeb.LorawanServerLive.lorawan_server_start()
 
     {:ok, %{}}
   end
