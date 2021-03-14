@@ -33,11 +33,16 @@ defmodule NsgLora.ExecSer do
           nil
       end
 
-    {:ok, %{name: name, port: port, data: CircularBuffer.new(10)}}
+    {:ok, %{name: name, port: port, data: CircularBuffer.new(100)}}
   end
 
   @impl true
-  def handle_info({_port, {:data, data}}, state) do
+  def handle_info({_port, {:data, data}}, state = %{name: name}) do
+    Phoenix.PubSub.broadcast(
+      NsgLora.PubSub,
+      "exec_ser",
+      {:get_data, name}
+    )
     {:noreply, %{state | data: CircularBuffer.insert(state.data, data)}}
   end
 

@@ -99,7 +99,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:67
-#: lib/nsg_lora_web/live/components/header_component.html.leex:128 lib/nsg_lora_web/templates/session/new.html.eex:10
+#: lib/nsg_lora_web/live/components/header_component.html.leex:129 lib/nsg_lora_web/templates/session/new.html.eex:10
 msgid "Password"
 msgstr ""
 
@@ -120,14 +120,14 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:74
-#: lib/nsg_lora_web/live/components/header_component.html.leex:135
+#: lib/nsg_lora_web/live/components/header_component.html.leex:136
 msgid "Confirm password"
 msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:60
 #: lib/nsg_lora_web/live/admins_live.html.leex:94 lib/nsg_lora_web/live/admins_live.html.leex:106
-#: lib/nsg_lora_web/live/components/header_component.html.leex:117
+#: lib/nsg_lora_web/live/components/header_component.html.leex:118
 msgid "Fullname"
 msgstr ""
 
@@ -139,7 +139,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:82
-#: lib/nsg_lora_web/live/bs_live.html.leex:84 lib/nsg_lora_web/live/components/header_component.html.leex:144
+#: lib/nsg_lora_web/live/bs_live.html.leex:85 lib/nsg_lora_web/live/components/header_component.html.leex:145
 #: lib/nsg_lora_web/live/lorawan_server_live.html.leex:68
 msgid "Save"
 msgstr ""
@@ -157,8 +157,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:14
-#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:83
-#: lib/nsg_lora_web/live/components/alert_component.html.leex:14 lib/nsg_lora_web/live/components/header_component.html.leex:143
+#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:84
+#: lib/nsg_lora_web/live/components/alert_component.html.leex:14 lib/nsg_lora_web/live/components/header_component.html.leex:144
 #: lib/nsg_lora_web/live/lorawan_server_live.html.leex:67
 msgid "Cancel"
 msgstr ""
@@ -195,18 +195,18 @@ msgid "Bad password"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/components/header_component.html.leex:95
-#: lib/nsg_lora_web/live/components/header_component.html.leex:113
+#: lib/nsg_lora_web/live/components/header_component.html.leex:96
+#: lib/nsg_lora_web/live/components/header_component.html.leex:114
 msgid "Edit profile"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/components/header_component.html.leex:124
+#: lib/nsg_lora_web/live/components/header_component.html.leex:125
 msgid "Leave the following fields blank if you do not want change password"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/components/header_component.html.leex:98
+#: lib/nsg_lora_web/live/components/header_component.html.leex:99
 msgid "Sign out"
 msgstr ""
 
@@ -231,7 +231,7 @@ msgid "Certificate"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:81
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:84
 msgid "Do you want to stop Lorawan server?"
 msgstr ""
 
@@ -276,17 +276,17 @@ msgid "SSL files paths"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:94
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:98
 msgid "Server closed"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:70
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:73
 msgid "Server not started"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:67
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:70
 msgid "Server started"
 msgstr ""
 
@@ -310,7 +310,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:133
+#: lib/nsg_lora_web/live/bs_live.ex:150
 msgid "Base station closed"
 msgstr ""
 
@@ -325,7 +325,7 @@ msgid "Base station not started"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:132
+#: lib/nsg_lora_web/live/bs_live.ex:149
 msgid "Base station started"
 msgstr ""
 
@@ -355,11 +355,26 @@ msgid "Server port up"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.html.leex:24
+#: lib/nsg_lora_web/live/bs_live.html.leex:21
 msgid "Channel plan"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.html.leex:61
+#: lib/nsg_lora_web/live/bs_live.html.leex:57
 msgid "Select channel plan"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/nsg_lora_web/live/bs_live.ex:205
+msgid "Base station adm state is down"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/nsg_lora_web/live/bs_live.html.leex:94
+msgid "Message log"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:219
+msgid "Server adm state is down"
 msgstr ""

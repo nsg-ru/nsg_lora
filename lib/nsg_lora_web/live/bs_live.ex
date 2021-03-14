@@ -31,7 +31,9 @@ defmodule NsgLoraWeb.BSLive do
        config: bs.gw,
        err: %{},
        input: false,
-       channel_plans: @channel_plans
+       channel_plans: @channel_plans,
+       bs_log: NsgLora.ExecSer.get_data(:packet_forwarder),
+       play_log: true
      )}
   end
 
@@ -117,6 +119,22 @@ defmodule NsgLoraWeb.BSLive do
     {:noreply, assign(socket, config: bs.gw, err: %{}, input: false)}
   end
 
+  def handle_event("toggle-log", _, socket) do
+    play_log = !socket.assigns.play_log
+
+    case play_log do
+      true ->
+        {:noreply,
+         assign(socket,
+           play_log: play_log,
+           bs_log: NsgLora.ExecSer.get_data(:packet_forwarder)
+         )}
+
+      _ ->
+        {:noreply, assign(socket, play_log: play_log)}
+    end
+  end
+
   def handle_event(event, params, socket) do
     IO.inspect(event: event, params: params)
     {:noreply, socket}
@@ -134,6 +152,16 @@ defmodule NsgLoraWeb.BSLive do
 
     socket = put_flash(socket, :info, info)
     {:noreply, assign(socket, bs_up: bs_up)}
+  end
+
+  def handle_info({:get_data, :packet_forwarder}, socket) do
+    case socket.assigns.play_log do
+      true ->
+        {:noreply, assign(socket, bs_log: NsgLora.ExecSer.get_data(:packet_forwarder))}
+
+      _ ->
+        {:noreply, socket}
+    end
   end
 
   def get_bs_or_default(sname) do

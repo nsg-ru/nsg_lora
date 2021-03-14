@@ -75,6 +75,12 @@ Hooks.FormChange = {
   }
 }
 
+Hooks.ScrollBottom = {
+  updated() {
+    this.el.scrollTop = this.el.scrollHeight
+  }
+}
+
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
