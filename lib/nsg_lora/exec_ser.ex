@@ -13,8 +13,9 @@ defmodule NsgLora.ExecSer do
     port =
       Port.open({:spawn_executable, Application.app_dir(:nsg_lora) <> "/priv/share/wrapper.sh"}, [
         :binary,
-        :stream,
-        # {:line, 1024},
+        # :stream,
+        {:line, 1024},
+        :stderr_to_stdout,
         args: [path | args]
       ])
 
@@ -39,15 +40,14 @@ defmodule NsgLora.ExecSer do
   end
 
   @impl true
-  def handle_info({_port, {:data, data}}, state = %{name: name}) do
+  def handle_info({_port, {:data, {_, data}}}, state = %{name: name}) do
     Phoenix.PubSub.broadcast(
       NsgLora.PubSub,
       "exec_ser",
       {:get_data, name}
     )
     IO.inspect(String.length(data), label: "Port data")
-    # {_, data} = data
-    # data = data<>"\n"
+    data = data<>"\n"
     {:noreply, %{state | data: CircularBuffer.insert(state.data, data)}}
   end
 
