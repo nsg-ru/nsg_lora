@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Start the program in the background
-exec "$@" &
+exec "$@" 2>&1 &
 pid1=$!
 
 # Silence warnings from here on
