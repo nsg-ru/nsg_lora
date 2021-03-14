@@ -13,6 +13,8 @@ defmodule NsgLora.ExecSer do
     port =
       Port.open({:spawn_executable, Application.app_dir(:nsg_lora) <> "/priv/share/wrapper.sh"}, [
         :binary,
+        :stream,
+        # {:line, 1024},
         args: [path | args]
       ])
 
@@ -43,7 +45,9 @@ defmodule NsgLora.ExecSer do
       "exec_ser",
       {:get_data, name}
     )
-    IO.inspect({data, String.length(data)}, label: "Port data")
+    IO.inspect(String.length(data), label: "Port data")
+    # {_, data} = data
+    # data = data<>"\n"
     {:noreply, %{state | data: CircularBuffer.insert(state.data, data)}}
   end
 
