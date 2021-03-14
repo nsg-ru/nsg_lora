@@ -98,7 +98,10 @@ defmodule NsgLora.ExecSer do
   end
 
   def get_data(name) do
-    GenServer.call(name, :get_data)
+    case pid(name) do
+      pid when is_pid(pid) -> GenServer.call(pid, :get_data)
+      _ -> ""
+    end
   end
 
   def port_info(name) do
