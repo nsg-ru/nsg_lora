@@ -5,8 +5,6 @@ defmodule NsgLora.LagerRing do
     GenServer.start_link(__MODULE__, params, name: __MODULE__)
   end
 
-
-
   @impl true
   def init(_params) do
     {:ok, %{log: CircularBuffer.new(1024)}}
@@ -14,6 +12,11 @@ defmodule NsgLora.LagerRing do
 
   @impl true
   def handle_cast({:log, msg}, state) do
+    Phoenix.PubSub.broadcast(
+      NsgLora.PubSub,
+      "lager_ring",
+      :get_log
+    )
     {:noreply, %{state | log: CircularBuffer.insert(state.log, msg)}}
   end
 

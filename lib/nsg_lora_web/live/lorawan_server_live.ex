@@ -35,6 +35,8 @@ defmodule NsgLoraWeb.LorawanServerLive do
 
   @impl true
   def mount(_params, session, socket) do
+    Phoenix.PubSub.subscribe(NsgLora.PubSub, "lager_ring")
+
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
     server = get_server_or_default(node())
     config = server.config
@@ -46,7 +48,9 @@ defmodule NsgLoraWeb.LorawanServerLive do
        server_up: !!app,
        config: config,
        err: %{},
-       input: false
+       input: false,
+       play_log: true,
+       log: NsgLora.LagerRing.get_log()
      )}
   end
 
@@ -133,9 +137,35 @@ defmodule NsgLoraWeb.LorawanServerLive do
     {:noreply, assign(socket, config: server.config, err: %{}, input: false)}
   end
 
+  def handle_event("toggle-log", _, socket) do
+    play_log = !socket.assigns.play_log
+
+    case play_log do
+      true ->
+        {:noreply,
+         assign(socket,
+           play_log: play_log,
+           log: NsgLora.LagerRing.get_log()
+         )}
+
+      _ ->
+        {:noreply, assign(socket, play_log: play_log)}
+    end
+  end
+
   def handle_event(event, params, socket) do
     IO.inspect(event: event, params: params)
     {:noreply, socket}
+  end
+
+  def handle_info(:get_log, socket) do
+    case socket.assigns.play_log do
+      true ->
+        {:noreply, assign(socket, log: NsgLora.LagerRing.get_log())}
+
+      _ ->
+        {:noreply, socket}
+    end
   end
 
   defp started?() do

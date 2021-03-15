@@ -23,7 +23,7 @@ defmodule LagerHandler do
         level = :lager_msg.severity(lager_msg)
         date = timestamp(:lager_msg.timestamp(lager_msg), false)
         msg = :lager_msg.message(lager_msg) |> to_string()
-        NsgLora.LagerRing.log("#{date} [#{level}] #{msg}")
+        NsgLora.LagerRing.log("#{date} [#{level}] #{msg}\n")
 
       _ ->
         nil
