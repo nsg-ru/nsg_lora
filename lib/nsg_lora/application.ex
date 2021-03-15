@@ -15,6 +15,7 @@ defmodule NsgLora.Application do
       NsgLoraWeb.Endpoint,
       # Start a worker by calling: NsgLora.Worker.start_link(arg)
       # {NsgLora.Worker, arg}
+      NsgLora.LagerRing,
       NsgLora.DynSup,
       NsgLora.DBServer
     ]

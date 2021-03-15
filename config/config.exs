@@ -37,6 +37,17 @@ config :nsg_lora, :lora,
   lora_gw_config_path: "./tmp/global_conf.json",
   packet_forwarder_path: "./loop.sh"
 
+config :lager, :crash_log, false
+# Stop lager redirecting :error_logger messages
+config :lager, :error_logger_redirect, false
+# Stop lager removing Logger's :error_logger handler
+config :lager, :error_logger_whitelist, [Logger.ErrorHandler]
+
+config :lager,
+  handlers: [
+    {LagerHandler, [level: :info]},
+    {:lager_console_backend, :info}
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -36,7 +36,7 @@ defmodule NsgLora.ExecSer do
           nil
       end
 
-    {:ok, %{name: name, port: port, data: CircularBuffer.new(100)}}
+    {:ok, %{name: name, port: port, data: CircularBuffer.new(1024)}}
   end
 
   @impl true
@@ -46,7 +46,6 @@ defmodule NsgLora.ExecSer do
       "exec_ser",
       {:get_data, name}
     )
-    IO.inspect(String.length(data), label: "Port data")
     data = data<>"\n"
     {:noreply, %{state | data: CircularBuffer.insert(state.data, data)}}
   end

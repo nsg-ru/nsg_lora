@@ -36,7 +36,8 @@ defmodule NsgLora.MixProject do
   def application do
     [
       mod: {NsgLora.Application, []},
-      extra_applications: [:lager, :logger, :runtime_tools]
+      extra_applications: [:lager, :logger, :runtime_tools],
+      erl_opts: [parse_transform: "lager_transform"]
     ]
   end
 

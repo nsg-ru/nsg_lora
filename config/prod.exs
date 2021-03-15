@@ -17,12 +17,6 @@ config :nsg_lora, NsgLoraWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info, colors: [enabled: false]
 
-config :lager,
-  crash_log: '/dev/null',
-  handlers: [
-    lager_console_backend: :info
-  ]
-
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

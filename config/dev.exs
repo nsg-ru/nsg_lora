@@ -59,12 +59,6 @@ config :nsg_lora, NsgLoraWeb.Endpoint,
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 
-config :lager,
-  crash_log: '/dev/null',
-  handlers: [
-    lager_console_backend: :info
-  ]
-
 
 
 # Set a higher stacktrace during development. Avoid configuring such
