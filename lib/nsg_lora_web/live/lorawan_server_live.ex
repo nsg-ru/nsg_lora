@@ -158,6 +158,7 @@ defmodule NsgLoraWeb.LorawanServerLive do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_info(:get_log, socket) do
     case socket.assigns.play_log do
       true ->

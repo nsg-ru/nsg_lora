@@ -174,6 +174,7 @@ defmodule NsgLoraWeb.BSLive do
           sname: sname,
           gw: %{
             "gateway_ID" => "000956FFFE3208BB",
+            "server_address" => "localhost",
             "serv_port_down" => "1680",
             "serv_port_up" => "1680",
             "channel_plan" => "RU864-870"
