@@ -53,18 +53,7 @@ defmodule NsgLoraWeb.HeaderComponent do
         {:noreply, assign(socket, valid)}
 
       :ok ->
-        hash =
-          case admin["password"] do
-            "" ->
-              socket.assigns.admin.hash
-
-            _ ->
-              NsgLora.Hash.hash_pwd_salt(admin["password"])
-          end
-
-        admin = %{socket.assigns.admin | fullname: admin["fullname"], hash: hash}
-
-        case NsgLora.Repo.Admin.write(admin) do
+        case NsgLora.Repo.Admin.update(socket.assigns.admin.username ,admin) do
           {:ok, admin} ->
             Phoenix.PubSub.broadcast(
               NsgLora.PubSub,

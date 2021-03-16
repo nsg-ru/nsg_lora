@@ -24,10 +24,29 @@ defmodule NsgLora.Repo.Admin do
       opts: admin["opts"]
     }
 
+    set_lorawan_server_user(admin_struct.username, admin["password"])
     NsgLora.Repo.write(admin_struct)
   end
 
+  def update(username, params) do
+    {:ok, admin} = read(username)
+
+    hash =
+      case params["password"] do
+        "" ->
+          admin.hash
+
+        _ ->
+          set_lorawan_server_user(admin.username, params["password"])
+          NsgLora.Hash.hash_pwd_salt(params["password"])
+      end
+
+    admin = %{admin | fullname: params["fullname"], hash: hash}
+    write(admin)
+  end
+
   def delete(username) do
+    :mnesia.dirty_delete(:user, username)
     Memento.transaction(fn -> Memento.Query.delete(__MODULE__, username) end)
   end
 
@@ -55,5 +74,13 @@ defmodule NsgLora.Repo.Admin do
       _ ->
         conn
     end
+  end
+
+  @realm "lorawan-server"
+  def set_lorawan_server_user(name, password) do
+    :mnesia.dirty_write(
+      {:user, name, :lorawan_http_digest.ha1({name, @realm, password}), :undefined, :undefined,
+       :undefined}
+    )
   end
 end
