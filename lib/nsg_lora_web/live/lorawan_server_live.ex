@@ -243,6 +243,11 @@ defmodule NsgLoraWeb.LorawanServerLive do
         Application.put_env(:lorawan_server, :http_admin_listen, http_admin_listen)
         Application.put_env(:lorawan_server, :http_admin_listen_ssl, http_admin_listen_ssl)
 
+        Application.put_env(:lorawan_server, :applications, [
+          {"semtech-mote", :lorawan_application_semtech_mote},
+          {"nsg-app", NsgLora.LoraApp}
+        ])
+
         Application.ensure_all_started(:lorawan_server)
 
       _ ->
