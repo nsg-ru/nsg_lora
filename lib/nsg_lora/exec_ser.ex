@@ -11,7 +11,7 @@ defmodule NsgLora.ExecSer do
     args = params[:args] || []
 
     port =
-      Port.open({:spawn_executable, Application.app_dir(:nsg_lora) <> "/priv/share/wrapper.sh"}, [
+      Port.open({:spawn_executable, Application.app_dir(:nsg_lora) <> "/priv/lora/wrapper.sh"}, [
         :binary,
         # :stream,
         {:line, 1024},
