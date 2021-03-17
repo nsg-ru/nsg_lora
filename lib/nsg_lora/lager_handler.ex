@@ -19,7 +19,7 @@ defmodule LagerHandler do
     metadata = :lager_msg.metadata(lager_msg)
 
     case metadata[:application] do
-      :lorawan_server ->
+      app when app == nil or app == :lorawan_server ->
         level = :lager_msg.severity(lager_msg)
         date = timestamp(:lager_msg.timestamp(lager_msg), false)
         msg = :lager_msg.message(lager_msg) |> to_string()

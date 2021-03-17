@@ -45,7 +45,7 @@ config :lager, :error_logger_whitelist, [Logger.ErrorHandler]
 
 config :lager,
   handlers: [
-    {LagerHandler, [level: :info]},
+    {LagerHandler, [level: :debug]},
     {:lager_console_backend, :info}
   ]
 
