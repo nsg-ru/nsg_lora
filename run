@@ -1,1 +1,1 @@
-iex --sname lora1 --erl-config sys.config -S mix phx.server
+iex --sname lora1 -S mix phx.server
