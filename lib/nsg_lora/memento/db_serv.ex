@@ -36,6 +36,8 @@ defmodule NsgLora.DBServer do
     end
 
     NsgLoraWeb.BSLive.bs_start()
+
+    Application.load(:lorawan_server)
     NsgLoraWeb.LorawanServerLive.lorawan_server_start()
 
     {:ok, %{}}
