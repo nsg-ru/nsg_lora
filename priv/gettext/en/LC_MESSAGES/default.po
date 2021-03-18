@@ -139,7 +139,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:82
-#: lib/nsg_lora_web/live/bs_live.html.leex:85 lib/nsg_lora_web/live/components/header_component.html.leex:145
+#: lib/nsg_lora_web/live/bs_live.html.leex:40 lib/nsg_lora_web/live/components/header_component.html.leex:145
 #: lib/nsg_lora_web/live/lorawan_server_live.html.leex:68
 msgid "Save"
 msgstr ""
@@ -157,7 +157,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:14
-#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:84
+#: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:39
 #: lib/nsg_lora_web/live/components/alert_component.html.leex:14 lib/nsg_lora_web/live/components/header_component.html.leex:144
 #: lib/nsg_lora_web/live/lorawan_server_live.html.leex:67
 msgid "Cancel"
@@ -231,7 +231,7 @@ msgid "Certificate"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:84
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:59
 msgid "Do you want to stop Lorawan server?"
 msgstr ""
 
@@ -276,17 +276,17 @@ msgid "SSL files paths"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:98
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:73
 msgid "Server closed"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:73
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:48
 msgid "Server not started"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:70
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:45
 msgid "Server started"
 msgstr ""
 
@@ -345,36 +345,52 @@ msgid "Must be hex number"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.html.leex:11
+#: lib/nsg_lora_web/live/bs_live.html.leex:12
 msgid "Server port down"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.html.leex:12
+#: lib/nsg_lora_web/live/bs_live.html.leex:13
 msgid "Server port up"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.html.leex:21
+#: lib/nsg_lora_web/live/bs_live.html.leex:29
 msgid "Channel plan"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.html.leex:57
+#: lib/nsg_lora_web/live/bs_live.html.leex:30
 msgid "Select channel plan"
 msgstr ""
 
-#, elixir-format, fuzzy
-#: lib/nsg_lora_web/live/bs_live.ex:205
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.ex:206
 msgid "Base station adm state is down"
 msgstr ""
 
-#, elixir-format, fuzzy
-#: lib/nsg_lora_web/live/bs_live.html.leex:94
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.html.leex:48
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:76
 msgid "Message log"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:219
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:226
 msgid "Server adm state is down"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.html.leex:22
+msgid "Lora module"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/bs_live.html.leex:23
+msgid "Select module"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/nsg_lora_web/live/bs_live.html.leex:11
+msgid "Server address"
 msgstr ""

@@ -19,13 +19,17 @@ module.exports = {
       green: colors.emerald,
       red: colors.red,
     },
-        minHeight: {
-       '0': '0',
-       'cell': '2rem'
-      }
+    minHeight: {
+      '0': '0',
+      'cell': '2rem'
+    },
+    extend: {
+      height: {
+        '25r': '25rem',
+        '32r': '32rem'
+      },
+    },
   },
-  variants: {
-    extend: {},
-  },
+  variants: {},
   plugins: [],
 }

@@ -1,0 +1,59 @@
+<div class="flex flex-wrap items-baseline mb-2">
+  <div class="w-full md:w-1/4"><%= @name %></div>
+
+  <div x-data="{open: false, select: '<%= @config[@id] %>'}"
+    class="relative w-full md:w-3/4"  >
+    <div @click="open = !open"
+    class= "input-field content-color flex justify-between items-center">
+      <%= text_input @f, @id,
+      readonly: "readonly",
+      "x-bind:value": "select",
+      phx_hook: "FormChange",
+      class: "content-color"
+      %>
+
+      <svg xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4"
+      fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+    <div
+    class="absolute right-2 top-2 w-56 rounded-md border border-gray-400 content-color z-50"
+    x-show="open"
+    x-cloak
+    >
+      <div class="py-1 rounded-md bg-white shadow-xs"
+      @click.away="open=false"
+      @click="open=false">
+        <div class="block flex justify-end mr-1">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          class="h-4 w-4"
+          stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+        <div class="block px-4 pb-2 text-center border-b border-gray-400">
+          <%= @header %>
+        </div>
+
+        <%= for cp <- @value_list do %>
+          <div class="block px-4 py-2 hover-item"
+          @click="select = '<%= cp %>';
+          $dispatch('liveview-push-event', {
+            event: 'config_validate',
+            payload: {config: {<%= @id %>: '<%= cp %>'}}
+          })">
+            <%= cp %>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-full text-right text-red-500 text-sm"><%=
+@err[@id] %></div>
