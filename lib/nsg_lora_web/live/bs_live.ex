@@ -217,7 +217,7 @@ defmodule NsgLoraWeb.BSLive do
 
     gw = Map.merge(gw, bs_gw)
 
-    phy = NsgLora.Config.phy(:nsg_default)
+    phy = NsgLora.Config.phy(:nsglora_spi)
     {:ok, phy} = Jason.decode(phy)
 
     {:ok, json} =
