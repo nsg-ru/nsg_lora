@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # Start the program in the background
-exec "$@" &
+exec stdbuf -oL  "$@" &
 pid1=$!
 
 # Silence warnings from here on
-#exec >/dev/null 2>&1
+exec >/dev/null 2>&1
 
 # Read from stdin in the background and
 # kill running program when stdin closes
