@@ -395,4 +395,4 @@ msgstr "Выберите модуль"
 #, elixir-format, fuzzy
 #: lib/nsg_lora_web/live/bs_live.html.leex:11
 msgid "Server address"
-msgstr "Сервер запущен"
+msgstr "Адрес сервера"
