@@ -33,10 +33,6 @@ config :nsg_lora, NsgLora.Guardian,
   issuer: "nsg_lora",
   secret_key: "99uM718KzWXfU/wxsmJzNgncrqZkRA/a3aOmkJLLDHamz7dXU3Ybbl5W9qLJKvcl"
 
-config :nsg_lora, :lora,
-  lora_gw_config_path: "./tmp/global_conf.json",
-  packet_forwarder_path: "./rak2247_usb/lora_pkt_fwd"
-
 config :lager, :crash_log, false
 # Stop lager redirecting :error_logger messages
 config :lager, :error_logger_redirect, false

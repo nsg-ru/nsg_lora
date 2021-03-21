@@ -21,7 +21,7 @@
         f: f, config: @config, err: @err,
         name: gettext("Lora module"),
         header: gettext("Select module"),
-        value_list: ["nsglora_spi", "rak2247_usb"]
+        value_list: @lora_modules
     %>
 
     <%= live_component @socket, NsgLoraWeb.SelectComponent, id: "channel_plan",

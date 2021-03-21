@@ -4,18 +4,6 @@ defmodule NsgLoraWeb.BSLive do
   alias NsgLora.Validate
   alias NsgLora.Repo.BS
 
-  @channel_plans [
-    "RU864-870",
-    "EU863-870",
-    "US902-928",
-    "EU433",
-    "AU-915-928",
-    "CN470-510",
-    "AS923",
-    "KR920-923",
-    "IN865-867"
-  ]
-
   @impl true
   def mount(_params, session, socket) do
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
@@ -31,7 +19,8 @@ defmodule NsgLoraWeb.BSLive do
        config: bs.gw,
        err: %{},
        input: false,
-       channel_plans: @channel_plans,
+       channel_plans: NsgLora.Config.channel_plan(:list),
+       lora_modules: NsgLora.Config.lora_module(:list),
        bs_log: NsgLora.ExecSer.get_data(:packet_forwarder),
        play_log: true
      )}
@@ -192,13 +181,14 @@ defmodule NsgLoraWeb.BSLive do
 
   def bs_start() do
     bs = get_bs_or_default(node())
+    module = bs.gw["lora_module"] || "gefault"
 
     case bs.adm_state do
       true ->
         exit_packet_forwarder()
         create_gw_config_file(bs)
         reset_module()
-        path = Application.get_env(:nsg_lora, :lora)[:packet_forwarder_path]
+        path = Application.app_dir(:nsg_lora) <> "/priv/lora/" <> module <> "/lora_pkt_fwd"
 
         NsgLora.ExecSer.start_child(%{name: :packet_forwarder, path: path})
 
@@ -212,23 +202,28 @@ defmodule NsgLoraWeb.BSLive do
     {:ok, gw} = Jason.decode(gw)
 
     bs_gw = bs.gw
-    bs_gw = Map.put(bs_gw, "serv_port_down", bs_gw["serv_port_down"] |> String.to_integer())
-    bs_gw = Map.put(bs_gw, "serv_port_up", bs_gw["serv_port_up"] |> String.to_integer())
 
-    gw = Map.merge(gw, bs_gw)
+    gw =
+      Map.merge(gw, %{
+        "gateway_ID" => bs_gw["gateway_ID"],
+        "server_address" => bs_gw["server_address"],
+        "serv_port_down" => bs_gw["serv_port_down"] |> String.to_integer(),
+        "serv_port_up" => bs_gw["serv_port_up"] |> String.to_integer()
+      })
 
-    phy = NsgLora.Config.phy(:nsglora_spi)
-    {:ok, phy} = Jason.decode(phy)
+    channel_plan = NsgLora.Config.channel_plan(bs_gw["channel_plan"])
+    {:ok, channel_plan} = Jason.decode(channel_plan)
+
+    lora_module = NsgLora.Config.lora_module(bs_gw["lora_module"])
+    {:ok, lora_module} = Jason.decode(lora_module)
+
+    phy = Map.merge(channel_plan, lora_module)
 
     {:ok, json} =
       %{"SX1301_conf" => phy, "gateway_conf" => gw}
       |> Jason.encode(pretty: true)
 
-    path = Application.get_env(:nsg_lora, :lora)[:lora_gw_config_path]
-
-    dir = Path.dirname(path)
-
-    File.mkdir_p(dir)
+    path = Application.app_dir(:nsg_lora) <> "/priv/lora/global_conf.json"
     File.write(path, json)
   end
 

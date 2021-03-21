@@ -38,3 +38,4 @@ npm-debug.log
 /log/
 /.mnesia/
 /priv/cert/
+/priv/lora/global_conf.json
