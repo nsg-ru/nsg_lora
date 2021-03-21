@@ -78,9 +78,11 @@ defmodule NsgLora.Repo.Admin do
 
   @realm "lorawan-server"
   def set_lorawan_server_user(name, password) do
-    :mnesia.dirty_write(
-      {:user, name, :lorawan_http_digest.ha1({name, @realm, password}), :undefined, :undefined,
-       :undefined}
+    :mnesia.transaction(fn ->
+      :mnesia.write(
+        {:user, name, :lorawan_http_digest.ha1({name, @realm, password}), :undefined, :undefined,
+        :undefined}
+      ) end
     )
   end
 end
