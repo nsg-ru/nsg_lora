@@ -2,6 +2,8 @@ defmodule NsgLora.Repo.Admin do
   use Memento.Table,
     attributes: [:username, :fullname, :hash, :opts]
 
+  require NsgLora.LoraWan
+
   def all() do
     Memento.transaction(fn -> Memento.Query.all(__MODULE__) end)
   end
@@ -80,9 +82,11 @@ defmodule NsgLora.Repo.Admin do
   def set_lorawan_server_user(name, password) do
     :mnesia.transaction(fn ->
       :mnesia.write(
-        {:user, name, :lorawan_http_digest.ha1({name, @realm, password}), :undefined, :undefined,
-        :undefined}
-      ) end
-    )
+        NsgLora.LoraWan.user(
+          name: name,
+          pass_ha1: :lorawan_http_digest.ha1({name, @realm, password})
+        )
+      )
+    end)
   end
 end
