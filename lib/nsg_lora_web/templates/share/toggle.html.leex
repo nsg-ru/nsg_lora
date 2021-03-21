@@ -3,10 +3,12 @@
     phx-click="<%= @click_event %>">
       <div class="h-2 w-16 rounded-full bg-gray-400">
       </div>
-      <div class="<%= @up && "" || "hidden" %>
-      absolute inset-y-0 right-0 h-6 w-6 rounded-full bg-green-500">
+      <div class="<%= @adm_state && "" || "hidden" %>
+      absolute inset-y-0 right-0 h-6 w-6 rounded-full
+      <%= @up && "bg-green-500" || "bg-red-500" %>">
+      
       </div>
-      <div class="<%= @up && "hidden" || "" %> absolute inset-y-0 h-6 w-6 rounded-full bg-gray-300 dark:bg-gray-500">
+      <div class="<%= @adm_state && "hidden" || "" %> absolute inset-y-0 h-6 w-6 rounded-full bg-gray-300 dark:bg-gray-500">
       </div>
     </a>
   </div>

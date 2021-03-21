@@ -15,6 +15,7 @@ defmodule NsgLoraWeb.BSLive do
 
     {:ok,
      assign(socket,
+       bs_adm_state: bs.adm_state,
        bs_up: bs_up,
        config: bs.gw,
        err: %{},
@@ -28,9 +29,9 @@ defmodule NsgLoraWeb.BSLive do
 
   @impl true
   def handle_event("toggle", _params, socket) do
-    bs_up = !socket.assigns.bs_up
+    bs_adm_state = !socket.assigns.bs_adm_state
 
-    case bs_up do
+    case bs_adm_state do
       true ->
         save_bs_adm_state(true)
 
@@ -47,17 +48,23 @@ defmodule NsgLoraWeb.BSLive do
               )
           end
 
-        {:noreply, socket}
+        {:noreply, assign(socket, bs_adm_state: true)}
 
       _ ->
-        {:noreply,
-         assign(socket,
-           alert: %{
-             hidden: false,
-             text: gettext("Do you want to stop Lora base station?"),
-             id: "bs_down"
-           }
-         )}
+        case socket.assigns.bs_up do
+          true ->
+            {:noreply,
+             assign(socket,
+               alert: %{
+                 hidden: false,
+                 text: gettext("Do you want to stop Lora base station?"),
+                 id: "bs_down"
+               }
+             )}
+
+          _ ->
+            {:noreply, assign(socket, bs_adm_state: false)}
+        end
     end
   end
 
@@ -68,7 +75,7 @@ defmodule NsgLoraWeb.BSLive do
   def handle_event("alert-ok", %{"id" => "bs_down"}, socket) do
     save_bs_adm_state(false)
     NsgLora.ExecSer.port_close(:packet_forwarder)
-    {:noreply, assign(socket, alert: %{hidden: true})}
+    {:noreply, assign(socket, bs_adm_state: false, alert: %{hidden: true})}
   end
 
   def handle_event("config_validate", %{"config" => config}, socket) do
