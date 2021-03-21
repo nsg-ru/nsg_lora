@@ -124,6 +124,8 @@ defmodule NsgLoraWeb.AdminsLive do
     err_pass =
       cond do
         pl == 0 && admins -> gettext("No password")
+        String.match?(p, ~r/\s/) -> gettext("Do not use spaces")
+        !String.match?(p, ~r/^[\x21-\x7e]+$/) -> gettext("Use only ASCII chars")
         pl < 8 and pl != 0 -> gettext("Too short")
         true -> ""
       end

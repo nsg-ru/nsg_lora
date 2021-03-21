@@ -179,12 +179,12 @@ msgid "Name must not be empty"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.ex:135
+#: lib/nsg_lora_web/live/admins_live.ex:137
 msgid "Not equal"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.ex:127
+#: lib/nsg_lora_web/live/admins_live.ex:129
 msgid "Too short"
 msgstr ""
 
@@ -309,7 +309,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:150
+#: lib/nsg_lora_web/live/bs_live.ex:139
 msgid "Base station closed"
 msgstr ""
 
@@ -319,17 +319,17 @@ msgid "Base station configuration"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:57
+#: lib/nsg_lora_web/live/bs_live.ex:46
 msgid "Base station not started"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:149
+#: lib/nsg_lora_web/live/bs_live.ex:138
 msgid "Base station started"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:68
+#: lib/nsg_lora_web/live/bs_live.ex:57
 msgid "Do you want to stop Lora base station?"
 msgstr ""
 
@@ -364,7 +364,7 @@ msgid "Select channel plan"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:206
+#: lib/nsg_lora_web/live/bs_live.ex:196
 msgid "Base station adm state is down"
 msgstr ""
 
@@ -392,4 +392,14 @@ msgstr ""
 #, elixir-format
 #: lib/nsg_lora_web/live/bs_live.html.leex:11
 msgid "Server address"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.ex:127
+msgid "Do not use spaces"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.ex:128
+msgid "Use only ASCII chars"
 msgstr ""

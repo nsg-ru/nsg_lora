@@ -180,12 +180,12 @@ msgid "Name must not be empty"
 msgstr "Имя не должно быть пустым"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.ex:135
+#: lib/nsg_lora_web/live/admins_live.ex:137
 msgid "Not equal"
 msgstr "Не совпадает"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/admins_live.ex:127
+#: lib/nsg_lora_web/live/admins_live.ex:129
 msgid "Too short"
 msgstr "Очень короткий"
 
@@ -312,7 +312,7 @@ msgstr[1] "символа"
 msgstr[2] "символов"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:150
+#: lib/nsg_lora_web/live/bs_live.ex:139
 msgid "Base station closed"
 msgstr "Базовая станция остановлена"
 
@@ -322,17 +322,17 @@ msgid "Base station configuration"
 msgstr "Конфигурация базовой станции"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:57
+#: lib/nsg_lora_web/live/bs_live.ex:46
 msgid "Base station not started"
 msgstr "Базовая станция не стартовала"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:149
+#: lib/nsg_lora_web/live/bs_live.ex:138
 msgid "Base station started"
 msgstr "Базовая станция стартовала"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:68
+#: lib/nsg_lora_web/live/bs_live.ex:57
 msgid "Do you want to stop Lora base station?"
 msgstr "Вы хотите остановить базовую станцию?"
 
@@ -367,7 +367,7 @@ msgid "Select channel plan"
 msgstr "Выберите частотный план"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/bs_live.ex:206
+#: lib/nsg_lora_web/live/bs_live.ex:196
 msgid "Base station adm state is down"
 msgstr "Базовая станция стартовала"
 
@@ -392,7 +392,17 @@ msgstr "Модуль LoRa"
 msgid "Select module"
 msgstr "Выберите модуль"
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/nsg_lora_web/live/bs_live.html.leex:11
 msgid "Server address"
 msgstr "Адрес сервера"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.ex:127
+msgid "Do not use spaces"
+msgstr "Не используйте пробелы"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/admins_live.ex:128
+msgid "Use only ASCII chars"
+msgstr "Используйте только ASCII символы"
