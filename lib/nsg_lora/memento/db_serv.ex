@@ -40,6 +40,12 @@ defmodule NsgLora.DBServer do
     Application.load(:lorawan_server)
     NsgLoraWeb.LorawanServerLive.lorawan_server_start()
 
+    Phoenix.PubSub.broadcast(
+      NsgLora.PubSub,
+      "system",
+      :lorawan_server_started
+    )
+
     {:ok, %{}}
   end
 end

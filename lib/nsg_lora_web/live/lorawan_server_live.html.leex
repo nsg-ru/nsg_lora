@@ -1,17 +1,6 @@
   <h1 class="text-3xl font-bold text-center"><%= gettext "Lorawan server title" %></h1>
-
-  <div class="flex justify-end">
-    <a href="#" class="relative py-2"
-    phx-click="toggle">
-      <div class="h-2 w-16 rounded-full bg-gray-400">
-      </div>
-      <div class="<%= @server_up && "" || "hidden" %>
-      absolute inset-y-0 right-0 h-6 w-6 rounded-full bg-green-500">
-      </div>
-      <div class="<%= @server_up && "hidden" || "" %> absolute inset-y-0 h-6 w-6 rounded-full bg-gray-300 dark:bg-gray-500">
-      </div>
-    </a>
-  </div>
+  <%= render NsgLoraWeb.ShareView, "toggle.html", click_event: "toggle",
+  adm_state: @server_adm_state, up: @server_up %>
 
   <!-- Server on/off -->
   <div class="flex justify-end mt-2 mb-5">

@@ -7,6 +7,7 @@ defmodule NsgLoraWeb.LorawanServerLive do
   @impl true
   def mount(_params, session, socket) do
     Phoenix.PubSub.subscribe(NsgLora.PubSub, "lager_ring")
+    Phoenix.PubSub.subscribe(NsgLora.PubSub, "system")
 
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
     server = get_server_or_default(node())
@@ -16,6 +17,7 @@ defmodule NsgLoraWeb.LorawanServerLive do
 
     {:ok,
      assign(socket,
+       server_adm_state: server.adm_state,
        server_up: !!app,
        config: config,
        err: %{},
@@ -33,11 +35,11 @@ defmodule NsgLoraWeb.LorawanServerLive do
 
   @impl true
   def handle_event("toggle", _params, socket) do
-    server_up = !socket.assigns.server_up
+    server_adm_state = !socket.assigns.server_adm_state
 
-    case server_up do
+    case server_adm_state do
       true ->
-        save_server_adm_state(server_up)
+        save_server_adm_state(true)
 
         socket =
           case lorawan_server_start() do
@@ -49,17 +51,27 @@ defmodule NsgLoraWeb.LorawanServerLive do
           end
 
         {:noreply,
-         assign(socket, server_up: !!started?(), server_url: lorawan_server_url(socket))}
+         assign(socket,
+           server_adm_state: true,
+           server_up: !!started?(),
+           server_url: lorawan_server_url(socket)
+         )}
 
       _ ->
-        {:noreply,
-         assign(socket,
-           alert: %{
-             hidden: false,
-             text: gettext("Do you want to stop Lorawan server?"),
-             id: "server_down"
-           }
-         )}
+        case socket.assigns.server_up do
+          true ->
+            {:noreply,
+             assign(socket,
+               alert: %{
+                 hidden: false,
+                 text: gettext("Do you want to stop Lorawan server?"),
+                 id: "server_down"
+               }
+             )}
+
+          _ ->
+            {:noreply, assign(socket, server_adm_state: false)}
+        end
     end
   end
 
@@ -71,7 +83,9 @@ defmodule NsgLoraWeb.LorawanServerLive do
     save_server_adm_state(false)
     Application.stop(:lorawan_server)
     socket = put_flash(socket, :info, gettext("Server closed"))
-    {:noreply, assign(socket, server_up: !!started?(), alert: %{hidden: true})}
+
+    {:noreply,
+     assign(socket, server_adm_state: false, server_up: !!started?(), alert: %{hidden: true})}
   end
 
   def handle_event("config_validate", %{"config" => config}, socket) do
@@ -138,6 +152,10 @@ defmodule NsgLoraWeb.LorawanServerLive do
       _ ->
         {:noreply, socket}
     end
+  end
+
+  def handle_info(:lorawan_server_started, socket) do
+    {:noreply, assign(socket, server_up: !!started?())}
   end
 
   defp started?() do
