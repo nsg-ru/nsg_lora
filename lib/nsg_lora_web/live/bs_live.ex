@@ -173,7 +173,8 @@ defmodule NsgLoraWeb.BSLive do
             "server_address" => "localhost",
             "serv_port_down" => "1680",
             "serv_port_up" => "1680",
-            "channel_plan" => "RU864-870"
+            "channel_plan" => "RU864-870",
+            "lora_module" => "NSGLoRa_spi"
           }
         }
     end
@@ -218,11 +219,21 @@ defmodule NsgLoraWeb.BSLive do
         "serv_port_up" => bs_gw["serv_port_up"] |> String.to_integer()
       })
 
-    channel_plan = NsgLora.Config.channel_plan(bs_gw["channel_plan"])
-    {:ok, channel_plan} = Jason.decode(channel_plan)
+    channel_plan = NsgLora.Config.channel_plan(bs_gw["channel_plan"]) || "{}"
 
-    lora_module = NsgLora.Config.lora_module(bs_gw["lora_module"])
-    {:ok, lora_module} = Jason.decode(lora_module)
+    channel_plan =
+      case Jason.decode(channel_plan) do
+        {:ok, channel_plan} -> channel_plan
+        _ -> %{}
+      end
+
+    lora_module = NsgLora.Config.lora_module(bs_gw["lora_module"]) || "{}"
+
+    lora_module =
+      case Jason.decode(lora_module) do
+        {:ok, lora_module} -> lora_module
+        _ -> %{}
+      end
 
     phy = Map.merge(channel_plan, lora_module)
 
