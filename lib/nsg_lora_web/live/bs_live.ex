@@ -189,15 +189,14 @@ defmodule NsgLoraWeb.BSLive do
 
   def bs_start() do
     bs = get_bs_or_default(node())
-    module = bs.gw["lora_module"] || "gefault"
+    module = bs.gw["lora_module"] || "default"
 
     case bs.adm_state do
       true ->
         exit_packet_forwarder()
         create_gw_config_file(bs)
         reset_module()
-        path = Application.app_dir(:nsg_lora) <> "/priv/lora/" <> module <> "/lora_pkt_fwd"
-
+        path = get_lora_pkt_fwd_path(module)
         NsgLora.ExecSer.start_child(%{name: :packet_forwarder, path: path})
 
       _ ->
@@ -261,6 +260,32 @@ defmodule NsgLoraWeb.BSLive do
   defp save_bs_adm_state(adm_state) do
     bs = get_bs_or_default(node())
     BS.write(%{bs | adm_state: adm_state})
+  end
+
+  defp get_lora_pkt_fwd_path(module) do
+    case Application.get_env(:nsg_lora, :lora)[:lora_pkt_fwd_path] do
+      path when is_binary(path) ->
+        path
+
+      _ ->
+        nsg_executable =
+          case module do
+            "RAK2247_usb" -> "lora_pkt_fwd_rak2247usb"
+            "NSGLoRa_spi" -> "lora_pkt_fwd_nsg"
+            _ -> ""
+          end
+
+        case System.find_executable(nsg_executable) do
+          path when is_binary(path) ->
+            path
+
+          _ ->
+            Application.app_dir(:nsg_lora) <>
+              "/priv/lora/" <>
+              module <>
+              "/lora_pkt_fwd"
+        end
+    end
   end
 
   if Application.get_env(:nsg_lora, :lora)[:gpio_reset_pin] do

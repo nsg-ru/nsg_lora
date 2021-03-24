@@ -25,6 +25,13 @@ defmodule NsgLora.MixProject do
           include_erts: "/opt/erlang/arm_rt_eabi/erlang-22.3.4/erts-10.7.2",
           runtime_config_path: "config/target.exs",
           steps: [:assemble, :tar]
+        ],
+        nsg_lora_powerpc: [
+          include_executables_for: [:unix],
+          applications: @rel_app,
+          include_erts: "/opt/erlang/powerpc_rt/erlang-22.3.4/erts-10.7.2",
+          runtime_config_path: "config/target.exs",
+          steps: [:assemble, :tar]
         ]
       ]
     ]
