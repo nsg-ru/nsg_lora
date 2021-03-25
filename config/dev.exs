@@ -8,6 +8,14 @@ use Mix.Config
 # with webpack to recompile .js and .css sources.
 config :nsg_lora, NsgLoraWeb.Endpoint,
   http: [port: 4000],
+  https: [
+    port: 4443,
+    cipher_suite: :strong,
+    keyfile: "priv/cert/selfsigned_key.pem",
+    certfile: "priv/cert/selfsigned.pem",
+    transport_options: [socket_opts: [:inet6]]
+  ],
+  url: [host: "localhost", port: 4443],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
