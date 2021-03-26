@@ -380,7 +380,7 @@ defmodule NsgLora.Config do
         "forward_crc_disabled": false,
         "forward_crc_error": false,
         "forward_crc_valid": true,
-        "gateway_ID": "000956FFFE3208BB",
+        "gateway_ID": "0000000000000000",
         "keepalive_interval": 10,
         "push_timeout_ms": 100,
         "serv_port_down": 1680,

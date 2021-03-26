@@ -7,8 +7,11 @@ adm_state: @bs_adm_state, up: @bs_up %>
   <%= f = form_for :config, "#",
   [phx_change: :config_validate, phx_submit: :config] %>
 
+    <%= render NsgLoraWeb.ShareView, "input_form.html",
+    f: f, config: @config, err: @err, id: "gateway_ID", name: gettext("Gateway ID")
+    %>
+
     <%= for {id, name} <- [
-      {"gateway_ID",gettext("Gateway ID")},
       {"server_address",gettext("Server address")},
       {"serv_port_down",gettext("Server port down")},
       {"serv_port_up",gettext("Server port up")},

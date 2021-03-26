@@ -63,6 +63,7 @@ defmodule NsgLoraWeb.BSLive do
              )}
 
           _ ->
+            save_bs_adm_state(false)
             {:noreply, assign(socket, bs_adm_state: false)}
         end
     end
@@ -169,7 +170,7 @@ defmodule NsgLoraWeb.BSLive do
         %BS{
           sname: sname,
           gw: %{
-            "gateway_ID" => "000956FFFE3208BB",
+            "gateway_ID" => "0000000000000000",
             "server_address" => "localhost",
             "serv_port_down" => "1680",
             "serv_port_up" => "1680",
@@ -285,6 +286,19 @@ defmodule NsgLoraWeb.BSLive do
               module <>
               "/lora_pkt_fwd"
         end
+    end
+  end
+
+  def get_gw_id_from_eth_mac() do
+    with {res, 0} <- System.cmd("ip", ["addr"]),
+         [_, x1, x2, x3, x4, x5, x6] <-
+           Regex.run(
+             ~r/ether\s+([[:xdigit:]]{2,2}):([[:xdigit:]]{2,2}):([[:xdigit:]]{2,2}):([[:xdigit:]]{2,2}):([[:xdigit:]]{2,2}):([[:xdigit:]]{2,2})/,
+             res
+           ) do
+      "#{x1}#{x2}#{x3}FFFF#{x4}#{x5}#{x6}" |> String.upcase()
+    else
+      _ -> "FFFFFFFFFFFFFFFF"
     end
   end
 
