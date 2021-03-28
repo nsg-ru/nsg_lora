@@ -42,7 +42,7 @@ config :lager, :error_logger_whitelist, [Logger.ErrorHandler]
 config :lager,
   handlers: [
     {LagerHandler, [level: :debug]},
-    {:lager_console_backend, :info}
+    {:lager_console_backend, [level: :info]}
   ]
 
 # Import environment specific config. This must remain at the bottom

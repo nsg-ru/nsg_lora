@@ -132,6 +132,12 @@ defmodule NsgLoraWeb.BSLive do
     end
   end
 
+  def handle_event("load_default", %{"id" => "gateway_ID"}, socket) do
+    gw_id = get_gw_id_from_eth_mac()
+    config = socket.assigns.config |> Map.put("gateway_ID", gw_id)
+    {:noreply, assign(socket, config: config, input: true)}
+  end
+
   def handle_event(event, params, socket) do
     IO.inspect(event: event, params: params)
     {:noreply, socket}

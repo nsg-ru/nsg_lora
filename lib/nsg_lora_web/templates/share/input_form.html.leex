@@ -1,8 +1,29 @@
 <div class="flex flex-wrap items-baseline mb-2">
   <div class="w-full md:w-1/4"><%= @name %></div>
-  <%= text_input @f, @id, value: @config[@id],
-  class: "input-field content-color w-full md:w-3/4"
-  %>
+  <div class="relative flex items-center input-field content-color w-full md:w-3/4">
+    <%= text_input @f, @id, value: @config[@id],
+    class: "content-color w-full"
+    %>
+
+    <%= if   assigns[:load_default] do %>
+      <div class="relative h-6 w-6" phx-click="load_default" phx-value-id="<%= @id %>"
+      x-data="{open: false}">
+        <svg xmlns="http://www.w3.org/2000/svg"
+        @mouseover="open = true"
+        @mouseover.away = "open = false"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        <div
+        x-show="open" x-cloak
+        class="absolute right-6 top-4 max-w-xs w-max text-sm p-2 rounded-md border border-gray-400 content-color z-50">
+          <%= gettext "Load default value" %>
+        </div>
+      </div>
+    <%= end %>
+
+  </div>
   <div class="w-full text-right text-red-500 text-sm"><%=
     @err[@id] %></div>
 </div>
