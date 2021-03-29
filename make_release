@@ -1,8 +1,0 @@
-export SECRET_KEY_BASE=`mix phx.gen.secret`
-MIX_ENV=prod mix release nsg_lora_arm
-cd _build/prod/rel/
-tar -czf nsg_lora_arm.tar.gz nsg_lora_arm
-
-#To Client
-scp nsg_lora_arm.tar.gz root@192.168.1.1:/tmp
-ssh root@192.168.1.1 "tar -C /usr/lib -mxzf /tmp/nsg_lora_arm.tar.gz"

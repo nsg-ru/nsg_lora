@@ -204,7 +204,8 @@ defmodule NsgLoraWeb.BSLive do
         create_gw_config_file(bs)
         reset_module()
         path = get_lora_pkt_fwd_path(module)
-        NsgLora.ExecSer.start_child(%{name: :packet_forwarder, path: path})
+        {path, args} = nice_20(path)
+        NsgLora.ExecSer.start_child(%{name: :packet_forwarder, path: path, args: args})
 
       _ ->
         {:error, gettext("Base station adm state is down")}
@@ -292,6 +293,13 @@ defmodule NsgLoraWeb.BSLive do
               module <>
               "/lora_pkt_fwd"
         end
+    end
+  end
+
+  defp nice_20(path, args \\ []) do
+    case System.find_executable("nice") do
+      nice when is_binary(nice) -> {nice, ["-n", "-20", path | args]}
+      _ -> {path, args}
     end
   end
 
