@@ -1,22 +1,31 @@
 #!/bin/bash
-REL=${1-local}
+BOARD=${1-host}
+
+case "$BOARD" in
+  host )
+    REL=local;;
+
+  nsg1700 )
+    REL=nsg_lora_arm;;
+
+  nsg1810 )
+    REL=nsg_lora_powerpc;;
+esac
 
 case "$REL" in
 nsg_lora_arm )
-  export CC=/opt/nsgdevkit-2017-Q2/usr/bin/arm-nsg_rt-linux-gnueabi-gcc
-  ERL="/opt/erlang/arm_rt_eabi/erlang-22.3.4"
-  export ERTS_INCLUDE_DIR=$ERL/erts-10.7.2/include
-  echo Make release nsg_lora_arm;;
+  echo -n Make release nsg_lora_arm;;
 
 nsg_lora_powerpc )
-  echo Make release nsg_lora_powerpc;;
+  echo -n Make release nsg_lora_powerpc;;
 
 local )
-  echo Make release local;;
+  echo -n Make release local;;
 esac
+echo " for board $BOARD"
 
 export SECRET_KEY_BASE=`mix phx.gen.secret`
-export MIX_ENV=prod
+export MIX_ENV=$BOARD
 mix compile
 npm install --prefix ./assets
 npm run deploy --prefix ./assets
@@ -25,15 +34,15 @@ mix release $REL
 
 if [[ $REL == local ]]
 then
-  _build/prod/rel/local/bin/local start_iex
+  _build/$BOARD/rel/local/bin/local start_iex
 elif [[ $REL == nsg_lora_arm ]]
 then
-  scp _build/prod/nsg_lora_arm-0.1.0.tar.gz root@10.0.10.93:/tmp
+  scp _build/$BOARD/nsg_lora_arm-0.1.0.tar.gz root@10.0.10.93:/tmp
   ssh root@10.0.10.93 \
   "mkdir -p /usr/lib/lora; tar -C /usr/lib/lora -mxzf /tmp/nsg_lora_arm-0.1.0.tar.gz"
 elif [[ $REL == nsg_lora_powerpc ]]
 then
-  scp _build/prod/nsg_lora_powerpc-0.1.0.tar.gz root@10.0.10.69:/tmp
+  scp _build/$BOARD/nsg_lora_powerpc-0.1.0.tar.gz root@10.0.10.69:/tmp
   ssh root@10.0.10.69 \
   "mkdir -p /usr/lib/lora; tar -C /usr/lib/lora -mxzf /tmp/nsg_lora_powerpc-0.1.0.tar.gz"
 fi

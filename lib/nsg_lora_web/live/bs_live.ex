@@ -329,4 +329,6 @@ defmodule NsgLoraWeb.BSLive do
   else
     def reset_module(), do: nil
   end
+
+  # echo 792000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 
 end
