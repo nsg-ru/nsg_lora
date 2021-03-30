@@ -1,5 +1,7 @@
-defmodule NsgLora.LoraApp do
+defmodule NsgLora.LoraApp.Rak7200 do
   @behaviour :lorawan_application
+
+  require NsgLora.LoraWan
 
   def init(app) do
     IO.inspect(app, label: "INIT")
@@ -7,7 +9,7 @@ defmodule NsgLora.LoraApp do
   end
 
   def handle_join({_network, _profile, _device} = a, {_mac, _rxq} = b, _dev_addr = c) do
-    IO.inspect({a, b, c}, label: "LOIN")
+    IO.inspect({a, b, c}, label: "JOIN")
     :ok
   end
 
@@ -24,6 +26,11 @@ defmodule NsgLora.LoraApp do
 
   def handle_rxq({network, profile, node}, gateways, will_reply, frame, state) do
     IO.inspect([{network, profile, node}, gateways, will_reply, frame, state], label: "RXQ")
+    data = IO.inspect(NsgLora.LoraWan.frame(frame)[:data])
+
+    :lorawan_application_backend.cayenne_decode(data)
+    |> IO.inspect()
+
     :ok
   end
 
