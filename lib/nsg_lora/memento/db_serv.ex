@@ -35,6 +35,9 @@ defmodule NsgLora.DBServer do
       _ -> nil
     end
 
+    NsgLora.Board.init()
+    Logger.info("Board init")
+
     NsgLoraWeb.BSLive.bs_start()
 
     Application.load(:lorawan_server)

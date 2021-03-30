@@ -12,5 +12,3 @@ config :nsg_lora, NsgLoraWeb.Endpoint,
 
 config :mnesia,
   dir: '/usr/lib/lora/Mnesia'
-
-config :nsg_lora, :lora, gpio_reset_pin: 27

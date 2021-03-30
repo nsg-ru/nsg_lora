@@ -5,10 +5,10 @@ case "$BOARD" in
   host )
     REL=local;;
 
-  nsg1700 )
+  nsg17xx )
     REL=nsg_lora_arm;;
 
-  nsg1810 )
+  nsg18xx )
     REL=nsg_lora_powerpc;;
 esac
 
