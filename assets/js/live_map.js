@@ -10,4 +10,13 @@ if (livemap) {
       errorTileUrl: '/images/bogatka-o.png',
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap);
+
+  global.addMarkerToLiveMap = function(marker) {
+    var circle = L.circle([marker.lat, marker.lon], {
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.5,
+      radius: 5
+    }).addTo(mymap);
+  }
 }

@@ -87,6 +87,16 @@ Hooks.ScrollBottom = {
   }
 }
 
+Hooks.MapSightingsHandler = {
+  mounted() {
+    const handleNewSightingFunction = (marker) => {
+      addMarkerToLiveMap(marker)
+    };
+
+    this.handleEvent('new_sighting', handleNewSightingFunction);
+  },
+};
+
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {

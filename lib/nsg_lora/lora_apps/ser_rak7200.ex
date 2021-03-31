@@ -38,6 +38,12 @@ defmodule NsgLora.LoraApps.SerRak7200 do
           }
           |> IO.inspect()
 
+        Phoenix.PubSub.broadcast(
+          NsgLora.PubSub,
+          "nsg-rak7200",
+          {:new_marker, marker}
+        )
+
         {:noreply, %{state | markers: CircularBuffer.insert(state.markers, marker)}}
 
       _ ->
