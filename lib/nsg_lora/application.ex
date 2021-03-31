@@ -17,6 +17,7 @@ defmodule NsgLora.Application do
       # {NsgLora.Worker, arg}
       NsgLora.LagerRing,
       NsgLora.DynSup,
+      NsgLora.LoraApps.Sup,
       NsgLora.DBServer
     ]
 

@@ -11,5 +11,12 @@ defmodule NsgLora.LoraWan do
     Record.extract(:frame, from: "deps/lorawan_server/include/lorawan.hrl")
   )
 
-
+  Record.defrecord(
+    :rxq,
+    Record.extract(:rxq, from: "deps/lorawan_server/include/lorawan_db.hrl")
+  )
+  Record.defrecord(
+    :profile,
+    Record.extract(:profile, from: "deps/lorawan_server/include/lorawan_db.hrl")
+  )
 end

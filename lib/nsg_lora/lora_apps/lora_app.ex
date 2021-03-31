@@ -3,37 +3,53 @@ defmodule NsgLora.LoraApp do
 
   require NsgLora.LoraWan
 
-  def init(app) do
-    IO.inspect(app, label: "INIT")
+  @server %{
+    "nsg-rak7200" => NsgLora.LoraApps.SerRak7200
+  }
+
+  def init(_app) do
     :ok
   end
 
-  def handle_join({_network, _profile, _device} = a, {_mac, _rxq} = b, _dev_addr = c) do
-    IO.inspect({a, b, c}, label: "JOIN")
+  def handle_join({_network, _profile, _device}, {_mac, _rxq}, _dev_addr) do
     :ok
   end
 
   def handle_uplink({_network, _profile, _node}, _rxq, {:missed, _receipt}, _frame) do
-    IO.puts("UPLINK MISSED")
     :retransmit
   end
 
-  def handle_uplink(context, rxq, last_missed, frame) do
-    IO.inspect([context, rxq, last_missed, frame], label: "UPLINK")
+  def handle_uplink(_context, _rxq, _last_missed, _frame) do
     # accept and wait for deduplication
     {:ok, []}
   end
 
   def handle_rxq({network, profile, node}, gateways, will_reply, frame, state) do
-    IO.inspect([{network, profile, node}, gateways, will_reply, frame, state], label: "RXQ")
-    :lager.log(:debug, self(), "Get frame: #{inspect(NsgLora.LoraWan.frame(frame))}" )
+    app =
+      NsgLora.LoraWan.profile(profile)[:app]
 
+    case @server[app] do
+      nil ->
+        :lager.log(:error, self(), "No app server for #{app}")
+
+      mod ->
+        apply(mod, :rxq, [
+          %{
+            network: network,
+            profile: profile,
+            node: node,
+            gateways: gateways,
+            will_reply: will_reply,
+            frame: frame,
+            state: state
+          }
+        ])
+    end
 
     :ok
   end
 
-  def handle_delivery({network, profile, node}, result, receipt) do
-    IO.inspect([{network, profile, node}, result, receipt], label: "DELIVERY")
+  def handle_delivery({_network, _profile, _node}, _result, _receipt) do
     :ok
   end
 end
