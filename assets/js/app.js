@@ -21,6 +21,8 @@ import NProgress from "nprogress"
 import {
   LiveSocket
 } from "phoenix_live_view"
+import "./live_map"
+
 
 let Hooks = {}
 

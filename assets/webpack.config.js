@@ -28,6 +28,30 @@ module.exports = (env, options) => {
       path: path.resolve(__dirname, '../priv/static/js'),
       publicPath: '/js/'
     },
+
+    resolve: {
+      alias: {
+        "./images/layers.png$": path.resolve(
+          __dirname,
+          "./node_modules/leaflet/dist/images/layers.png"
+        ),
+        "./images/layers-2x.png$": path.resolve(
+          __dirname,
+          "./node_modules/leaflet/dist/images/layers-2x.png"
+        ),
+        "./images/marker-icon.png$": path.resolve(
+          __dirname,
+          "./node_modules/leaflet/dist/images/marker-icon.png"
+        ),
+        "./images/marker-icon-2x.png$": path.resolve(
+          __dirname,
+          "./node_modules/leaflet/dist/images/marker-icon-2x.png"
+        ),
+
+
+      }
+    },
+
     devtool: devMode ? 'eval-cheap-module-source-map' : undefined,
     module: {
       rules: [{
@@ -45,7 +69,17 @@ module.exports = (env, options) => {
             'postcss-loader',
             'sass-loader',
           ],
+        },
+        {
+          test: /\.(jpg|png|gif)$/,
+          loader: "file-loader",
+          options: {
+            name: "[name].[ext]",
+            outputPath: "../images/"
+          }
         }
+
+
       ]
     },
     plugins: [
