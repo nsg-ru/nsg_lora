@@ -43,6 +43,7 @@ defmodule NsgLoraWeb.Router do
     live "/mqtt", MQTTServerLive
     live "/absys", AboutSystemLive
     live "/admins", AdminsLive
+    live "/map", MapLive
     live "/blank", BlankLive
   end
 
