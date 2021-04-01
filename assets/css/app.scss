@@ -49,6 +49,10 @@
 /* This file is for your main application css. */
 @import "../node_modules/nprogress/nprogress.css";
 @import "../node_modules/leaflet/dist/leaflet.css";
+
+.nsg-sensor-icon {
+}
+
 /* LiveView specific classes for your customizations */
 .phx-no-feedback .invalid-feedback,
 .phx-no-feedback.invalid-feedback {
