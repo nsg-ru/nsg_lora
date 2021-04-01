@@ -2,7 +2,9 @@ import L from "leaflet"
 let livemap = document.getElementById("live-map")
 
 if (livemap) {
-  let mymap = L.map('live-map').setView([55.7782, 37.7371], 13);
+  let bs_position = {lat: livemap.dataset.lat, lon: livemap.dataset.lon}
+
+  let mymap = L.map('live-map').setView([bs_position.lat, bs_position.lon], 13);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -18,24 +20,34 @@ if (livemap) {
     });
   }
 
-  let marker = {
-    date: "2021-04-01T13:21:30",
-    freq: 867.3,
-    lat: 55.7775,
-    lon: 37.7382,
-    lsnr: 11,
-    rssi: -43
+  let bsIcon = function() {
+    return L.divIcon({
+      html: `<div class="flex flex-col justify-center h-8 w-8 rounded-full bg-gray-500 bg-opacity-50 border border-gray-900  text-center text-gray-900"><div>BS</div></div>`,
+      className: 'nsg-sensor-icon'
+    });
   }
 
-  L.marker([55.7782, 37.7371], {
-      icon: sensorIcon(marker.rssi, marker.distance || ""),
-    })
-    .bindPopup(`${marker.date}<br>${marker.lat} ${marker.lon}<br>freq: ${marker.freq}<br>rssi: ${marker.rssi}<br>lsnr: ${marker.lsnr}`).openPopup()
-    .addTo(mymap);
 
+
+  let bsMarker = L.marker([bs_position.lat, bs_position.lon], {
+    icon: bsIcon(),
+    draggable: 'true'
+  }).addTo(mymap);
+
+  bsMarker.on('dragend', function(event) {
+    var position = bsMarker.getLatLng();
+    console.log(position)
+    var event = new CustomEvent('liveview-map-bs-event', {
+      'detail': {
+        event: 'bs_position',
+        payload: position
+      }
+    });
+    dispatchEvent(event);
+
+  });
 
   global.addMarkerToLiveMap = function(marker) {
-    console.log(marker)
     L.marker([marker.lat, marker.lon], {
         icon: sensorIcon(marker.rssi, marker.distance || ""),
       })

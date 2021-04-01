@@ -89,12 +89,23 @@ Hooks.ScrollBottom = {
 
 Hooks.MapSightingsHandler = {
   mounted() {
+    const liveView = this
+    this.liveViewPushEvent = function(e) {
+      liveView.pushEvent(e.detail.event, e.detail.payload)
+    }
+    window.addEventListener('liveview-map-bs-event',
+      this.liveViewPushEvent)
+
     const handleNewSightingFunction = (marker) => {
       addMarkerToLiveMap(marker)
     };
 
     this.handleEvent('new_sighting', handleNewSightingFunction);
   },
+  destroyed() {
+    window.removeEventListener('liveview-map-bs-event',
+      this.liveViewPushEvent)
+  }
 };
 
 
