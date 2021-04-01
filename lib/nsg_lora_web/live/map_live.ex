@@ -33,6 +33,15 @@ defmodule NsgLoraWeb.MapLive do
   end
 
   def handle_info({:new_marker, marker}, socket) do
+    distance =
+      Geocalc.distance_between([socket.assigns.bs_position.lat, socket.assigns.bs_position.lon], [
+        marker.lat,
+        marker.lon
+      ])
+      |> round()
+
+    marker = Map.put(marker, :distance, distance)
+
     {:noreply, push_event(socket, "new_sighting", marker)}
   end
 end

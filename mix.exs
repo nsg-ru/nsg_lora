@@ -74,6 +74,7 @@ defmodule NsgLora.MixProject do
       {:guardian, "~> 2.0"},
       {:circular_buffer, "~> 0.3.0"},
       {:websockex, "~> 0.4.3"},
+      {:geocalc, "~> 0.8"},
 
       # Для совместимости с lorawan-server
       {:ranch, "1.7.1", override: true},
