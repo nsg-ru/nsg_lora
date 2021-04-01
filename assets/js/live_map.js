@@ -1,4 +1,6 @@
 import L from "leaflet"
+import "leaflet.fullscreen/Control.FullScreen"
+
 let livemap = document.getElementById("live-map")
 
 if (livemap) {
@@ -33,6 +35,8 @@ if (livemap) {
     icon: bsIcon(),
     draggable: 'true'
   }).addTo(mymap);
+
+  mymap.addControl(new L.Control.FullScreen());
 
   bsMarker.on('dragend', function(event) {
     var position = bsMarker.getLatLng();
