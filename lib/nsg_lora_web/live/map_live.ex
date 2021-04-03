@@ -20,6 +20,7 @@ defmodule NsgLoraWeb.MapLive do
     {:ok, assign(socket, bs_position: SerRak7200.get_bs_position())}
   end
 
+
   @impl true
   def handle_event("bs_position", %{"lat" => lat, "lng" => lon}, socket) do
     new_position = %{lat: lat, lon: lon}
