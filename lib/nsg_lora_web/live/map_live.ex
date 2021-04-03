@@ -3,6 +3,8 @@ defmodule NsgLoraWeb.MapLive do
   import NsgLoraWeb.Gettext
   alias NsgLora.LoraApps.SerRak7200
 
+  @emul_interval 10_000
+
   @impl true
   def mount(_params, session, socket) do
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
@@ -17,9 +19,10 @@ defmodule NsgLoraWeb.MapLive do
       )
     end)
 
+    Process.send_after(self(), :emul, @emul_interval)
+
     {:ok, assign(socket, bs_position: SerRak7200.get_bs_position())}
   end
-
 
   @impl true
   def handle_event("bs_position", %{"lat" => lat, "lng" => lon}, socket) do
@@ -30,6 +33,25 @@ defmodule NsgLoraWeb.MapLive do
 
   def handle_event(event, params, socket) do
     IO.inspect(event: event, params: params)
+    {:noreply, socket}
+  end
+
+  def handle_info(:emul, socket) do
+    Phoenix.PubSub.broadcast(
+      NsgLora.PubSub,
+      "nsg-rak7200",
+      {:new_marker,
+       %{
+         date: NaiveDateTime.local_now(),
+         freq: 868.1,
+         rssi: -51,
+         lsnr: 8,
+         lat: 55.777594 + Enum.random(-100..100) * 0.0001,
+         lon: 37.737926 + Enum.random(-100..100) * 0.0001
+       }}
+    )
+
+    Process.send_after(self(), :emul, @emul_interval)
     {:noreply, socket}
   end
 
