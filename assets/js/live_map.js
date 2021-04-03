@@ -18,14 +18,16 @@ if (livemap) {
   let sensorIcon = function(dbm, distance) {
     return L.divIcon({
       html: `<div class="flex flex-col justify-center h-8 w-8 rounded-full bg-red-500 bg-opacity-50 border border-gray-900  text-center text-gray-900 tracking-tighter leading-none"><div>${dbm}</div><div>${distance}</div></div>`,
-      className: 'nsg-sensor-icon'
+      className: 'nsg-sensor-icon',
+      iconAnchor: [16, 16]
     });
   }
 
   let bsIcon = function() {
     return L.divIcon({
       html: `<div class="flex flex-col justify-center h-8 w-8 rounded-full bg-gray-500 bg-opacity-50 border border-gray-900  text-center text-gray-900"><div>BS</div></div>`,
-      className: 'nsg-sensor-icon'
+      className: 'nsg-sensor-icon',
+      iconAnchor: [16, 16]
     });
   }
 
