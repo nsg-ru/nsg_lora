@@ -40,12 +40,6 @@ Hooks.ToggleTheme = {
   },
   updated() {
     this.set_theme(this.el)
-    // let html = document.querySelector("html")
-    // if (this.el.classList.contains("hidden")) {
-    //   html.classList.add("dark")
-    // } else {
-    //   html.classList.remove("dark")
-    // }
   }
 }
 
