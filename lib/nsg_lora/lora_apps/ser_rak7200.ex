@@ -1,6 +1,7 @@
 defmodule NsgLora.LoraApps.SerRak7200 do
   use GenServer
   require NsgLora.LoraWan
+  require Logger
 
   def start_link(params) do
     GenServer.start_link(__MODULE__, params, name: __MODULE__)
@@ -16,22 +17,27 @@ defmodule NsgLora.LoraApps.SerRak7200 do
   end
 
   @impl true
-  def handle_cast({:rxq, %{frame: frame, gateways: [{_mak, rxq} | _]}}, state) do
-    data = NsgLora.LoraWan.frame(frame)[:data]
+  def handle_cast({:rxq, %{frame: frame, gateways: [{_mak, rxq} | _] = _gateways}}, state) do
+    frame = NsgLora.LoraWan.frame(frame)
+
+    data = frame[:data]
 
     data =
-      try do
-        :lorawan_application_backend.cayenne_decode(data)
-      rescue
-        _ -> nil
+      case rak7200_decode(data, %{}) do
+        {:ok, data} ->
+          data
+
+        {:error, _} ->
+          {_, data} = rak7200_decode(data, %{}, :gps4)
+          data
       end
 
     case data do
-      %{"field1" => %{lat: lat, lon: lon}} ->
+      %{gps: %{lat: lat, lon: lon}} ->
         rxq = NsgLora.LoraWan.rxq(rxq)
 
         marker = %{
-          date: NaiveDateTime.local_now(),
+          date: NaiveDateTime.local_now() |> to_string(),
           freq: rxq[:freq],
           rssi: rxq[:rssi],
           lsnr: rxq[:lsnr],
@@ -87,5 +93,93 @@ defmodule NsgLora.LoraApps.SerRak7200 do
 
   def get_markers(n) do
     GenServer.call(__MODULE__, {:get_markers, n})
+  end
+
+  defp rak7200_decode(rest, acc, opts \\ nil)
+
+  defp rak7200_decode(<<>>, acc, _opts) do
+    {:ok, acc}
+  end
+
+  defp rak7200_decode(<<0x0188::16, lat::24, lon::24, alt::24, rest::binary>>, acc, :gps4) do
+    rak7200_decode(
+      rest,
+      Map.put(acc, :gps, %{
+        lat: lat |> precision(4),
+        lon: lon |> precision(4),
+        alt: alt |> precision(2)
+      })
+    )
+  end
+
+  defp rak7200_decode(<<0x0188::16, lat::32, lon::32, alt::32, rest::binary>>, acc, _opts) do
+    rak7200_decode(
+      rest,
+      Map.put(acc, :gps, %{
+        lat: lat |> precision(6),
+        lon: lon |> precision(6),
+        alt: alt |> precision(2)
+      })
+    )
+  end
+
+  defp rak7200_decode(<<0x0371::16, x::16, y::16, z::16, rest::binary>>, acc, _opts) do
+    rak7200_decode(
+      rest,
+      Map.put(acc, :acceleration, %{
+        x: x |> precision(3),
+        y: y |> precision(3),
+        z: z |> precision(3)
+      })
+    )
+  end
+
+  defp rak7200_decode(<<0x0586::16, x::16, y::16, z::16, rest::binary>>, acc, _opts) do
+    rak7200_decode(
+      rest,
+      Map.put(acc, :gyroscope, %{
+        x: x |> precision(2),
+        y: y |> precision(2),
+        z: z |> precision(2)
+      })
+    )
+  end
+
+  defp rak7200_decode(<<0x0902::16, x::16, rest::binary>>, acc, _opts) do
+    rak7200_decode(
+      rest,
+      Map.put(acc, :magnetometer, (acc[:magnetometer] || %{}) |> Map.put(:x, x |> precision(2)))
+    )
+  end
+
+  defp rak7200_decode(<<0x0A02::16, y::16, rest::binary>>, acc, _opts) do
+    rak7200_decode(
+      rest,
+      Map.put(acc, :magnetometer, (acc[:magnetometer] || %{}) |> Map.put(:y, y |> precision(2)))
+    )
+  end
+
+  defp rak7200_decode(<<0x0B02::16, z::16, rest::binary>>, acc, _opts) do
+    rak7200_decode(
+      rest,
+      Map.put(acc, :magnetometer, (acc[:magnetometer] || %{}) |> Map.put(:z, z |> precision(2)))
+    )
+  end
+
+  defp rak7200_decode(<<0x0802::16, batt::16, rest::binary>>, acc, _opts) do
+    rak7200_decode(
+      rest,
+      Map.put(acc, :battery, batt |> precision(2))
+    )
+  end
+
+  defp rak7200_decode(rest, acc, _opts) do
+    Logger.error("Bad payload: #{rest |> Base.encode16()}")
+
+    {:error, acc}
+  end
+
+  defp precision(val, n) do
+    (val * :math.pow(10, -n)) |> Float.round(n)
   end
 end

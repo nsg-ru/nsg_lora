@@ -19,7 +19,7 @@ defmodule NsgLoraWeb.MapLive do
       )
     end)
 
-    Process.send_after(self(), :emul, @emul_interval)
+    # Process.send_after(self(), :emul, @emul_interval)
 
     {:ok, assign(socket, bs_position: SerRak7200.get_bs_position())}
   end
@@ -36,13 +36,14 @@ defmodule NsgLoraWeb.MapLive do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_info(:emul, socket) do
     Phoenix.PubSub.broadcast(
       NsgLora.PubSub,
       "nsg-rak7200",
       {:new_marker,
        %{
-         date: NaiveDateTime.local_now(),
+         date: NaiveDateTime.local_now() |> to_string(),
          freq: 868.1,
          rssi: -51,
          lsnr: 8,

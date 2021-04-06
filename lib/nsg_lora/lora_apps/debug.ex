@@ -21,13 +21,24 @@ defmodule NsgLora.LoraApps.Debug do
 
   def handle_rxq(
         {_network, _profile, _node},
-        [{_mac, rxq} | _] = _gateways,
+        [{_mac, rxq} | _] = gateways,
         _will_reply,
         frame,
         _state
       ) do
     rxq = NsgLora.LoraWan.rxq(rxq)
     frame = NsgLora.LoraWan.frame(frame)
+
+    # [
+    #   NaiveDateTime.local_now() |> to_string(),
+    #   frame[:devaddr] |> Base.encode16()
+    #   | gateways
+    #     |> Enum.map(fn {mac, rxq} ->
+    #       rxq = NsgLora.LoraWan.rxq(rxq)
+    #       [mac: Base.encode16(mac), freq: rxq[:freq], rssi: rxq[:rssi], lsnr: rxq[:lsnr]]
+    #     end)
+    # ]
+    # |> IO.inspect()
 
     res = [
       devaddr: frame[:devaddr] |> Base.encode16(),
