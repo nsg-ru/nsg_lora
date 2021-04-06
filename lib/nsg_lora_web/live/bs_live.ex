@@ -250,6 +250,12 @@ defmodule NsgLoraWeb.BSLive do
 
     path = Application.app_dir(:nsg_lora) <> "/priv/lora/global_conf.json"
     File.write(path, json)
+
+    aux_path = Application.get_env(:nsg_lora, :lora)[:global_conf_path]
+
+    if aux_path do
+      File.write(aux_path, json)
+    end
   end
 
   defp exit_packet_forwarder() do
@@ -329,6 +335,4 @@ defmodule NsgLoraWeb.BSLive do
   else
     def reset_module(), do: nil
   end
-
-  # echo 792000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 
 end
