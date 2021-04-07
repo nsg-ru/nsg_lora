@@ -1,7 +1,10 @@
 defmodule NsgLora.LoraApps.SerRak7200 do
   use GenServer
   require NsgLora.LoraWan
+  alias NsgLora.LoraWan
   require Logger
+
+  @emul_interval 10_000
 
   def start_link(params) do
     GenServer.start_link(__MODULE__, params, name: __MODULE__)
@@ -9,11 +12,36 @@ defmodule NsgLora.LoraApps.SerRak7200 do
 
   @impl true
   def init(_params) do
+    Process.send_after(self(), :emul, @emul_interval)
+
     {:ok,
      %{
        bs_position: %{lat: 55.777594, lon: 37.737926},
        markers: CircularBuffer.new(1024)
      }}
+  end
+
+  @impl true
+  def handle_info(:emul, state) do
+    rxq(%{
+      frame:
+        LoraWan.frame(
+          data:
+            <<0x0188::16, 55_777_594 + Enum.random(-10000..10000)::32,
+              37_737_926 + Enum.random(-10000..10000)::32, 188::32>>
+        ),
+      gateways: [
+        {"FFFFFF000000",
+         LoraWan.rxq(
+           freq: 868.1,
+           rssi: -55,
+           lsnr: 11
+         )}
+      ]
+    })
+
+    Process.send_after(self(), :emul, @emul_interval)
+    {:noreply, state}
   end
 
   @impl true

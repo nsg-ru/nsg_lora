@@ -1,10 +1,12 @@
 import L from "leaflet"
 import "leaflet.fullscreen/Control.FullScreen"
 
-let livemap = document.getElementById("live-map")
-
-if (livemap) {
-  let bs_position = {lat: livemap.dataset.lat, lon: livemap.dataset.lon}
+global.initLiveMap = function() {
+  let livemap = document.getElementById("live-map")
+  let bs_position = {
+    lat: livemap.dataset.lat,
+    lon: livemap.dataset.lon
+  }
 
   let mymap = L.map('live-map').setView([bs_position.lat, bs_position.lon], 13);
 
@@ -31,8 +33,6 @@ if (livemap) {
     });
   }
 
-
-
   let bsMarker = L.marker([bs_position.lat, bs_position.lon], {
     icon: bsIcon(),
     draggable: 'true'
@@ -50,7 +50,6 @@ if (livemap) {
       }
     });
     dispatchEvent(event);
-
   });
 
   global.addMarkerToLiveMap = function(marker) {

@@ -19,29 +19,12 @@ x-data="main_init()"
       <%= gettext "Dashboard" %>
     <% end %>
 
-
     <div x-data="submenu_init('lora')">
       <a href="#"
       @click="toggleOpen"
       class="side-menu-item flex justify-between">
         <span class="font-bold"><%= gettext "LoRa" %></span>
-        <span>
-          <svg xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          x-show="!isOpen"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M19 9l-7 7-7-7" />
-          </svg>
-
-          <svg xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          x-show="isOpen"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M5 15l7-7 7 7" />
-          </svg>
-        </span>
+        <%= render NsgLoraWeb.ShareView, "menu_chevron.html" %>
       </a>
 
       <div class="pl-2"
@@ -63,30 +46,30 @@ x-data="main_init()"
       </div>
     </div>
 
+    <div x-data="submenu_init('applications')">
+      <a href="#"
+      @click="toggleOpen"
+      class="side-menu-item flex justify-between">
+        <span class="font-bold"><%= gettext "Applications" %></span>
+        <%= render NsgLoraWeb.ShareView, "menu_chevron.html" %>
+      </a>
 
+      <div class="pl-2"
+      x-show="isOpen">
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.MapLive),
+        class: "side-menu-item" do %>
+          <%= gettext "RAK7200 tracker" %>
+        <% end %>
+
+      </div>
+    </div>
 
     <div x-data="submenu_init('administration')">
       <a href="#"
       @click="toggleOpen"
       class="side-menu-item flex justify-between">
         <span class="font-bold"><%= gettext "Administration" %></span>
-        <span>
-          <svg xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          x-show="!isOpen"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M19 9l-7 7-7-7" />
-          </svg>
-
-          <svg xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          x-show="isOpen"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M5 15l7-7 7 7" />
-          </svg>
-        </span>
+        <%= render NsgLoraWeb.ShareView, "menu_chevron.html" %>
       </a>
 
       <div class="pl-2"
@@ -108,23 +91,7 @@ x-data="main_init()"
       @click="toggleOpen"
       class="side-menu-item flex justify-between">
         <span class="font-bold"><%= gettext "Other" %></span>
-        <span>
-          <svg xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          x-show="!isOpen"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M19 9l-7 7-7-7" />
-          </svg>
-
-          <svg xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          x-show="isOpen"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M5 15l7-7 7 7" />
-          </svg>
-        </span>
+        <%= render NsgLoraWeb.ShareView, "menu_chevron.html" %>
       </a>
 
       <div class="pl-2"

@@ -83,6 +83,7 @@ Hooks.ScrollBottom = {
 
 Hooks.MapSightingsHandler = {
   mounted() {
+    initLiveMap()
     const liveView = this
     this.liveViewPushEvent = function(e) {
       liveView.pushEvent(e.detail.event, e.detail.payload)
