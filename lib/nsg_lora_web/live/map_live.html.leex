@@ -1,4 +1,13 @@
 <div class="text-3xl font-bold text-center"><%= gettext "RAK7200 tracker" %></div>
+
+<div class="flex justify-end items-center mb-2">
+  <a href="#" class="btn" phx-click="clear">
+    <%= gettext "Clear" %>
+  </a>
+
+  <%= render NsgLoraWeb.ShareView, "toggle_play_pause.html", play: @play %>
+</div>
+
 <section id="live-map-section"
 phx-update="ignore" phx-hook="MapSightingsHandler">
   <div id="live-map"

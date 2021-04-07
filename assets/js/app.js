@@ -91,11 +91,8 @@ Hooks.MapSightingsHandler = {
     window.addEventListener('liveview-map-bs-event',
       this.liveViewPushEvent)
 
-    const handleNewSightingFunction = (marker) => {
-      addMarkerToLiveMap(marker)
-    };
-
-    this.handleEvent('new_sighting', handleNewSightingFunction);
+    this.handleEvent('new_sighting', addMarkerToLiveMap);
+    this.handleEvent('clear_markers', clearAllMarkers);
   },
   destroyed() {
     window.removeEventListener('liveview-map-bs-event',

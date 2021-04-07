@@ -122,7 +122,7 @@ defmodule NsgLoraWeb.LorawanServerLive do
     {:noreply, assign(socket, config: server.config, err: %{}, input: false)}
   end
 
-  def handle_event("toggle-log", _, socket) do
+  def handle_event("toggle-play-pause", _, socket) do
     play_log = !socket.assigns.play_log
 
     case play_log do

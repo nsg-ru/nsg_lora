@@ -38,6 +38,8 @@ global.initLiveMap = function() {
     draggable: 'true'
   }).addTo(mymap);
 
+  let markerLayerGroup = L.layerGroup().addTo(mymap);
+
   mymap.addControl(new L.Control.FullScreen());
 
   bsMarker.on('dragend', function(event) {
@@ -57,6 +59,11 @@ global.initLiveMap = function() {
         icon: sensorIcon(marker.rssi, marker.distance || ""),
       })
       .bindPopup(`${marker.date}<br>${marker.lat} ${marker.lon}<br>freq: ${marker.freq}<br>rssi: ${marker.rssi}<br>lsnr: ${marker.lsnr}`).openPopup()
-      .addTo(mymap);
+      .addTo(markerLayerGroup);
+  }
+
+  global.clearAllMarkers = function() {
+    console.log("Clear")
+    markerLayerGroup.clearLayers();
   }
 }
