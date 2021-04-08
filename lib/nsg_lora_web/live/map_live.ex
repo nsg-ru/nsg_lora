@@ -11,12 +11,15 @@ defmodule NsgLoraWeb.MapLive do
     Process.send(self(), {:init, -markers_qty}, [])
 
     {:ok,
-     assign(socket,
+     socket
+     |> assign(
+       uploaded_files: [],
        play: true,
        markers_qty: markers_qty,
        markers_qty_err: false,
        bs_position: SerRak7200.get_bs_position()
-     )}
+     )
+     |> allow_upload(:markers, accept: ~w(.json), max_entries: 1)}
   end
 
   @impl true
@@ -65,6 +68,32 @@ defmodule NsgLoraWeb.MapLive do
 
       _ ->
         {:noreply, assign(socket, markers_qty_err: true)}
+    end
+  end
+
+  def handle_event("markers_save", _params, socket) do
+    with [{:ok, json}] <-
+           consume_uploaded_entries(socket, :markers, fn %{path: path}, _entry ->
+             File.read(path)
+           end),
+         {:ok, markers} <- Jason.decode(json) do
+      markers
+      |> Enum.each(fn marker ->
+        marker =
+          marker
+          |> Enum.map(fn {k, v} -> {String.to_atom(k), v} end)
+          |> Enum.into(%{})
+
+        Phoenix.PubSub.broadcast(
+          NsgLora.PubSub,
+          "nsg-rak7200",
+          {:new_marker, marker}
+        )
+      end)
+
+      {:noreply, socket}
+    else
+      _ -> {:noreply, socket}
     end
   end
 

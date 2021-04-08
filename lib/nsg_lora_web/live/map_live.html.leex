@@ -1,22 +1,25 @@
 <div class="text-3xl font-bold text-center mb-3"><%= gettext "RAK7200 tracker" %></div>
 
-<div class="flex justify-between items-center mb-2">
-  <div class="flex items-baseline" >
-    <a href="#" class="btn mr-2" phx-click="all">
+<div class="md:flex md:justify-between items-center mb-2">
+  <div class="flex flex-col md:flex-row md:items-baseline" >
+    <a href="#" class="btn md:mr-2 mb-2" phx-click="all">
       <%= gettext "Show all" %>
     </a>
-    <a href="#" class="btn" phx-click="clear">
-      <%= gettext "Show" %>
-    </a>
-    <form phx-change="markers_qty" phx-submit="clear">
+
+    <form phx-change="markers_qty" phx-submit="clear" class="flex items-baseline">
+      <a href="#" class="btn" phx-click="clear">
+        <%= gettext "Show" %>
+      </a>
       <input class="input-field content-color w-12 px-1 text-center mr-1
       <%= @markers_qty_err && "text-red-500" || "" %>"
       type="text"
       name="qty" value="<%= @markers_qty %>"/>
+      <div><%= ngettext "last marker","last markers", @markers_qty %></div>
     </form>
-    <div><%= ngettext "last marker","last markers", @markers_qty %></div>
   </div>
-  <%= render NsgLoraWeb.ShareView, "toggle_play_pause.html", play: @play %>
+  <div class="flex justify-end">
+    <%= render NsgLoraWeb.ShareView, "toggle_play_pause.html", play: @play %>
+  </div>
 </div>
 
 <section id="live-map-section"
@@ -27,7 +30,23 @@ phx-update="ignore" phx-hook="MapSightingsHandler">
   class="h-32r border border-gray-400 mb-4"></div>
 </section>
 
-<%= link gettext("Export"),
-to: Routes.download_path(@socket, :export,
-    filename: "RAK7200_markers", ext: "json", params: %{qty: @markers_qty}),
-class: "btn" %>
+<div class="md:flex md:justify-between">
+  <form phx-submit="markers_save" phx-change="markers_validate" class="md:flex md:items-baseline mb-3 md:mb-0">
+    <button type="submit" class="btn mr-2"><%= gettext "Import" %></button>
+    <label class="btn inline-block mr-2">
+      <%= live_file_input(@uploads.markers) %>
+      <%= gettext "Select a file" %>
+    </label>
+  </form>
+
+  <%= link gettext("Export"),
+  to: Routes.download_path(@socket, :export,
+  filename: "RAK7200_markers", ext: "json", params: %{qty: @markers_qty}),
+  class: "btn" %>
+</div>
+
+<div class="text-sm">
+  <%= for entry <- @uploads.markers.entries do %>
+  <%= entry.client_name %> - <%= entry.progress %>%
+  <% end %>
+</div>

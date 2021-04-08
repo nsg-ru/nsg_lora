@@ -54,6 +54,10 @@
 .nsg-sensor-icon {
 }
 
+input[type="file"] {
+    display: none;
+}
+
 /* LiveView specific classes for your customizations */
 .phx-no-feedback .invalid-feedback,
 .phx-no-feedback.invalid-feedback {
