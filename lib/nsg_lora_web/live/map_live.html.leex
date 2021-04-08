@@ -24,5 +24,10 @@ phx-update="ignore" phx-hook="MapSightingsHandler">
   <div id="live-map"
   data-lat="<%= @bs_position.lat %>"
   data-lon="<%= @bs_position.lon %>"
-  class="h-32r border border-gray-400 z-0"></div>
+  class="h-32r border border-gray-400 mb-4"></div>
 </section>
+
+<%= link gettext("Export"),
+to: Routes.download_path(@socket, :export,
+    filename: "RAK7200_markers", ext: "json", params: %{qty: @markers_qty}),
+class: "btn" %>

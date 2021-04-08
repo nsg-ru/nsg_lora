@@ -32,6 +32,7 @@ defmodule NsgLoraWeb.Router do
     get "/login", SessionController, :new
     post "/login", SessionController, :login
     get "/logout", SessionController, :logout
+    get "/download", DownloadController, :export
   end
 
   scope "/", NsgLoraWeb do
