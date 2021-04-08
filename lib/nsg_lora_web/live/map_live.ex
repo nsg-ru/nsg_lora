@@ -7,8 +7,16 @@ defmodule NsgLoraWeb.MapLive do
   def mount(_params, session, socket) do
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
     Phoenix.PubSub.subscribe(NsgLora.PubSub, "nsg-rak7200")
-    Process.send(self(), :init, [])
-    {:ok, assign(socket, play: true, bs_position: SerRak7200.get_bs_position())}
+    markers_qty = 8
+    Process.send(self(), {:init, -markers_qty}, [])
+
+    {:ok,
+     assign(socket,
+       play: true,
+       markers_qty: markers_qty,
+       markers_qty_err: false,
+       bs_position: SerRak7200.get_bs_position()
+     )}
   end
 
   @impl true
@@ -23,19 +31,41 @@ defmodule NsgLoraWeb.MapLive do
 
     case play do
       true ->
-        {:noreply,
-         assign(socket,
-           play: play
-         )}
+        socket = assign(socket, play: true)
+        Process.send(self(), {:init, -socket.assigns.markers_qty}, [])
+        {:noreply, push_event(socket, "clear_markers", %{})}
 
       _ ->
-        {:noreply, assign(socket, play: play)}
+        {:noreply, assign(socket, play: false)}
     end
   end
 
+  def handle_event("clear", _params, %{assigns: %{play: false}} = socket) do
+    {:noreply, socket}
+  end
+
+  def handle_event("all", _params, %{assigns: %{play: false}} = socket) do
+    {:noreply, socket}
+  end
+
   def handle_event("clear", _params, socket) do
-    Process.send(self(), :init, [])
+    Process.send(self(), {:init, -socket.assigns.markers_qty}, [])
     {:noreply, push_event(socket, "clear_markers", %{})}
+  end
+
+  def handle_event("all", _params, socket) do
+    Process.send(self(), {:init, :all}, [])
+    {:noreply, push_event(socket, "clear_markers", %{})}
+  end
+
+  def handle_event("markers_qty", %{"qty" => qty}, socket) do
+    case Integer.parse(qty) do
+      {qty, ""} when qty > 0 ->
+        {:noreply, assign(socket, markers_qty: qty, markers_qty_err: false)}
+
+      _ ->
+        {:noreply, assign(socket, markers_qty_err: true)}
+    end
   end
 
   def handle_event(event, params, socket) do
@@ -44,8 +74,8 @@ defmodule NsgLoraWeb.MapLive do
   end
 
   @impl true
-  def handle_info(:init, socket) do
-    SerRak7200.get_markers(-8)
+  def handle_info({:init, n}, socket) do
+    SerRak7200.get_markers(n)
     |> Enum.each(fn marker ->
       Phoenix.PubSub.broadcast(
         NsgLora.PubSub,

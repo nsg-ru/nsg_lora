@@ -1,10 +1,21 @@
-<div class="text-3xl font-bold text-center"><%= gettext "RAK7200 tracker" %></div>
+<div class="text-3xl font-bold text-center mb-3"><%= gettext "RAK7200 tracker" %></div>
 
-<div class="flex justify-end items-center mb-2">
-  <a href="#" class="btn" phx-click="clear">
-    <%= gettext "Clear" %>
-  </a>
-
+<div class="flex justify-between items-center mb-2">
+  <div class="flex items-baseline" >
+    <a href="#" class="btn mr-2" phx-click="all">
+      <%= gettext "Show all" %>
+    </a>
+    <a href="#" class="btn" phx-click="clear">
+      <%= gettext "Show" %>
+    </a>
+    <form phx-change="markers_qty" phx-submit="clear">
+      <input class="input-field content-color w-12 px-1 text-center mr-1
+      <%= @markers_qty_err && "text-red-500" || "" %>"
+      type="text"
+      name="qty" value="<%= @markers_qty %>"/>
+    </form>
+    <div><%= ngettext "last marker","last markers", @markers_qty %></div>
+  </div>
   <%= render NsgLoraWeb.ShareView, "toggle_play_pause.html", play: @play %>
 </div>
 

@@ -115,7 +115,7 @@ defmodule NsgLora.LoraApps.SerRak7200 do
     GenServer.cast(__MODULE__, {:set_bs_position, position})
   end
 
-  def get_markers() do
+  def get_markers(:all) do
     GenServer.call(__MODULE__, :get_markers)
   end
 
