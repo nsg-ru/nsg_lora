@@ -12,10 +12,11 @@ defmodule NsgLora.LoraApps.SerRak7200 do
 
   @impl true
   def init(_params) do
-    Process.send_after(self(), :emul, @emul_interval)
+    # Process.send_after(self(), :emul, @emul_interval)
 
     {:ok,
      %{
+       id: 0,
        bs_position: %{lat: 55.777594, lon: 37.737926},
        markers: CircularBuffer.new(1024)
      }}
@@ -62,9 +63,11 @@ defmodule NsgLora.LoraApps.SerRak7200 do
 
     case data do
       %{gps: %{lat: lat, lon: lon}} ->
+        id = state.id + 1
         rxq = NsgLora.LoraWan.rxq(rxq)
 
         marker = %{
+          id: id,
           date: NaiveDateTime.local_now() |> to_string(),
           freq: rxq[:freq],
           rssi: rxq[:rssi],
@@ -79,7 +82,7 @@ defmodule NsgLora.LoraApps.SerRak7200 do
           {:new_marker, marker}
         )
 
-        {:noreply, %{state | markers: CircularBuffer.insert(state.markers, marker)}}
+        {:noreply, %{state | id: id, markers: CircularBuffer.insert(state.markers, marker)}}
 
       _ ->
         {:noreply, state}
