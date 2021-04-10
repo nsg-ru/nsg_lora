@@ -22,6 +22,7 @@ import {
   LiveSocket
 } from "phoenix_live_view"
 import "./live_map"
+import "./live_plan"
 
 
 let Hooks = {}

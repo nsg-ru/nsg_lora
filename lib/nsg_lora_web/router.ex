@@ -45,6 +45,7 @@ defmodule NsgLoraWeb.Router do
     live "/absys", AboutSystemLive
     live "/admins", AdminsLive
     live "/map", MapLive
+    live "/plan", PlanLive
     live "/blank", BlankLive
   end
 
