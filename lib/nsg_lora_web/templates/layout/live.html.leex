@@ -60,6 +60,10 @@ x-data="main_init()"
         class: "side-menu-item" do %>
           <%= gettext "RAK7200 tracker" %>
         <% end %>
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.PlanLive),
+        class: "side-menu-item" do %>
+          <%= gettext "Localization" %>
+        <% end %>
 
       </div>
     </div>

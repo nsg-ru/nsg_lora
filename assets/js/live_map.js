@@ -44,7 +44,6 @@ global.initLiveMap = function() {
 
   bsMarker.on('dragend', function(event) {
     var position = bsMarker.getLatLng();
-    console.log(position)
     var event = new CustomEvent('liveview-map-bs-event', {
       'detail': {
         event: 'bs_position',
@@ -63,7 +62,6 @@ global.initLiveMap = function() {
   }
 
   global.clearAllMarkers = function() {
-    console.log("Clear")
     markerLayerGroup.clearLayers();
   }
 }

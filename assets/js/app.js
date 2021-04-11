@@ -102,6 +102,26 @@ Hooks.MapSightingsHandler = {
 };
 
 
+Hooks.LocalizationHandler = {
+  mounted() {
+    initLivePlan()
+    const liveView = this
+    this.liveViewPushEvent = function(e) {
+      liveView.pushEvent(e.detail.event, e.detail.payload)
+    }
+    window.addEventListener('liveview-plan-event',
+      this.liveViewPushEvent)
+
+    // this.handleEvent('new_sighting', addMarkerToLiveMap);
+    // this.handleEvent('clear_markers', clearAllMarkers);
+  },
+  destroyed() {
+    window.removeEventListener('liveview-plan-event',
+      this.liveViewPushEvent)
+  }
+};
+
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   dom: {
