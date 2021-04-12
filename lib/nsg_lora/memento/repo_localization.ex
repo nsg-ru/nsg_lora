@@ -15,4 +15,8 @@ defmodule NsgLora.Repo.Localization do
   def write(fp = %{}) do
     NsgLora.Repo.write(struct(NsgLora.Repo.Localization, fp))
   end
+
+  def delete(id) do
+    Memento.transaction(fn -> Memento.Query.delete(__MODULE__, id) end)
+  end
 end

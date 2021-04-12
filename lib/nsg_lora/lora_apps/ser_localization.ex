@@ -28,13 +28,35 @@ defmodule NsgLora.LoraApps.SerLocalization do
         {Base.encode16(mac), LoraWan.rxq(rxq)[:rssi]}
       end)
       |> Enum.into(%{})
-      |> IO.inspect()
 
     case state.mode do
       :collect ->
         {:noreply, %{state | rssi_measures: [rssi_vec | state.rssi_measures]}}
 
       :localization ->
+        IO.inspect(rssi_vec, label: "Localization")
+        {:ok, fp_matrix} = NsgLora.Repo.Localization.all()
+
+        {sy, sx, sw} =
+          fp_matrix
+          |> Enum.map(fn %{coord: coord, rssi: rssi_fp} ->
+            {coord, distance(rssi_vec, rssi_fp)}
+          end)
+          |> Enum.sort_by(fn {_, d} -> d end)
+          |> Enum.take(3)
+          |> Enum.reduce({0, 0, 0}, fn {[y, x], d}, {sy, sx, sw} ->
+            w = 1 / d
+            {sy + y * w, sx + x * w, sw + w}
+          end)
+
+        point = [sy / sw, sx / sw]
+
+        Phoenix.PubSub.broadcast(
+          NsgLora.PubSub,
+          "nsg-localization",
+          {:new_marker, point}
+        )
+
         {:noreply, state}
     end
   end
@@ -53,6 +75,11 @@ defmodule NsgLora.LoraApps.SerLocalization do
     {:noreply, %{state | coord: coord, rssi_measures: []}}
   end
 
+  @impl true
+  def handle_call(:get_coord, _from, state) do
+    {:reply, state.coord, state}
+  end
+
   defp collect_rssi_vec(%{coord: coord, rssi_measures: [_ | _] = vec}) do
     rssi =
       vec
@@ -66,10 +93,21 @@ defmodule NsgLora.LoraApps.SerLocalization do
       |> Enum.map(fn {mac, {sum, n}} -> {mac, sum / n} end)
 
     NsgLora.Repo.Localization.write(%{coord: coord, rssi: rssi})
-    |> IO.inspect()
   end
 
   defp collect_rssi_vec(_) do
+  end
+
+  defp distance(map, list) do
+    list
+    |> Enum.map(fn {mac, rssi} ->
+      case map[mac] do
+        nil -> nil
+        v -> :math.pow(rssi - v, 2)
+      end
+    end)
+    |> Enum.sum()
+    |> :math.sqrt()
   end
 
   def rxq(params) do
@@ -79,7 +117,12 @@ defmodule NsgLora.LoraApps.SerLocalization do
   def set_mode(mode) do
     GenServer.cast(__MODULE__, {:set_mode, mode})
   end
-  def set_fp([_x, _y] = coord) do
+
+  def set_fp([_y, _x] = coord) do
     GenServer.cast(__MODULE__, {:set_fp, coord})
+  end
+
+  def get_fp() do
+    GenServer.call(__MODULE__, :get_coord)
   end
 end

@@ -2,6 +2,9 @@ import L from "leaflet"
 import "leaflet.fullscreen/Control.FullScreen"
 
 global.initLivePlan = function() {
+  let live_plan = document.getElementById("live-plan")
+  let fp_coord = [live_plan.dataset.y, live_plan.dataset.x]
+
   var plan = L.map('live-plan', {
     crs: L.CRS.Simple,
     minZoom: 4,
@@ -10,9 +13,9 @@ global.initLivePlan = function() {
 
   var bounds = [
     [0, 0],
-    [15, 9]
+    [13.35, 25.84]
   ];
-  var image = L.imageOverlay('/images/plan.jpg', bounds).addTo(plan);
+  var image = L.imageOverlay('/images/plan_nsg.jpg', bounds).addTo(plan);
   plan.fitBounds(bounds);
 
   let tpIconSvg = `<svg xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +40,7 @@ global.initLivePlan = function() {
   }
 
 
-  let tpMarker = L.marker(L.latLng([0, 0]), {
+  let tpMarker = L.marker(L.latLng(fp_coord), {
     icon: tpIcon(),
     draggable: 'true'
   }).addTo(plan);

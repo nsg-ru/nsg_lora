@@ -28,7 +28,6 @@ defmodule NsgLora.LoraApp do
   def handle_rxq({network, profile, node}, gateways, will_reply, frame, state) do
     app =
       NsgLora.LoraWan.profile(profile)[:app]
-      |> IO.inspect()
 
     case @server[app] do
       nil ->
