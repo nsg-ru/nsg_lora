@@ -47,7 +47,7 @@ defmodule NsgLora.LoraApps.SerRak7200 do
 
   @impl true
   def handle_cast({:rxq, %{frame: frame, gateways: [{_mak, rxq} | _] = _gateways}}, state) do
-    frame = NsgLora.LoraWan.frame(frame)
+    frame = LoraWan.frame(frame)
 
     data = frame[:data]
 
@@ -64,7 +64,7 @@ defmodule NsgLora.LoraApps.SerRak7200 do
     case data do
       %{gps: %{lat: lat, lon: lon}} ->
         id = state.id + 1
-        rxq = NsgLora.LoraWan.rxq(rxq)
+        rxq = LoraWan.rxq(rxq)
 
         marker = %{
           id: id,

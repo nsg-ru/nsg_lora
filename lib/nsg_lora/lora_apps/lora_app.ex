@@ -4,7 +4,8 @@ defmodule NsgLora.LoraApp do
   require NsgLora.LoraWan
 
   @server %{
-    "nsg-rak7200" => NsgLora.LoraApps.SerRak7200
+    "nsg-rak7200" => NsgLora.LoraApps.SerRak7200,
+    "nsg-localization" => NsgLora.LoraApps.SerLocalization
   }
 
   def init(_app) do
@@ -27,6 +28,7 @@ defmodule NsgLora.LoraApp do
   def handle_rxq({network, profile, node}, gateways, will_reply, frame, state) do
     app =
       NsgLora.LoraWan.profile(profile)[:app]
+      |> IO.inspect()
 
     case @server[app] do
       nil ->
