@@ -58,6 +58,13 @@ global.initLivePlan = function() {
     });
     dispatchEvent(event);
   });
+
+  global.addMarkerToPlan = function(payload) {
+    console.log(payload.position)
+    L.marker(L.latLng(payload.position), {
+      icon: tpIcon(),
+    }).addTo(plan);
+  }
 }
 
 // plan.setView( [70, 120], 1);
