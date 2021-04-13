@@ -113,7 +113,8 @@ Hooks.LocalizationHandler = {
       this.liveViewPushEvent)
 
     this.handleEvent('new_position', addMarkerToPlan);
-    // this.handleEvent('clear_markers', clearAllMarkers);
+    this.handleEvent('fp_position', addFpToPlan);
+    this.handleEvent('clear_fp_position', clearAllFp);
   },
   destroyed() {
     window.removeEventListener('liveview-plan-event',

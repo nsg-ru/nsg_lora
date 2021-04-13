@@ -31,7 +31,15 @@ defmodule NsgLora.LoraApps.SerLocalization do
 
     case state.mode do
       :collect ->
-        {:noreply, %{state | rssi_measures: [rssi_vec | state.rssi_measures]}}
+        rssi_measures = [rssi_vec | state.rssi_measures]
+
+        Phoenix.PubSub.broadcast(
+          NsgLora.PubSub,
+          "nsg-localization",
+          {:rssi_measures, rssi_measures}
+        )
+
+        {:noreply, %{state | rssi_measures: rssi_measures}}
 
       :localization ->
         IO.inspect(rssi_vec, label: "Localization")
@@ -43,7 +51,7 @@ defmodule NsgLora.LoraApps.SerLocalization do
             {coord, distance(rssi_vec, rssi_fp)}
           end)
           |> Enum.sort_by(fn {_, d} -> d end)
-          |> Enum.take(3)
+          |> Enum.take(4)
           |> Enum.reduce({0, 0, 0}, fn {[y, x], d}, {sy, sx, sw} ->
             w = 1 / d
             {sy + y * w, sx + x * w, sw + w}
@@ -76,8 +84,16 @@ defmodule NsgLora.LoraApps.SerLocalization do
   end
 
   @impl true
+  def handle_call(:get_mode, _from, state) do
+    {:reply, state.mode, state}
+  end
+
   def handle_call(:get_coord, _from, state) do
     {:reply, state.coord, state}
+  end
+
+  def handle_call(:get_rssi_measures, _from, state) do
+    {:reply, state.rssi_measures, state}
   end
 
   defp collect_rssi_vec(%{coord: coord, rssi_measures: [_ | _] = vec}) do
@@ -93,6 +109,12 @@ defmodule NsgLora.LoraApps.SerLocalization do
       |> Enum.map(fn {mac, {sum, n}} -> {mac, sum / n} end)
 
     NsgLora.Repo.Localization.write(%{coord: coord, rssi: rssi})
+
+    Phoenix.PubSub.broadcast(
+      NsgLora.PubSub,
+      "nsg-localization",
+      {:new_fp, coord}
+    )
   end
 
   defp collect_rssi_vec(_) do
@@ -106,6 +128,8 @@ defmodule NsgLora.LoraApps.SerLocalization do
         v -> :math.pow(rssi - v, 2)
       end
     end)
+    |> Enum.filter(fn x -> x end)
+    |> IO.inspect()
     |> Enum.sum()
     |> :math.sqrt()
   end
@@ -122,7 +146,15 @@ defmodule NsgLora.LoraApps.SerLocalization do
     GenServer.cast(__MODULE__, {:set_fp, coord})
   end
 
+  def get_mode() do
+    GenServer.call(__MODULE__, :get_mode)
+  end
+
   def get_fp() do
     GenServer.call(__MODULE__, :get_coord)
+  end
+
+  def get_rssi_measures() do
+    GenServer.call(__MODULE__, :get_rssi_measures)
   end
 end

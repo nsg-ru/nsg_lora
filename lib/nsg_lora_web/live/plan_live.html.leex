@@ -1,4 +1,17 @@
 <div class="text-3xl font-bold text-center"><%= gettext "Plan" %></div>
+
+<div class="flex justify-end mb-2">
+  <div class="mr-2"><%= gettext "Show fixed points" %></div>
+  <%= render NsgLoraWeb.ShareView, "toggle.html", click_event: "fp_show_toggle",
+  adm_state: @fp_show, up: true %>
+</div>
+
+<div class="flex justify-end mb-2">
+  <div class="mr-2"><%= gettext "Training mode" %></div>
+  <%= render NsgLoraWeb.ShareView, "toggle.html", click_event: "training_mode_toggle",
+  adm_state: @training, up: true %>
+</div>
+
 <section id="live-plan-section"
 phx-update="ignore" phx-hook="LocalizationHandler">
   <div id="live-plan"
@@ -6,3 +19,7 @@ phx-update="ignore" phx-hook="LocalizationHandler">
   data-y="<%= @tp_position.y %>"
   class="h-32r border border-gray-400 mb-4"></div>
 </section>
+
+<code class="text-xs"><pre>
+  <%= @rssi_measures %>
+</pre></code>
