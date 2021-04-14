@@ -32,13 +32,13 @@ global.initLivePlan = function() {
   }
 
   let fpIconDiv = `<div
-  class="h-2 w-2 rounded-full bg-gray-900 bg-opacity-50 border border-gray-900">
+  class="h-2 w-2 rounded-full bg-gray-900 bg-opacity-50">
   </div>`
   let fpIcon = function() {
     return L.divIcon({
       html: fpIconDiv,
       className: 'nsg-sensor-icon',
-      iconAnchor: [4, 4]
+      iconAnchor: [3, 3]
     });
   }
 
@@ -71,6 +71,10 @@ global.initLivePlan = function() {
     });
     dispatchEvent(event);
   });
+
+  global.updateTpMarker = function(payload) {
+    tpMarker.setLatLng(L.latLng(payload.position))
+  }
 
   global.addFpToPlan = function(payload) {
     L.marker(L.latLng(payload.position), {

@@ -42,7 +42,6 @@ defmodule NsgLora.LoraApps.SerLocalization do
         {:noreply, %{state | rssi_measures: rssi_measures}}
 
       :localization ->
-        IO.inspect(rssi_vec, label: "Localization")
         {:ok, fp_matrix} = NsgLora.Repo.Localization.all()
 
         {sy, sx, sw} =
@@ -70,17 +69,23 @@ defmodule NsgLora.LoraApps.SerLocalization do
   end
 
   def handle_cast({:set_mode, mode}, %{mode: :collect} = state) do
-    collect_rssi_vec(state)
-    {:noreply, %{state | mode: mode, rssi_measures: []}}
+    state = collect_rssi_vec(state) |> set_mode(mode)
+    {:noreply, state}
   end
 
   def handle_cast({:set_mode, mode}, state) do
-    {:noreply, %{state | mode: mode}}
+    {:noreply, set_mode(state, mode)}
   end
 
   def handle_cast({:set_fp, coord}, state) do
-    collect_rssi_vec(state)
-    {:noreply, %{state | coord: coord, rssi_measures: []}}
+    Phoenix.PubSub.broadcast(
+      NsgLora.PubSub,
+      "nsg-localization",
+      {:update_tp, coord}
+    )
+
+    state = collect_rssi_vec(state)
+    {:noreply, %{state | coord: coord}}
   end
 
   @impl true
@@ -96,7 +101,7 @@ defmodule NsgLora.LoraApps.SerLocalization do
     {:reply, state.rssi_measures, state}
   end
 
-  defp collect_rssi_vec(%{coord: coord, rssi_measures: [_ | _] = vec}) do
+  defp collect_rssi_vec(%{coord: coord, rssi_measures: [_ | _] = vec} = state) do
     rssi =
       vec
       |> Enum.reduce(%{}, fn rssi, acc ->
@@ -115,9 +120,11 @@ defmodule NsgLora.LoraApps.SerLocalization do
       "nsg-localization",
       {:new_fp, coord}
     )
+     %{state | rssi_measures: []}
   end
 
-  defp collect_rssi_vec(_) do
+  defp collect_rssi_vec(state) do
+    state
   end
 
   defp distance(map, list) do
@@ -129,9 +136,17 @@ defmodule NsgLora.LoraApps.SerLocalization do
       end
     end)
     |> Enum.filter(fn x -> x end)
-    |> IO.inspect()
     |> Enum.sum()
     |> :math.sqrt()
+  end
+
+  defp set_mode(state, mode) do
+    Phoenix.PubSub.broadcast(
+      NsgLora.PubSub,
+      "nsg-localization",
+      {:training, mode == :collect}
+    )
+    %{state | mode: mode}
   end
 
   def rxq(params) do

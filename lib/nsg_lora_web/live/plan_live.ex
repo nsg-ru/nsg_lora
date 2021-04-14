@@ -71,18 +71,25 @@ defmodule NsgLoraWeb.PlanLive do
     {:noreply, push_event(socket, "new_position", %{position: position})}
   end
 
+  def handle_info({:update_tp, position}, socket) do
+    {:noreply, push_event(socket, "update_tp", %{position: position})}
+  end
+
   def handle_info({:new_fp, position}, socket) do
-    {:noreply, push_event(socket, "fp_position", %{position: position})
-    |> assign(rssi_measures: "")
-  }
+    {:noreply,
+     push_event(socket, "fp_position", %{position: position})
+     |> assign(rssi_measures: "")}
   end
 
   def handle_info({:rssi_measures, measures}, socket) do
     {:noreply, assign(socket, rssi_measures: parce_rssi_measures(measures))}
   end
 
+  def handle_info({:training, t}, socket) do
+    {:noreply, assign(socket, training: t)}
+  end
+
   defp parce_rssi_measures(measures) do
     inspect(measures, pretty: true)
   end
-
 end
