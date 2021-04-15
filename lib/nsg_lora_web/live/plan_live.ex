@@ -47,18 +47,18 @@ defmodule NsgLoraWeb.PlanLive do
     socket =
       case fp_show do
         true ->
-          {:ok, fps} = NsgLora.Repo.Localization.all()
-
-          fps
-          |> Enum.reduce(socket, fn fp, socket ->
-            push_event(socket, "fp_position", %{position: fp.coord})
-          end)
+          add_show_fp_events(socket)
 
         _ ->
           push_event(socket, "clear_fp_position", %{})
       end
 
     {:noreply, assign(socket, fp_show: fp_show)}
+  end
+
+  def handle_event("delete_fp", %{"id" => id}, socket) do
+    NsgLora.Repo.Localization.delete(id)
+    {:noreply, redraw_fp_events(socket)}
   end
 
   def handle_event(event, params, socket) do
@@ -75,9 +75,9 @@ defmodule NsgLoraWeb.PlanLive do
     {:noreply, push_event(socket, "update_tp", %{position: position})}
   end
 
-  def handle_info({:new_fp, position}, socket) do
+  def handle_info({:new_fp, %{id: id, coord: position}}, socket) do
     {:noreply,
-     push_event(socket, "fp_position", %{position: position})
+     push_event(socket, "fp_position", %{id: id, position: position})
      |> assign(rssi_measures: "")}
   end
 
@@ -91,5 +91,20 @@ defmodule NsgLoraWeb.PlanLive do
 
   defp parce_rssi_measures(measures) do
     inspect(measures, pretty: true)
+  end
+
+  defp add_show_fp_events(socket) do
+    {:ok, fps} = NsgLora.Repo.Localization.all()
+
+    fps
+    |> Enum.reduce(socket, fn fp, socket ->
+      push_event(socket, "fp_position", %{id: fp.id, position: fp.coord})
+    end)
+  end
+
+  defp redraw_fp_events(socket) do
+    socket
+    |> push_event("clear_fp_position", %{})
+    |> add_show_fp_events()
   end
 end

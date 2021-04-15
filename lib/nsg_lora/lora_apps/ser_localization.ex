@@ -4,6 +4,9 @@ defmodule NsgLora.LoraApps.SerLocalization do
   alias NsgLora.LoraWan
   require Logger
 
+  @k 4
+  @g 2
+
   def start_link(params) do
     GenServer.start_link(__MODULE__, params, name: __MODULE__)
   end
@@ -14,24 +17,26 @@ defmodule NsgLora.LoraApps.SerLocalization do
      %{
        mode: :localization,
        coord: [0, 0],
-       rssi_measures: []
+       rssi_measures: %{}
      }}
   end
 
   @impl true
   def handle_cast({:rxq, %{gateways: gateways}}, state) do
-    IO.inspect(state)
-
     rssi_vec =
       gateways
       |> Enum.map(fn {mac, rxq} ->
         {Base.encode16(mac), LoraWan.rxq(rxq)[:rssi]}
       end)
-      |> Enum.into(%{})
 
     case state.mode do
       :collect ->
-        rssi_measures = [rssi_vec | state.rssi_measures]
+        rssi_measures =
+          rssi_vec
+          |> Enum.reduce(state.rssi_measures, fn {mac, rssi}, acc ->
+            rssi_list = acc[mac] || []
+            Map.put(acc, mac, [rssi | rssi_list])
+          end)
 
         Phoenix.PubSub.broadcast(
           NsgLora.PubSub,
@@ -50,9 +55,9 @@ defmodule NsgLora.LoraApps.SerLocalization do
             {coord, distance(rssi_vec, rssi_fp)}
           end)
           |> Enum.sort_by(fn {_, d} -> d end)
-          |> Enum.take(4)
+          |> Enum.take(@k)
           |> Enum.reduce({0, 0, 0}, fn {[y, x], d}, {sy, sx, sw} ->
-            w = 1 / d
+            w = 1 / :math.pow(d, @g)
             {sy + y * w, sx + x * w, sw + w}
           end)
 
@@ -101,33 +106,29 @@ defmodule NsgLora.LoraApps.SerLocalization do
     {:reply, state.rssi_measures, state}
   end
 
-  defp collect_rssi_vec(%{coord: coord, rssi_measures: [_ | _] = vec} = state) do
+  defp collect_rssi_vec(%{rssi_measures: vec} = state) when vec == %{} do
+    state
+  end
+
+  defp collect_rssi_vec(%{coord: coord, rssi_measures: %{} = vec} = state) do
     rssi =
       vec
-      |> Enum.reduce(%{}, fn rssi, acc ->
-        rssi
-        |> Enum.reduce(acc, fn {mac, rssi}, acc ->
-          {sum, n} = acc[mac] || {0, 0}
-          Map.put(acc, mac, {sum + rssi, n + 1})
-        end)
-      end)
-      |> Enum.map(fn {mac, {sum, n}} -> {mac, sum / n} end)
+      |> Enum.map(fn {mac, rssi_list} -> {mac, Enum.sum(rssi_list) / length(rssi_list)} end)
 
-    NsgLora.Repo.Localization.write(%{coord: coord, rssi: rssi})
+    {:ok, fp} = NsgLora.Repo.Localization.write(%{coord: coord, rssi: rssi})
 
     Phoenix.PubSub.broadcast(
       NsgLora.PubSub,
       "nsg-localization",
-      {:new_fp, coord}
+      {:new_fp, fp}
     )
-     %{state | rssi_measures: []}
+
+    %{state | rssi_measures: %{}}
   end
 
-  defp collect_rssi_vec(state) do
-    state
-  end
+  defp distance(tp, list) do
+    map = Map.new(tp)
 
-  defp distance(map, list) do
     list
     |> Enum.map(fn {mac, rssi} ->
       case map[mac] do
@@ -146,6 +147,7 @@ defmodule NsgLora.LoraApps.SerLocalization do
       "nsg-localization",
       {:training, mode == :collect}
     )
+
     %{state | mode: mode}
   end
 

@@ -9,6 +9,7 @@
   "dependencies": {
     "alpinejs": "^2.8.0",
     "leaflet": "^1.7.1",
+    "leaflet-contextmenu": "^1.4.0",
     "leaflet.fullscreen": "^1.6.0",
     "nprogress": "^0.2.0",
     "phoenix": "file:../deps/phoenix",

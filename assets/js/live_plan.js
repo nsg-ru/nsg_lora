@@ -1,5 +1,6 @@
 import L from "leaflet"
 import "leaflet.fullscreen/Control.FullScreen"
+import "leaflet-contextmenu/dist/leaflet.contextmenu"
 
 global.initLivePlan = function() {
   let live_plan = document.getElementById("live-plan")
@@ -8,8 +9,18 @@ global.initLivePlan = function() {
   var plan = L.map('live-plan', {
     crs: L.CRS.Simple,
     minZoom: 4,
-    maxZoom: 10
+    maxZoom: 10,
+    contextmenu: true,
+    //   contextmenuWidth: 140,
+    contextmenuItems: [{
+      text: 'Show coordinates',
+      callback: showCoordinates
+    }]
   });
+
+  function showCoordinates(e) {
+    alert(e.latlng);
+  }
 
   var bounds = [
     [0, 0],
@@ -79,8 +90,31 @@ global.initLivePlan = function() {
   global.addFpToPlan = function(payload) {
     L.marker(L.latLng(payload.position), {
       icon: fpIcon(),
+      contextmenu: true,
+      contextmenuItems: [{
+        text: 'Delete point',
+        callback: deleteFP,
+        context: {id: payload.id},
+        index: 0
+      }, {
+        separator: true,
+        index: 1
+      }]
     }).addTo(fpLayerGroup);
   }
+  function deleteFP(e) {
+    console.log(e, this)
+    var event = new CustomEvent('liveview-plan-event', {
+      'detail': {
+        event: 'delete_fp',
+        payload: {id: this.id}
+      }
+    });
+    dispatchEvent(event);
+  }
+
+
+
   global.clearAllFp = function() {
     fpLayerGroup.clearLayers();
   }
