@@ -21,7 +21,7 @@ defmodule NsgLora.LoraApps.Debug do
 
   def handle_rxq(
         {_network, _profile, _node},
-        [{_mac, rxq} | _] = gateways,
+        [{_mac, rxq} | _] = _gateways,
         _will_reply,
         frame,
         _state

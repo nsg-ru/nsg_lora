@@ -1,6 +1,6 @@
 defmodule NsgLoraWeb.AboutSystemLive do
   use NsgLoraWeb, :live_view
-  import NsgLoraWeb.Gettext
+  # import NsgLoraWeb.Gettext
 
   @impl true
   def mount(_params, session, socket) do
@@ -13,7 +13,7 @@ defmodule NsgLoraWeb.AboutSystemLive do
   end
 
   @impl true
-  def handle_event(event, params, socket) do
+  def handle_event(_event, _params, socket) do
     {:noreply, socket}
   end
 
