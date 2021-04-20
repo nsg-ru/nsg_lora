@@ -39,3 +39,4 @@ npm-debug.log
 /.mnesia/
 /priv/cert/
 /priv/lora/global_conf.json
+/.tool-versions

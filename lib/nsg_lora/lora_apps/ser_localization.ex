@@ -113,7 +113,7 @@ defmodule NsgLora.LoraApps.SerLocalization do
   defp collect_rssi_vec(%{coord: coord, rssi_measures: %{} = vec} = state) do
     rssi =
       vec
-      |> Enum.map(fn {mac, rssi_list} -> {mac, Enum.sum(rssi_list) / length(rssi_list)} end)
+      |> Enum.map(fn {mac, rssi_list} -> {mac, avg(rssi_list, :med)} end)
 
     {:ok, fp} = NsgLora.Repo.Localization.write(%{coord: coord, rssi: rssi})
 
@@ -124,6 +124,19 @@ defmodule NsgLora.LoraApps.SerLocalization do
     )
 
     %{state | rssi_measures: %{}}
+  end
+
+  defp avg(rssi_list, :avg) do
+    Enum.sum(rssi_list) / length(rssi_list)
+  end
+
+  defp avg(rssi_list, :med) do
+    l = length(rssi_list)
+
+    case rem(l, 2) do
+      0 -> (Enum.at(rssi_list, div(l, 2)) + Enum.at(rssi_list, div(l, 2) - 1)) / 2
+      1 -> Enum.at(rssi_list, div(l, 2))
+    end
   end
 
   defp distance(tp, list) do

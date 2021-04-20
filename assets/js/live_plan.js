@@ -19,7 +19,7 @@ global.initLivePlan = function() {
   });
 
   function showCoordinates(e) {
-    alert(e.latlng);
+    alert(e.latlng.lat + ', ' + e.latlng.lng);
   }
 
   var bounds = [
@@ -94,7 +94,9 @@ global.initLivePlan = function() {
       contextmenuItems: [{
         text: 'Delete point',
         callback: deleteFP,
-        context: {id: payload.id},
+        context: {
+          id: payload.id
+        },
         index: 0
       }, {
         separator: true,
@@ -102,12 +104,15 @@ global.initLivePlan = function() {
       }]
     }).addTo(fpLayerGroup);
   }
+
   function deleteFP(e) {
     console.log(e, this)
     var event = new CustomEvent('liveview-plan-event', {
       'detail': {
         event: 'delete_fp',
-        payload: {id: this.id}
+        payload: {
+          id: this.id
+        }
       }
     });
     dispatchEvent(event);

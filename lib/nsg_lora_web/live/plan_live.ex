@@ -89,6 +89,8 @@ defmodule NsgLoraWeb.PlanLive do
     {:noreply, assign(socket, training: t)}
   end
 
+  defp parce_rssi_measures(measures) when measures == %{}, do: ""
+
   defp parce_rssi_measures(measures) do
     inspect(measures, pretty: true)
   end
