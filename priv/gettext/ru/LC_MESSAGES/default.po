@@ -12,12 +12,12 @@ msgstr ""
 "Plural-Forms: nplurals=3\n"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:101
+#: lib/nsg_lora_web/templates/layout/live.html.leex:105
 msgid "About Programm"
 msgstr "О программе"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:106
+#: lib/nsg_lora_web/templates/layout/live.html.leex:110
 msgid "About System"
 msgstr "О системе"
 
@@ -42,7 +42,7 @@ msgid "Dashboard title"
 msgstr "Панель мониторинга"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:111
+#: lib/nsg_lora_web/templates/layout/live.html.leex:115
 msgid "Debug Dashboard"
 msgstr "Отладка"
 
@@ -67,7 +67,7 @@ msgid "MQTT"
 msgstr "Сервер MQTT"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:93
+#: lib/nsg_lora_web/templates/layout/live.html.leex:97
 msgid "Other"
 msgstr "Прочее"
 
@@ -82,13 +82,13 @@ msgid "MQTT server title"
 msgstr "Сервер MQTT"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:71
+#: lib/nsg_lora_web/templates/layout/live.html.leex:75
 msgid "Administration"
 msgstr "Администрирование"
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:24
-#: lib/nsg_lora_web/templates/layout/live.html.leex:79
+#: lib/nsg_lora_web/templates/layout/live.html.leex:83
 msgid "Admins"
 msgstr "Админы"
 
@@ -114,7 +114,7 @@ msgid "Username"
 msgstr "Имя"
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:84
+#: lib/nsg_lora_web/templates/layout/live.html.leex:88
 msgid "Users"
 msgstr "Пользователи"
 
@@ -378,7 +378,7 @@ msgid "Message log"
 msgstr "Журнал сообщений"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:245
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:246
 msgid "Server adm state is down"
 msgstr "Сервер выключен административно"
 
@@ -415,7 +415,7 @@ msgstr[0] "последний маркер"
 msgstr[1] "последних маркера"
 msgstr[2] "последних маркеров"
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/nsg_lora_web/templates/layout/live.html.leex:53
 msgid "Applications"
 msgstr "Приложения"
@@ -432,7 +432,7 @@ msgid "RAK7200 tracker"
 msgstr "Трекер RAK7200"
 
 #, elixir-format
-#: lib/nsg_lora_web/live/map_live.html.leex:9
+#: lib/nsg_lora_web/live/map_live.html.leex:11
 msgid "Show"
 msgstr "Показать"
 
@@ -440,3 +440,38 @@ msgstr "Показать"
 #: lib/nsg_lora_web/live/map_live.html.leex:6
 msgid "Show all"
 msgstr "Показать все"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/map_live.html.leex:47
+msgid "Export"
+msgstr "Экспорт"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/map_live.html.leex:39
+msgid "Import"
+msgstr "Импорт"
+
+#, elixir-format
+#: lib/nsg_lora_web/templates/layout/live.html.leex:65
+msgid "Localization"
+msgstr "Позиционирование"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/plan_live.html.leex:1
+msgid "Plan"
+msgstr "План помещения"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/map_live.html.leex:37
+msgid "Select a file"
+msgstr "Выберите файл"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/plan_live.html.leex:4
+msgid "Show fixed points"
+msgstr "Показать фиксированные точки"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/plan_live.html.leex:10
+msgid "Training mode"
+msgstr "Сбор данных"
