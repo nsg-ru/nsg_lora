@@ -40,3 +40,4 @@ npm-debug.log
 /priv/cert/
 /priv/lora/global_conf.json
 /.tool-versions
+/.elixir_ls/

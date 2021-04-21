@@ -75,7 +75,7 @@ defmodule LagerHandler do
 
     {{_year, _month, _day}, {hour, minute, second}} =
       case utc_log? do
-        true -> :calendar.now_to_universal_time(now)
+        # true -> :calendar.now_to_universal_time(now)
         false -> :calendar.now_to_local_time(now)
       end
 

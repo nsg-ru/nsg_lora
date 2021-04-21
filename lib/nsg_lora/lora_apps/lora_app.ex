@@ -31,7 +31,7 @@ defmodule NsgLora.LoraApp do
 
     case @server[app] do
       nil ->
-        :lager.log(:error, self(), "No app server for #{app}")
+        :lager.log(:error, self(), 'No app server for #{app}')
 
       mod ->
         apply(mod, :rxq, [

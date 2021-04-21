@@ -48,7 +48,7 @@ defmodule NsgLora.LoraApps.Debug do
       data: frame[:data] |> Base.encode16()
     ]
 
-    :lager.log(:debug, self(), "Get frame: #{inspect(res, pretty: true)}")
+    :lager.log(:debug, self(), 'Get frame: #{inspect(res, pretty: true)}')
     :ok
   end
 

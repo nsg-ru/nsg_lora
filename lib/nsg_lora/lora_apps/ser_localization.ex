@@ -126,9 +126,9 @@ defmodule NsgLora.LoraApps.SerLocalization do
     %{state | rssi_measures: %{}}
   end
 
-  defp avg(rssi_list, :avg) do
-    Enum.sum(rssi_list) / length(rssi_list)
-  end
+  # defp avg(rssi_list, :avg) do
+  #   Enum.sum(rssi_list) / length(rssi_list)
+  # end
 
   defp avg(rssi_list, :med) do
     l = length(rssi_list)
