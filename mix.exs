@@ -9,7 +9,10 @@ defmodule NsgLora.MixProject do
       version: "0.1.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: [:phoenix, :gettext, :rustler] ++ Mix.compilers(),
+      rustler_crates: [
+        nsglora_rust: [mode: if(Mix.env() == :dev, do: :debug, else: :release)]
+      ],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -75,6 +78,7 @@ defmodule NsgLora.MixProject do
       {:circular_buffer, "~> 0.3.0"},
       {:websockex, "~> 0.4.3"},
       {:geocalc, "~> 0.8"},
+      {:rustler, "~> 0.22.0-rc.0"},
 
       # Для совместимости с lorawan-server
       {:ranch, "1.7.1", override: true},

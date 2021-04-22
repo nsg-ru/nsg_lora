@@ -38,6 +38,7 @@ npm-debug.log
 /log/
 /.mnesia/
 /priv/cert/
+/priv/native/
 /priv/lora/global_conf.json
 /.tool-versions
 /.elixir_ls/
