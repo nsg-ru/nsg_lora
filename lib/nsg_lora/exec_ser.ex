@@ -11,7 +11,14 @@ defmodule NsgLora.ExecSer do
     args = params[:args] || []
 
     port =
-      Port.open({:spawn_executable, Application.app_dir(:nsg_lora) <> "/priv/lora/wrapper.sh"}, [:binary,{:line, 1024}, :stderr_to_stdout, {:cd, Application.app_dir(:nsg_lora) <> "/priv/lora"}, args: [path | args]])
+      Port.open({:spawn_executable, Application.app_dir(:nsg_lora) <> "/priv/lora/wrapper.sh"}, [
+        :binary,
+        {:line, 1024},
+        :stderr_to_stdout,
+
+        {:cd, Application.app_dir(:nsg_lora) <> "/priv/lora"},
+        args: [path | args]
+      ])
 
     port =
       case port do
