@@ -1,1 +1,1 @@
-iex --sname lora1 -S mix phx.server
+iex --name lora1@imo -S mix phx.server
