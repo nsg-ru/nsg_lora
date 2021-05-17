@@ -25,6 +25,7 @@ defmodule NsgLoraWeb.PlanLive do
         training: training,
         rssi_measures: measures
       )
+      |> allow_upload(:plan, accept: ~w(.jpg .jpeg .png), max_entries: 1)
 
     {:ok, socket}
   end
@@ -60,6 +61,18 @@ defmodule NsgLoraWeb.PlanLive do
     NsgLora.Repo.Localization.delete(id)
     {:noreply, redraw_fp_events(socket)}
   end
+
+  def handle_event("plan_upload", _params, socket) do
+    consume_uploaded_entries(socket, :plan, fn %{path: path}, entry ->
+      IO.inspect(entry)
+      plans_dir = Path.join([:code.priv_dir(:nsg_lora), "static", "plans"])
+      File.mkdir_p!(plans_dir)
+      File.cp!(path, Path.join([plans_dir, entry.client_name]))
+    end)
+
+    {:noreply, socket}
+  end
+
 
   def handle_event(event, params, socket) do
     IO.inspect(event: event, params: params)

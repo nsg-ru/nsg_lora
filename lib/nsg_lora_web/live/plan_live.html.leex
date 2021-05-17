@@ -23,3 +23,16 @@ phx-update="ignore" phx-hook="LocalizationHandler">
 <code class="text-xs"><pre>
   <%= @rssi_measures %>
 </pre></code>
+
+<form phx-submit="plan_upload" phx-change="plan_validate" class="md:flex md:items-baseline mb-3 md:mb-0">
+  <label class="btn inline-block mr-2">
+    <%= live_file_input(@uploads.plan) %>
+    <%= gettext "Select a file" %>
+  </label>
+  <button type="submit" class="btn mr-2"><%= gettext "Import" %></button>
+</form>
+<div class="text-sm">
+  <%= for entry <- @uploads.plan.entries do %>
+  <%= entry.client_name %> - <%= entry.progress %>%
+  <% end %>
+</div>

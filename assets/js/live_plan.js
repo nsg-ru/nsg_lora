@@ -26,7 +26,7 @@ global.initLivePlan = function() {
     [0, 0],
     [13.35, 25.84]
   ];
-  var image = L.imageOverlay('/images/plan_nsg.jpg', bounds).addTo(plan);
+  var image = L.imageOverlay('/plans/plan_nsg.jpg', bounds).addTo(plan);
   plan.fitBounds(bounds);
 
   let fpLayerGroup = L.layerGroup().addTo(plan);
