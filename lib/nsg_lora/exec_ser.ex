@@ -11,24 +11,25 @@ defmodule NsgLora.ExecSer do
     args = params[:args] || []
 
     port =
-      Port.open({:spawn_executable, Application.app_dir(:nsg_lora) <> "/priv/lora/wrapper.sh"}, [:binary,{:line, 1024}, :stderr_to_stdout, {:cd, Application.app_dir(:nsg_lora) <> "/priv/lora"}, args: [path | args]])
+      Port.open(
+        {:spawn_executable,
+         (Application.app_dir(:nsg_lora) <> "/priv/lora/wrapper.sh") |> String.to_charlist()},
+        [
+          :binary,
+          {:line, 1024},
+          :stderr_to_stdout,
+          {:cd, Application.app_dir(:nsg_lora) <> "/priv/lora"},
+          args: [path | args]
+        ]
+      )
 
-    port =
-      case port do
-        port when is_port(port) ->
-          Port.monitor(port)
+    Port.monitor(port)
 
-          Phoenix.PubSub.broadcast(
-            NsgLora.PubSub,
-            "exec_ser",
-            {:change_port_status, name}
-          )
-
-          port
-
-        _ ->
-          nil
-      end
+    Phoenix.PubSub.broadcast(
+      NsgLora.PubSub,
+      "exec_ser",
+      {:change_port_status, name}
+    )
 
     {:ok, %{name: name, port: port, data: CircularBuffer.new(1024)}}
   end
