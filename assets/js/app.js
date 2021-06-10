@@ -24,6 +24,20 @@ import {
 import "./live_map"
 import "./live_plan"
 
+import * as monaco from 'monaco-editor';
+console.log("XXX",
+
+  monaco.editor.create(document.getElementById('editor-bs'), {
+    value: [
+      '{',
+      '"key": "value"',
+      '}'
+    ].join('\n'),
+    language: 'json',
+    wordWrap: 'on'
+  })
+)
+
 
 let Hooks = {}
 
@@ -60,7 +74,7 @@ Hooks.Flash = {
 Hooks.FormChange = {
   mounted() {
     const liveView = this
-    this.liveViewPushEvent = function(e) {
+    this.liveViewPushEvent = function (e) {
       liveView.pushEvent(e.detail.event, e.detail.payload)
     }
     window.addEventListener('liveview-push-event',
@@ -86,7 +100,7 @@ Hooks.MapSightingsHandler = {
   mounted() {
     initLiveMap()
     const liveView = this
-    this.liveViewPushEvent = function(e) {
+    this.liveViewPushEvent = function (e) {
       liveView.pushEvent(e.detail.event, e.detail.payload)
     }
     window.addEventListener('liveview-map-bs-event',
@@ -106,7 +120,7 @@ Hooks.LocalizationHandler = {
   mounted() {
     initLivePlan()
     const liveView = this
-    this.liveViewPushEvent = function(e) {
+    this.liveViewPushEvent = function (e) {
       liveView.pushEvent(e.detail.event, e.detail.payload)
     }
     window.addEventListener('liveview-plan-event',
