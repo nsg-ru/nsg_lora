@@ -23,7 +23,8 @@ defmodule NsgLoraWeb.BSLive do
        channel_plans: NsgLora.Config.channel_plan(:list),
        lora_modules: NsgLora.Config.lora_module(:list),
        bs_log: NsgLora.ExecSer.get_data(:packet_forwarder),
-       play_log: true
+       play_log: true,
+       bs_config: ~S|{"key": "value"}|
      )}
   end
 

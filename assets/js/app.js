@@ -60,7 +60,7 @@ Hooks.Flash = {
 Hooks.FormChange = {
   mounted() {
     const liveView = this
-    this.liveViewPushEvent = function(e) {
+    this.liveViewPushEvent = function (e) {
       liveView.pushEvent(e.detail.event, e.detail.payload)
     }
     window.addEventListener('liveview-push-event',
@@ -86,7 +86,7 @@ Hooks.MapSightingsHandler = {
   mounted() {
     initLiveMap()
     const liveView = this
-    this.liveViewPushEvent = function(e) {
+    this.liveViewPushEvent = function (e) {
       liveView.pushEvent(e.detail.event, e.detail.payload)
     }
     window.addEventListener('liveview-map-bs-event',
@@ -106,7 +106,7 @@ Hooks.LocalizationHandler = {
   mounted() {
     initLivePlan()
     const liveView = this
-    this.liveViewPushEvent = function(e) {
+    this.liveViewPushEvent = function (e) {
       liveView.pushEvent(e.detail.event, e.detail.payload)
     }
     window.addEventListener('liveview-plan-event',
@@ -137,6 +137,16 @@ let liveSocket = new LiveSocket("/live", Socket, {
   hooks: Hooks,
   params: {
     _csrf_token: csrfToken
+  },
+  metadata: {
+    keyup: (e, el) => {
+      return {
+        key: e.key,
+        metaKey: e.metaKey,
+        ctrlKey: e.ctrlKey,
+        altKey: e.altKey,
+      }
+    }
   }
 })
 

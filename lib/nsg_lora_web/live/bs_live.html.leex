@@ -61,3 +61,15 @@ adm_state: @bs_adm_state, up: @bs_up %>
   overflow-auto overflow-ellipsis"
   ><span class="py-2"><%= @bs_log %></span></pre>
 </div>
+
+<div>
+  <h1 class="text-2xl font-bold text-center mt-5">
+    <%= gettext "Editor" %>
+  </h1>
+
+  <textarea id="bs-editor" phx-keyup="editor"
+  class="content-color border border-gray-400 px-2 rounded-md h-32r w-full font-mono
+  overflow-auto overflow-ellipsis"
+  spellcheck="false"
+  >hhh hhh</textarea>
+</div>
