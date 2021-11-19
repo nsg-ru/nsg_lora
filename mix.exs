@@ -92,7 +92,14 @@ defmodule NsgLora.MixProject do
        override: true},
       {:cowboy, "~> 2.8",
        env: :prod, hex: "cowboy", repo: "hexpm", optional: false, override: true},
-      {:cowlib, git: "https://github.com/ninenines/cowlib", tag: "2.9.1", override: true}
+      {:cowlib, git: "https://github.com/ninenines/cowlib", tag: "2.9.1", override: true},
+
+      # Emulator
+      # {:lge,
+      #  git: "https://github.com/nsg-ru/lorawan-gateway-emulator.git", runtime: false},
+      {:lge,
+       path: "../lorawan-gateway-emulator", runtime: false},
+       {:jsx, "~> 2.10.0", env: :prod, repo: "hexpm", hex: "jsx", override: true}
     ]
   end
 

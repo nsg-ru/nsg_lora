@@ -37,6 +37,8 @@
   "jsx": {:hex, :jsx, "2.10.0", "77760560d6ac2b8c51fd4c980e9e19b784016aa70be354ce746472c33beb0b1c", [:rebar3], [], "hexpm", "9a83e3704807298016968db506f9fad0f027de37546eb838b3ae1064c3a0ad62"},
   "lager": {:hex, :lager, "3.7.0", "563ab17cd32134a3dd17ec3b3622e6d8f827506aa4f8c489158879bed87d980b", [:rebar3], [{:goldrush, "0.1.9", [hex: :goldrush, repo: "hexpm", optional: false]}], "hexpm", "97dc7e1c9e7289c3167f417e71ffe1df28218537967e076800ecedb1c28c9e48"},
   "lager_logger": {:hex, :lager_logger, "1.0.5", "2b58be52fe1e0fb82656180fc54e45618aa2dc619090b00e6d3fb4707c6a1fe5", [:mix], [{:lager, ">= 2.1.0", [hex: :lager, repo: "hexpm", optional: false]}], "hexpm", "e1b166bcd39ce9e32378d16b8bc0d78cee6e9d9de8488900e12e9168998e49a0"},
+  "lge": {:git, "https://github.com/nsg-ru/lorawan-gateway-emulator.git", "8b231b1112bd70ecf2d2e32736cb09d13786f61a", []},
+  "lorawan_gateway_emulator": {:git, "https://github.com/nsg-ru/lorawan-gateway-emulator.git", "8b231b1112bd70ecf2d2e32736cb09d13786f61a", []},
   "lorawan_server": {:git, "https://github.com/nsg-ru/lorawan-server.git", "1a5c0f2f4d8238a54a326c57a5eb0e6015821b1d", []},
   "memento": {:hex, :memento, "0.3.1", "b2909390820550d8b90b68ec96f9e15ff8a45a28b6f97fa4a62ef50e87c2f9d9", [:mix], [], "hexpm", "ff8fc66255d21dcd539c5d77a0b5458715bf3efec91b389dd06017bbb4e2e916"},
   "metrics": {:hex, :metrics, "1.0.1", "25f094dea2cda98213cecc3aeff09e940299d950904393b2a29d191c346a8486", [:rebar3], [], "hexpm", "69b09adddc4f74a40716ae54d140f93beb0fb8978d8636eaded0c31b6f099f16"},
