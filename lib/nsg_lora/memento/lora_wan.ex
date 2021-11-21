@@ -15,8 +15,25 @@ defmodule NsgLora.LoraWan do
     :rxq,
     Record.extract(:rxq, from: "deps/lorawan_server/include/lorawan_db.hrl")
   )
+
   Record.defrecord(
     :profile,
     Record.extract(:profile, from: "deps/lorawan_server/include/lorawan_db.hrl")
   )
+
+  Record.defrecord(
+    :node,
+    Record.extract(:node, from: "deps/lorawan_server/include/lorawan_db.hrl")
+  )
+
+  def read() do
+    :mnesia.transaction(fn ->
+      :mnesia.read(
+        NsgLora.LoraWan.node(
+
+        )
+      )
+    end)
+  end
+
 end
