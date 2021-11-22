@@ -110,6 +110,11 @@ x-data="main_init()"
           <%= gettext "About System" %>
         <% end %>
 
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.EmulatorLive),
+        class: "side-menu-item" do %>
+          <%= gettext "Emulator" %>
+        <% end %>
+
         <a href="live_dashboard"  target="_blank"
         class="side-menu-item">
           <%= gettext "Debug Dashboard" %>

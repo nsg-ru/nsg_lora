@@ -28,12 +28,7 @@ defmodule NsgLora.LoraWan do
 
   def read() do
     :mnesia.transaction(fn ->
-      :mnesia.read(
-        NsgLora.LoraWan.node(
-
-        )
-      )
+      :mnesia.read(:node)
     end)
   end
-
 end

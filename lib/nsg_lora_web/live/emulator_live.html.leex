@@ -1,0 +1,25 @@
+<h1 class="text-3xl font-bold text-center"><%= gettext "Emulator" %></h1>
+<%= render NsgLoraWeb.ShareView, "toggle.html", click_event: "toggle",
+adm_state: @emul_state, up: @emul_up %>
+
+<div>
+  <h1 class="text-2xl font-bold text-center mb-2"><%= gettext "Emulator configuration" %></h1>
+
+    <%= f = form_for :config, "#",
+    [phx_change: :config_validate, phx_submit: :config] %>
+        <%= for {id, name} <- [
+        {"payload",gettext("Payload")},
+        {"interval",gettext("Interval")},
+        ] do %>
+        <%= render NsgLoraWeb.ShareView, "input_form.html",
+            f: f, config: @config, err: @err, id: id, name: name
+        %>
+        <% end %>
+        <div class="flex justify-end  mb-2">
+        <a href="#" phx-click="cancel"
+        class="btn <%= @input && "animate-pulse" || "" %>"><%= gettext "Cancel" %></a>
+        <%= submit gettext("Save"), class: "btn ml-2 #{@input && "animate-pulse" || ""} " %>
+        </div>
+        <div class="w-full text-right text-red-500 text-sm"><%= @err["save"] %></div>
+    </form>
+</div>

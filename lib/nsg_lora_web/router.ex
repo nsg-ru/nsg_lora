@@ -47,6 +47,7 @@ defmodule NsgLoraWeb.Router do
     live "/map", MapLive
     live "/plan", PlanLive
     live "/blank", BlankLive
+    live "/emul", EmulatorLive
   end
 
   # Other scopes may use custom stacks.
