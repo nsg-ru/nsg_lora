@@ -24,6 +24,29 @@ defmodule NsgLora.Validate do
     end
   end
 
+  def uint(errmap, _id, nil), do: errmap
+
+  def uint(errmap, id, value) do
+    value = String.trim(value)
+
+    case value do
+      "" ->
+        errmap
+
+      _ ->
+        case Integer.parse(value) do
+          {n, ""} ->
+            cond do
+              n < 0 -> Map.put(errmap, id, gettext("Must be unsigned integer"))
+              true -> errmap
+            end
+
+          _ ->
+            Map.put(errmap, id, gettext("Must be number"))
+        end
+    end
+  end
+
   def hex(errmap, _id, nil, _size), do: errmap
 
   def hex(errmap, id, value, size) do
@@ -49,6 +72,6 @@ defmodule NsgLora.Validate do
   end
 
   def hex(errmap, id, value) when is_binary(value) do
-    hex(errmap, id, value, String.length(value))
+    hex(errmap, id, value, value |> String.trim() |> String.length())
   end
 end

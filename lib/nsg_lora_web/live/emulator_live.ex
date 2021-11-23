@@ -1,6 +1,8 @@
 defmodule NsgLoraWeb.EmulatorLive do
   use NsgLoraWeb, :live_view
   import NsgLoraWeb.Gettext
+  alias NsgLora.Repo.Config
+  alias NsgLora.Validate
 
   @impl true
   def mount(_params, session, socket) do
@@ -10,7 +12,7 @@ defmodule NsgLoraWeb.EmulatorLive do
 
     {:ok,
      assign(socket,
-       config: %{},
+       config: get_config(),
        err: %{},
        emul_state: is_started,
        emul_up: is_started,
@@ -29,9 +31,47 @@ defmodule NsgLoraWeb.EmulatorLive do
     {:noreply, assign(socket, emul_up: is_started, emul_state: is_started)}
   end
 
+  def handle_event("config_validate", %{"config" => config}, socket) do
+    config = socket.assigns.config |> Map.merge(config)
+    err = validate(config)
+    {:noreply, assign(socket, config: config, err: err, input: true)}
+  end
+
+  def handle_event("config", %{"config" => config}, socket) do
+    config = socket.assigns.config |> Map.merge(config)
+
+    case validate(config) do
+      err when err == %{} ->
+        Config.write(:emulator_interval, config["interval"])
+        Config.write(:emulator_payload, config["payload"])
+
+        {:noreply,
+         assign(
+           socket,
+           config: config,
+           err: err,
+           input: false
+         )}
+
+      err ->
+        {:noreply, assign(socket, config: config, err: err)}
+    end
+  end
+
+  def handle_event("cancel", _, socket) do
+    {:noreply, assign(socket, config: get_config(), err: %{}, input: false)}
+  end
+
   def handle_event(event, params, socket) do
     IO.inspect(event: event, params: params)
     {:noreply, socket}
+  end
+
+  defp get_config() do
+    %{
+      "interval" => Config.read_value(:emulator_interval),
+      "payload" => Config.read_value(:emulator_payload) || "530101000000005A"
+    }
   end
 
   defp started?() do
@@ -41,7 +81,13 @@ defmodule NsgLoraWeb.EmulatorLive do
     |> Kernel.!()
   end
 
-  def start_lge() do
+  defp validate(config) do
+    %{}
+    |> Validate.uint("interval", config["interval"])
+    |> Validate.hex("payload", config["payload"])
+  end
+
+  defp start_lge() do
     Application.put_env(:lge, :ip, {127, 0, 0, 1})
     Application.put_env(:lge, :port, 1680)
 
@@ -65,7 +111,7 @@ defmodule NsgLoraWeb.EmulatorLive do
     Application.ensure_all_started(:lge)
   end
 
-  def stop_lge() do
+  defp stop_lge() do
     Application.stop(:lge)
   end
 end
