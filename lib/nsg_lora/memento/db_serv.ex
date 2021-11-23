@@ -6,7 +6,8 @@ defmodule NsgLora.DBServer do
     NsgLora.Repo.Admin,
     NsgLora.Repo.Server,
     NsgLora.Repo.BS,
-    NsgLora.Repo.Localization
+    NsgLora.Repo.Localization,
+    NsgLora.Repo.Config
   ]
 
   def start_link(params) do
