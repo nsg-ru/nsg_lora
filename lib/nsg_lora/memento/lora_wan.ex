@@ -25,10 +25,4 @@ defmodule NsgLora.LoraWan do
     :node,
     Record.extract(:node, from: "deps/lorawan_server/include/lorawan_db.hrl")
   )
-
-  def read() do
-    :mnesia.transaction(fn ->
-      :mnesia.read(:node)
-    end)
-  end
 end

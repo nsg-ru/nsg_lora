@@ -88,6 +88,8 @@ defmodule NsgLoraWeb.EmulatorLive do
   end
 
   defp start_lge() do
+    reset_fcnt()
+
     Application.put_env(:lge, :ip, {127, 0, 0, 1})
     Application.put_env(:lge, :port, 1680)
 
@@ -113,5 +115,16 @@ defmodule NsgLoraWeb.EmulatorLive do
 
   defp stop_lge() do
     Application.stop(:lge)
+  end
+
+  require NsgLora.LoraWan
+
+  def reset_fcnt() do
+    :mnesia.transaction(fn ->
+      [rec] = :mnesia.read(:node, Base.decode16!("EEEEEEEE"))
+      rec = NsgLora.LoraWan.node(rec, fcntup: 0, fcntdown: 0)
+      NsgLora.LoraWan.node(rec)
+      :mnesia.write(rec)
+    end)
   end
 end

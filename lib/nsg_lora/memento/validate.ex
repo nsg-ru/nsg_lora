@@ -72,6 +72,12 @@ defmodule NsgLora.Validate do
   end
 
   def hex(errmap, id, value) when is_binary(value) do
-    hex(errmap, id, value, value |> String.trim() |> String.length())
+    len = value |> String.trim() |> String.length()
+
+    case rem(len, 2) do
+      0 -> errmap
+      _ -> Map.put(errmap, id, gettext("Must be an even number of digits"))
+    end
+    |> hex(id, value, len)
   end
 end
