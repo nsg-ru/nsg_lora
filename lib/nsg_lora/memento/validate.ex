@@ -2,6 +2,7 @@ defmodule NsgLora.Validate do
   import NsgLoraWeb.Gettext
 
   def port(errmap, _id, nil), do: errmap
+
   def port(errmap, id, value) do
     value = String.trim(value)
 
@@ -24,6 +25,7 @@ defmodule NsgLora.Validate do
   end
 
   def hex(errmap, _id, nil, _size), do: errmap
+
   def hex(errmap, id, value, size) do
     value = String.trim(value)
 
@@ -44,5 +46,9 @@ defmodule NsgLora.Validate do
       _ ->
         Map.put(errmap, id, gettext("Must be hex number"))
     end
+  end
+
+  def hex(errmap, id, value) when is_binary(value) do
+    hex(errmap, id, value, String.length(value))
   end
 end
