@@ -23,8 +23,14 @@ defmodule NsgLoraWeb.EmulatorLive do
   @impl true
   def handle_event("toggle", _params, socket) do
     case started?() do
-      true -> stop_lge()
-      _ -> start_lge()
+      true ->
+        stop_lge()
+
+      _ ->
+        start_lge(
+          interval: socket.assigns.config["interval"],
+          payload: socket.assigns.config["payload"]
+        )
     end
 
     is_started = started?()
@@ -87,7 +93,7 @@ defmodule NsgLoraWeb.EmulatorLive do
     |> Validate.hex("payload", config["payload"])
   end
 
-  defp start_lge() do
+  defp start_lge(opts) do
     reset_fcnt()
 
     Application.put_env(:lge, :ip, {127, 0, 0, 1})
@@ -108,6 +114,25 @@ defmodule NsgLoraWeb.EmulatorLive do
       :netwkskey,
       <<0xEE, 0xEE, 0xEE, 0xEE, 0xEE, 0xEE, 0xEE, 0xEE, 0xEE, 0xEE, 0xEE, 0xEE, 0xEE, 0xEE, 0xEE,
         0xEE>>
+    )
+
+    interval = opts[:interval] || "0"
+
+    interval =
+      case interval |> String.trim() |> Integer.parse() do
+        {interval, ""} ->
+          interval
+          _ -> 0
+      end
+
+    Application.put_env(:lge, :interval, interval)
+
+    payload = opts[:payload] || "530101000000005B"
+
+    Application.put_env(
+      :lge,
+      :message,
+      payload |> String.trim() |> String.upcase() |> Base.decode16!()
     )
 
     Application.ensure_all_started(:lge)
