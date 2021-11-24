@@ -237,7 +237,8 @@ defmodule NsgLoraWeb.LorawanServerLive do
           {"semtech-mote", :lorawan_application_semtech_mote},
           {"nsg-debug", NsgLora.LoraApps.Debug},
           {"nsg-rak7200", NsgLora.LoraApp},
-          {"nsg-localization", NsgLora.LoraApp}
+          {"nsg-localization", NsgLora.LoraApp},
+          {"nsg-smtp", NsgLora.LoraApp}
         ])
 
         Application.ensure_all_started(:lorawan_server)

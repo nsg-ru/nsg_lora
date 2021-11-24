@@ -99,7 +99,8 @@ defmodule NsgLora.MixProject do
       #  git: "https://github.com/nsg-ru/lorawan-gateway-emulator.git", runtime: false},
       {:lge,
        path: "../lorawan-gateway-emulator", runtime: false},
-       {:jsx, "~> 2.10.0", env: :prod, repo: "hexpm", hex: "jsx", override: true}
+       {:jsx, "~> 2.10.0", env: :prod, repo: "hexpm", hex: "jsx", override: true},
+       {:gen_smtp, "~> 1.0.1", override: true}
     ]
   end
 

@@ -9,7 +9,8 @@ defmodule NsgLora.LoraApps.Sup do
   def init(_arg) do
     children = [
       NsgLora.LoraApps.SerRak7200,
-      NsgLora.LoraApps.SerLocalization
+      NsgLora.LoraApps.SerLocalization,
+      NsgLora.LoraApps.Smtp
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

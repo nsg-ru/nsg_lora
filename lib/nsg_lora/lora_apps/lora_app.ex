@@ -5,7 +5,8 @@ defmodule NsgLora.LoraApp do
 
   @server %{
     "nsg-rak7200" => NsgLora.LoraApps.SerRak7200,
-    "nsg-localization" => NsgLora.LoraApps.SerLocalization
+    "nsg-localization" => NsgLora.LoraApps.SerLocalization,
+    "nsg-smtp" => NsgLora.LoraApps.Smtp
   }
 
   def init(_app) do
