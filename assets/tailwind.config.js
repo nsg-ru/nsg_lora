@@ -30,6 +30,10 @@ module.exports = {
       },
     },
   },
-  variants: {},
-  plugins: [],
+  variants: {
+    extend: {
+      backgroundColor: ['active'],
+    },
+    plugins: [],
+  }
 }

@@ -2,6 +2,13 @@
 <%= render NsgLoraWeb.ShareView, "toggle.html", click_event: "toggle",
 adm_state: @emul_state, up: @emul_up %>
 
+<%= if @emul_up do %>
+<div class="flex justify-end mt-2 mb-5">
+    <a href="#" phx-click="push-data"
+    class="btn active:bg-green-500"><%= gettext "Send a PUSH_DATA message" %></a>
+</div>
+<% end %>
+
 <div>
   <h1 class="text-2xl font-bold text-center mb-2"><%= gettext "Emulator configuration" %></h1>
 

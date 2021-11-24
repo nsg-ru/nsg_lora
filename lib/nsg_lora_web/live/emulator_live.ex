@@ -37,6 +37,11 @@ defmodule NsgLoraWeb.EmulatorLive do
     {:noreply, assign(socket, emul_up: is_started, emul_state: is_started)}
   end
 
+  def handle_event("push-data", _params, socket) do
+    GenServer.cast(:lge_push_data, :push)
+    {:noreply, socket}
+  end
+
   def handle_event("config_validate", %{"config" => config}, socket) do
     config = socket.assigns.config |> Map.merge(config)
     err = validate(config)
@@ -122,7 +127,9 @@ defmodule NsgLoraWeb.EmulatorLive do
       case interval |> String.trim() |> Integer.parse() do
         {interval, ""} ->
           interval
-          _ -> 0
+
+        _ ->
+          0
       end
 
     Application.put_env(:lge, :interval, interval)
