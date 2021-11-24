@@ -140,7 +140,7 @@ msgstr ""
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:82
 #: lib/nsg_lora_web/live/bs_live.html.leex:45 lib/nsg_lora_web/live/components/header_component.html.leex:145
-#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:57
+#: lib/nsg_lora_web/live/emulator_live.html.leex:28 lib/nsg_lora_web/live/lorawan_server_live.html.leex:57
 msgid "Save"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgstr ""
 #: lib/nsg_lora_web/live/admins_live.html.leex:14
 #: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:44
 #: lib/nsg_lora_web/live/components/alert_component.html.leex:14 lib/nsg_lora_web/live/components/header_component.html.leex:144
-#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:56
+#: lib/nsg_lora_web/live/emulator_live.html.leex:27 lib/nsg_lora_web/live/lorawan_server_live.html.leex:56
 msgid "Cancel"
 msgstr ""
 
@@ -261,12 +261,12 @@ msgid "Lorawan server is down"
 msgstr "LoRaWan Server"
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:16
+#: lib/nsg_lora/memento/validate.ex:17
 msgid "Must be from 1 to 65535"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:21
+#: lib/nsg_lora/memento/validate.ex:22 lib/nsg_lora/memento/validate.ex:45
 msgid "Must be number"
 msgstr ""
 
@@ -296,14 +296,14 @@ msgid "Packet forwarder port"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:40
+#: lib/nsg_lora/memento/validate.ex:65
 msgid "Must be"
 msgid_plural "Must be"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:40
+#: lib/nsg_lora/memento/validate.ex:65
 msgid "char"
 msgid_plural "chars"
 msgstr[0] ""
@@ -340,7 +340,7 @@ msgid "Gateway ID"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:45
+#: lib/nsg_lora/memento/validate.ex:70
 msgid "Must be hex number"
 msgstr ""
 
@@ -484,4 +484,34 @@ msgstr ""
 #: lib/nsg_lora_web/live/emulator_live.html.leex:1
 #: lib/nsg_lora_web/templates/layout/live.html.leex:115
 msgid "Emulator"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/emulator_live.html.leex:13
+msgid "Emulator configuration"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/emulator_live.html.leex:19
+msgid "Interval"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora/memento/validate.ex:79
+msgid "Must be an even number of digits"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora/memento/validate.ex:40
+msgid "Must be unsigned integer"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/emulator_live.html.leex:18
+msgid "Payload"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/emulator_live.html.leex:8
+msgid "Send a PUSH_DATA message"
 msgstr ""

@@ -140,7 +140,7 @@ msgstr "Имя"
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:82
 #: lib/nsg_lora_web/live/bs_live.html.leex:45 lib/nsg_lora_web/live/components/header_component.html.leex:145
-#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:57
+#: lib/nsg_lora_web/live/emulator_live.html.leex:28 lib/nsg_lora_web/live/lorawan_server_live.html.leex:57
 msgid "Save"
 msgstr "Сохранить"
 
@@ -159,7 +159,7 @@ msgstr "Вы уверены что хотите удалить админа"
 #: lib/nsg_lora_web/live/admins_live.html.leex:14
 #: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:44
 #: lib/nsg_lora_web/live/components/alert_component.html.leex:14 lib/nsg_lora_web/live/components/header_component.html.leex:144
-#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:56
+#: lib/nsg_lora_web/live/emulator_live.html.leex:27 lib/nsg_lora_web/live/lorawan_server_live.html.leex:56
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -261,12 +261,12 @@ msgid "Lorawan server is down"
 msgstr "Сервер LoRaWan остановлен"
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:16
+#: lib/nsg_lora/memento/validate.ex:17
 msgid "Must be from 1 to 65535"
 msgstr "Должно быть число от 1 до 65535"
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:21
+#: lib/nsg_lora/memento/validate.ex:22 lib/nsg_lora/memento/validate.ex:45
 msgid "Must be number"
 msgstr "Должно быть число"
 
@@ -296,7 +296,7 @@ msgid "Packet forwarder port"
 msgstr "Порт packet forwarder"
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:40
+#: lib/nsg_lora/memento/validate.ex:65
 msgid "Must be"
 msgid_plural "Must be"
 msgstr[0] "Должен быть"
@@ -304,7 +304,7 @@ msgstr[1] "Должно быть"
 msgstr[2] "Должно быть"
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:40
+#: lib/nsg_lora/memento/validate.ex:65
 msgid "char"
 msgid_plural "chars"
 msgstr[0] "символ"
@@ -342,7 +342,7 @@ msgid "Gateway ID"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora/memento/validate.ex:45
+#: lib/nsg_lora/memento/validate.ex:70
 msgid "Must be hex number"
 msgstr "Должно быть шестнадцатеричное число"
 
@@ -488,3 +488,33 @@ msgstr ""
 #: lib/nsg_lora_web/templates/layout/live.html.leex:115
 msgid "Emulator"
 msgstr "Эмулятор"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/emulator_live.html.leex:13
+msgid "Emulator configuration"
+msgstr "Конфигурация эмулятора"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/emulator_live.html.leex:19
+msgid "Interval"
+msgstr "Интервал"
+
+#, elixir-format
+#: lib/nsg_lora/memento/validate.ex:79
+msgid "Must be an even number of digits"
+msgstr "Должно быть четное число цифр"
+
+#, elixir-format
+#: lib/nsg_lora/memento/validate.ex:40
+msgid "Must be unsigned integer"
+msgstr "Должно быть целое положительное"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/emulator_live.html.leex:18
+msgid "Payload"
+msgstr "Данные"
+
+#, elixir-format
+#: lib/nsg_lora_web/live/emulator_live.html.leex:8
+msgid "Send a PUSH_DATA message"
+msgstr "Послать пакет PUSH_DATA"
