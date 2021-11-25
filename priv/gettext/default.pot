@@ -11,12 +11,12 @@ msgid ""
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:105
+#: lib/nsg_lora_web/templates/layout/live.html.leex:110
 msgid "About Programm"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:110
+#: lib/nsg_lora_web/templates/layout/live.html.leex:115
 msgid "About System"
 msgstr ""
 
@@ -41,7 +41,7 @@ msgid "Dashboard title"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:120
+#: lib/nsg_lora_web/templates/layout/live.html.leex:125
 msgid "Debug Dashboard"
 msgstr ""
 
@@ -66,7 +66,7 @@ msgid "MQTT"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:97
+#: lib/nsg_lora_web/templates/layout/live.html.leex:102
 msgid "Other"
 msgstr ""
 
@@ -81,13 +81,13 @@ msgid "MQTT server title"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:75
+#: lib/nsg_lora_web/templates/layout/live.html.leex:80
 msgid "Administration"
 msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:24
-#: lib/nsg_lora_web/templates/layout/live.html.leex:83
+#: lib/nsg_lora_web/templates/layout/live.html.leex:88
 msgid "Admins"
 msgstr ""
 
@@ -98,7 +98,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/admins_live.html.leex:67
-#: lib/nsg_lora_web/live/components/header_component.html.leex:129 lib/nsg_lora_web/templates/session/new.html.eex:10
+#: lib/nsg_lora_web/live/components/header_component.html.leex:129 lib/nsg_lora_web/live/smtp_live.html.leex:15
+#: lib/nsg_lora_web/templates/session/new.html.eex:10
 msgid "Password"
 msgstr ""
 
@@ -108,12 +109,13 @@ msgid "Sign in"
 msgstr ""
 
 #, elixir-format
+#: lib/nsg_lora_web/live/smtp_live.html.leex:8
 #: lib/nsg_lora_web/templates/session/new.html.eex:6
 msgid "Username"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/templates/layout/live.html.leex:88
+#: lib/nsg_lora_web/templates/layout/live.html.leex:93
 msgid "Users"
 msgstr ""
 
@@ -140,6 +142,7 @@ msgstr ""
 #: lib/nsg_lora_web/live/admins_live.html.leex:82
 #: lib/nsg_lora_web/live/bs_live.html.leex:45 lib/nsg_lora_web/live/components/header_component.html.leex:145
 #: lib/nsg_lora_web/live/emulator_live.html.leex:28 lib/nsg_lora_web/live/lorawan_server_live.html.leex:57
+#: lib/nsg_lora_web/live/smtp_live.html.leex:32
 msgid "Save"
 msgstr ""
 
@@ -159,6 +162,7 @@ msgstr ""
 #: lib/nsg_lora_web/live/admins_live.html.leex:81 lib/nsg_lora_web/live/bs_live.html.leex:44
 #: lib/nsg_lora_web/live/components/alert_component.html.leex:14 lib/nsg_lora_web/live/components/header_component.html.leex:144
 #: lib/nsg_lora_web/live/emulator_live.html.leex:27 lib/nsg_lora_web/live/lorawan_server_live.html.leex:56
+#: lib/nsg_lora_web/live/smtp_live.html.leex:31
 msgid "Cancel"
 msgstr ""
 
@@ -370,12 +374,12 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/bs_live.html.leex:53
-#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:65
+#: lib/nsg_lora_web/live/lorawan_server_live.html.leex:65 lib/nsg_lora_web/live/smtp_live.html.leex:39
 msgid "Message log"
 msgstr ""
 
 #, elixir-format
-#: lib/nsg_lora_web/live/lorawan_server_live.ex:246
+#: lib/nsg_lora_web/live/lorawan_server_live.ex:247
 msgid "Server adm state is down"
 msgstr ""
 
@@ -481,7 +485,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/nsg_lora_web/live/emulator_live.html.leex:1
-#: lib/nsg_lora_web/templates/layout/live.html.leex:115
+#: lib/nsg_lora_web/templates/layout/live.html.leex:120
 msgid "Emulator"
 msgstr ""
 
@@ -513,4 +517,45 @@ msgstr ""
 #, elixir-format
 #: lib/nsg_lora_web/live/emulator_live.html.leex:8
 msgid "Send a PUSH_DATA message"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/smtp_live.html.leex:18
+msgid "Email configuration"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora/memento/validate.ex:88
+msgid "Must not be leading or trailing whitespaces"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/smtp_live.html.leex:21
+msgid "Receiver"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/smtp_live.html.leex:7
+msgid "Relay"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/smtp_live.html.leex:1
+#: lib/nsg_lora_web/templates/layout/live.html.leex:69
+msgid "SMTP"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/smtp_live.html.leex:5
+msgid "SMTP server configuration"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/smtp_live.html.leex:20
+msgid "Sender"
+msgstr ""
+
+#, elixir-format
+#: lib/nsg_lora_web/live/smtp_live.html.leex:22
+msgid "Subject"
 msgstr ""

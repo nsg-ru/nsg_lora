@@ -16,6 +16,7 @@ defmodule NsgLora.Application do
       # Start a worker by calling: NsgLora.Worker.start_link(arg)
       # {NsgLora.Worker, arg}
       NsgLora.LagerRing,
+      NsgLora.SmtpLog,
       NsgLora.DynSup,
       NsgLora.LoraApps.Sup,
       NsgLora.DBServer

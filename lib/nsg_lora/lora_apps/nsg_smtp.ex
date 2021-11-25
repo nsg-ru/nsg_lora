@@ -29,7 +29,7 @@ defmodule NsgLora.LoraApps.Smtp do
       password: config.password
     ]
 
-    IO.inspect({server, config.sender, [config.receiver], config.subject, text})
+    # IO.inspect({server, config.sender, [config.receiver], config.subject, text})
     smtp(server, config.sender, [config.receiver], config.subject, text)
     {:noreply, state}
   end
@@ -65,25 +65,11 @@ defmodule NsgLora.LoraApps.Smtp do
         ],
       fn
         res ->
-          IO.inspect(res, label: "SMTP RES")
+          NsgLora.SmtpLog.log(inspect(res))
           'ok'
       end
     )
 
     text
-  end
-
-  def send_email() do
-    smtp(
-      [
-        relay: 'mail.nsg.net.ru',
-        username: 'imosunov',
-        password: 'baidnos0'
-      ],
-      "imosunov@nsg.net.ru",
-      ["imo59y@yandex.ru"],
-      "LoRa",
-      "Test"
-    )
   end
 end

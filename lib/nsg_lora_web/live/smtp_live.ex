@@ -6,6 +6,8 @@ defmodule NsgLoraWeb.SmtpLive do
 
   @impl true
   def mount(_params, session, socket) do
+    Phoenix.PubSub.subscribe(NsgLora.PubSub, "smtp_log")
+
     socket = assign(socket, NsgLoraWeb.Live.init(__MODULE__, session, socket))
 
     {:ok,
@@ -14,7 +16,7 @@ defmodule NsgLoraWeb.SmtpLive do
        err: %{},
        input: false,
        play_log: true,
-       smtp_log: "SMTP Log"
+       smtp_log: NsgLora.SmtpLog.get_log()
      )}
   end
 
@@ -53,6 +55,16 @@ defmodule NsgLoraWeb.SmtpLive do
   def handle_event(event, params, socket) do
     IO.inspect(event: event, params: params)
     {:noreply, socket}
+  end
+  @impl true
+  def handle_info(:get_log, socket) do
+    case socket.assigns.play_log do
+      true ->
+        {:noreply, assign(socket, log: NsgLora.SmtpLog.get_log())}
+
+      _ ->
+        {:noreply, socket}
+    end
   end
 
   defp get_config() do
