@@ -1,0 +1,49 @@
+<h1 class="text-3xl font-bold text-center"><%= gettext "SMTP" %></h1>
+<div class="mt-3">
+    <%= f = form_for :config, "#",
+    [phx_change: :config_validate, phx_submit: :config] %>
+        <h1 class="text-2xl font-bold text-center mb-2"><%= gettext "SMTP server configuration" %></h1>
+        <%= for {id, name} <- [
+        {"relay",gettext("Relay")},
+        {"username",gettext("Username")},
+        ] do %>
+            <%= render NsgLoraWeb.ShareView, "input_form.html",
+                f: f, config: @config, err: @err, id: id, name: name
+            %>
+        <% end %>
+        <%= render NsgLoraWeb.ShareView, "password_form.html",
+            f: f, config: @config, err: @err, id: "password", name: gettext("Password")
+        %>
+
+        <h1 class="text-2xl font-bold text-center mb-2"><%= gettext "Email configuration" %></h1>
+        <%= for {id, name} <- [
+        {"sender",gettext("Sender")},
+        {"receiver",gettext("Receiver")},
+        {"subject",gettext("Subject")},
+        ] do %>
+            <%= render NsgLoraWeb.ShareView, "input_form.html",
+                f: f, config: @config, err: @err, id: id, name: name
+            %>
+        <% end %>
+
+        <div class="flex justify-end  mb-2">
+        <a href="#" phx-click="cancel"
+        class="btn <%= @input && "animate-pulse" || "" %>"><%= gettext "Cancel" %></a>
+        <%= submit gettext("Save"), class: "btn ml-2 #{@input && "animate-pulse" || ""} " %>
+        </div>
+        <div class="w-full text-right text-red-500 text-sm"><%= @err["save"] %></div>
+    </form>
+</div>
+<div>
+  <h1 class="text-2xl font-bold text-center mt-5">
+    <%= gettext "Message log" %>
+  </h1>
+  <div class="flex justify-end mb-2">
+    <%= render NsgLoraWeb.ShareView, "toggle_play_pause.html", play: @play_log %>
+  </div>
+
+  <pre phx-hook="ScrollBottom" id="bs-log"
+  class="text-sm content-color border border-gray-400 px-2 rounded-md h-32r
+  overflow-auto overflow-ellipsis"
+  ><span class="py-2"><%= @smtp_log %></span></pre>
+</div>

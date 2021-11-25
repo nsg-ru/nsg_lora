@@ -217,7 +217,7 @@ defmodule NsgLoraWeb.BSLive do
     gw = NsgLora.Config.gw(:default)
     {:ok, gw} = Jason.decode(gw)
 
-    bs_gw = bs.gw
+    bs_gw = bs.gw |> Enum.map(fn {k, v} -> {k, String.trim(v)} end) |> Enum.into(%{})
 
     gw =
       Map.merge(gw, %{

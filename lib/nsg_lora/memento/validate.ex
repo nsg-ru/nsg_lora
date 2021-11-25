@@ -80,4 +80,12 @@ defmodule NsgLora.Validate do
     end
     |> hex(id, value, len)
   end
+
+  def trim(errmap, id, value) when is_binary(value) do
+    if value == String.trim(value) do
+      errmap
+    else
+      Map.put(errmap, id, gettext("Must not be leading or trailing whitespaces"))
+    end
+  end
 end

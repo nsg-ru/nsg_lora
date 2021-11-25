@@ -64,6 +64,11 @@ x-data="main_init()"
         class: "side-menu-item" do %>
           <%= gettext "Localization" %>
         <% end %>
+        <%= live_redirect to: Routes.live_path(@socket, NsgLoraWeb.SmtpLive),
+        class: "side-menu-item" do %>
+          <%= gettext "SMTP" %>
+        <% end %>
+
 
       </div>
     </div>
