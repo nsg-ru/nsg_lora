@@ -26,23 +26,28 @@ echo " for board $BOARD"
 
 export SECRET_KEY_BASE=`mix phx.gen.secret`
 export MIX_ENV=$BOARD
-mix compile
+#mix deps.clean --all
+#mix deps.get --only prod
 npm install --prefix ./assets
 npm run deploy --prefix ./assets
 mix phx.digest
+echo ******** $MIX_ENV
 mix release $REL
+
+
+VER=$(cat mix.exs | grep version | sed -e 's/.*version: "\(.*\)",/\1/')
 
 if [[ $REL == local ]]
 then
   _build/$BOARD/rel/local/bin/local start_iex
 elif [[ $REL == nsg_lora_arm ]]
 then
-  scp _build/$BOARD/nsg_lora_arm-0.1.0.tar.gz root@10.0.10.70:/tmp
-  ssh root@10.0.10.70 \
-  "mkdir -p /usr/lib/lora; tar -C /mnt/lora/usr/lib/lora -mxzf /tmp/nsg_lora_arm-0.1.0.tar.gz"
+  scp _build/$BOARD/nsg_lora_arm-$VER.tar.gz root@10.0.10.93:/tmp
+  ssh root@10.0.10.93 \
+  "mkdir -p /usr/lib/lora; tar -C /usr/lib/lora -mxzf /tmp/nsg_lora_arm-$VER.tar.gz"
 elif [[ $REL == nsg_lora_powerpc ]]
 then
-  scp _build/$BOARD/nsg_lora_powerpc-0.1.0.tar.gz root@10.0.10.69:/tmp
+  scp _build/$BOARD/nsg_lora_powerpc-$VER.tar.gz root@10.0.10.69:/tmp
   ssh root@10.0.10.69 \
-  "mkdir -p /usr/lib/lora; tar -C /usr/lib/lora -mxzf /tmp/nsg_lora_powerpc-0.1.0.tar.gz"
+  "mkdir -p /usr/lib/lora; tar -C /usr/lib/lora -mxzf /tmp/nsg_lora_powerpc-$VER.tar.gz"
 fi
