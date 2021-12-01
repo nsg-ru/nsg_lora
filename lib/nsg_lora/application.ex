@@ -8,7 +8,7 @@ defmodule NsgLora.Application do
   def start(_type, _args) do
     children = [
       # Start the Telemetry supervisor
-      NsgLoraWeb.Telemetry,
+      # NsgLoraWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: NsgLora.PubSub},
       # Start the Endpoint (http/https)

@@ -120,12 +120,7 @@ x-data="main_init()"
           <%= gettext "Emulator" %>
         <% end %>
 
-        <%= if Mix.env() in [:dev] do %>
-          <a href="live_dashboard"  target="_blank"
-          class="side-menu-item">
-            <%= gettext "Debug Dashboard" %>
-          </a>
-        <% end %>
+
       </div>
     </div>
 
