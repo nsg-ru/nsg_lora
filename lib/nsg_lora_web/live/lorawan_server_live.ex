@@ -23,7 +23,10 @@ defmodule NsgLoraWeb.LorawanServerLive do
        err: %{},
        input: false,
        play_log: true,
-       log: NsgLora.LagerRing.get_log()
+       log: NsgLora.LagerRing.get_log(),
+       advanced: false,
+       regions: ["RU868", "EU868"],
+       net_config: %{}
      )}
   end
 
@@ -88,7 +91,8 @@ defmodule NsgLoraWeb.LorawanServerLive do
      assign(socket, server_adm_state: false, server_up: !!started?(), alert: %{hidden: true})}
   end
 
-  def handle_event("config_validate", %{"config" => config}, socket) do
+  def handle_event("config_validate", %{"config" => config} = params, socket) do
+    IO.inspect(params)
     err = validate(config)
     {:noreply, assign(socket, config: config, err: err, input: true)}
   end
@@ -122,6 +126,13 @@ defmodule NsgLoraWeb.LorawanServerLive do
     {:noreply, assign(socket, config: server.config, err: %{}, input: false)}
   end
 
+  def handle_event("add_net_validate", %{"net_config" => net_config}, socket) do
+    net_config = socket.assigns.net_config |> Map.merge(net_config)
+    IO.inspect(net_config)
+
+    {:noreply, assign(socket, net_config: net_config, err: %{})}
+  end
+
   def handle_event("toggle-play-pause", _, socket) do
     play_log = !socket.assigns.play_log
 
@@ -136,6 +147,10 @@ defmodule NsgLoraWeb.LorawanServerLive do
       _ ->
         {:noreply, assign(socket, play_log: play_log)}
     end
+  end
+
+  def handle_event("advanced", _, socket) do
+    {:noreply, assign(socket, advanced: !socket.assigns.advanced)}
   end
 
   def handle_event(event, params, socket) do

@@ -73,3 +73,40 @@
   overflow-auto overflow-ellipsis"
   ><span class="py-2"><%= @log %></span></pre>
 </div>
+
+<div class="mt-5">
+    <a href="#"" class="text-2xl font-bold mt-5" phx-click="advanced">
+        <%= if @advanced do gettext "Hide Advanced"
+            else gettext "Advanced:"
+            end %>
+    </a>
+
+  <%= if @advanced do %>
+  <div class="pl-2">
+
+  <div>
+    <h1 class="text-2xl font-bold text-center mb-2"><%= gettext "Add LoRaWAN network" %></h1>
+    <%= f = form_for :net_config, "#",
+    [phx_change: :add_net_validate, phx_submit: :net_config] %>
+
+          <%= render NsgLoraWeb.ShareView, "input_form.html",
+            f: f, config: @net_config, err: @err, id: "network_name", name: gettext("Name")
+          %>
+    <%= live_component @socket, NsgLoraWeb.SelectComponent, id: "region",
+        f: f, config: @net_config, err: @err,
+        name: gettext("Region"),
+        header: gettext("Select region"),
+        value_list: @regions
+    %>
+
+
+
+      <div class="flex justify-end  mb-2">
+        <%= submit gettext("Add network"), class: "btn ml-2 #{@input && "animate-pulse" || ""} " %>
+      </div>
+      <div class="w-full text-right text-red-500 text-sm"><%= @err["save"] %></div>
+    </form>
+
+  </div>
+  <% end %>
+</div>

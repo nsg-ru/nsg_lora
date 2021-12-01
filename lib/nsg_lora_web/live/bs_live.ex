@@ -24,7 +24,8 @@ defmodule NsgLoraWeb.BSLive do
        lora_modules: NsgLora.Config.lora_module(:list),
        bs_log: NsgLora.ExecSer.get_data(:packet_forwarder),
        play_log: true,
-       bs_config: ~S|{"key": "value"}|
+       bs_config: ~S|{"key": "value"}|,
+       advanced: false
      )}
   end
 
@@ -137,6 +138,10 @@ defmodule NsgLoraWeb.BSLive do
     gw_id = get_gw_id_from_eth_mac()
     config = socket.assigns.config |> Map.put("gateway_ID", gw_id)
     {:noreply, assign(socket, config: config, input: true)}
+  end
+
+  def handle_event("advanced", _, socket) do
+    {:noreply, assign(socket, advanced: !socket.assigns.advanced)}
   end
 
   def handle_event(event, params, socket) do

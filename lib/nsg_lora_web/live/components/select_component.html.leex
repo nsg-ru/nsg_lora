@@ -43,8 +43,8 @@
           <div class="block px-4 py-2 hover-item"
           @click="select = '<%= cp %>';
           $dispatch('liveview-push-event', {
-            event: 'config_validate',
-            payload: {config: {<%= @id %>: '<%= cp %>'}}
+            event: '<%= @f.options[:phx_change] %>',
+            payload: {<%= @f.options[:phx_submit] %>: {<%= @id %>: '<%= cp %>'}}
           })">
             <%= cp %>
           </div>
