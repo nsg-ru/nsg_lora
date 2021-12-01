@@ -73,7 +73,7 @@ defmodule NsgLora.MixProject do
       {:memento, "~> 0.3.1"},
       {:guardian, "~> 2.0"},
       {:circular_buffer, "~> 0.3.0"},
-      {:websockex, "~> 0.4.3"},
+      # {:websockex, "~> 0.4.3"},
       {:geocalc, "~> 0.8"},
 
       # Для совместимости с lorawan-server
